@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0F3D3E">
+<title>Contagem de Estoque</title>
+<link rel="manifest" href="data:application/json,{%22name%22:%22Contagem%20Estoque%22,%22short_name%22:%22Contagem%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%230F3D3E%22,%22theme_color%22:%22%230F3D3E%22}">
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  :root {
+    --petroleo: #0F3D3E; --petroleo2: #155F60;
+    --verde-bg: #D4EDDA; --verde-tx: #155724;
+    --verm-bg: #F8D7DA; --verm-tx: #721C24;
+    --ambar-bg: #FFF3CD; --ambar-tx: #856404;
+    --cinza-bg: #F2F6F6; --borda: #C4D0D0; --txt: #1A2B2B; --suave: #5A6A6A;
+  }
+  html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--txt); background: #EAF0F0; }
+  #root { min-height: 100%; display: flex; flex-direction: column; }
+  .topbar { background: var(--petroleo); color: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,.15); position: sticky; top: 0; z-index: 10; }
+  .topbar h1 { font-size: 17px; font-weight: 700; }
+  .topbar .badge { background: rgba(255,255,255,.2); border-radius: 12px; padding: 3px 10px; font-size: 13px; }
+  .content { flex: 1; padding: 16px; padding-bottom: 90px; max-width: 640px; margin: 0 auto; width: 100%; }
+  .card { background: #fff; border: 1px solid var(--borda); border-radius: 14px; padding: 16px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .btn { border: none; border-radius: 12px; padding: 15px 18px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; transition: transform .05s; }
+  .btn:active { transform: scale(.98); }
+  .btn-primary { background: var(--petroleo); color: #fff; }
+  .btn-outline { background: #fff; color: var(--petroleo); border: 2px solid var(--petroleo); }
+  .btn-ghost { background: var(--cinza-bg); color: var(--txt); }
+  .btn-sm { padding: 10px 14px; font-size: 14px; width: auto; }
+  #reader { width: 100%; border-radius: 12px; overflow: hidden; }
+  #reader video { border-radius: 12px; }
+  .scan-hint { text-align: center; color: var(--suave); font-size: 14px; margin-top: 10px; }
+  .prod-nome { font-size: 19px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+  .prod-meta { color: var(--suave); font-size: 14px; margin-bottom: 14px; }
+  .prod-meta b { color: var(--txt); }
+  .estoque-box { display: flex; align-items: center; gap: 10px; background: var(--cinza-bg); border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; }
+  .estoque-box .lbl { font-size: 13px; color: var(--suave); }
+  .estoque-box .val { font-size: 24px; font-weight: 800; color: var(--petroleo); }
+  .campos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .campo label { display: block; font-size: 13px; color: var(--suave); margin-bottom: 5px; font-weight: 600; }
+  .campo input { width: 100%; border: 2px solid var(--borda); border-radius: 10px; padding: 14px; font-size: 20px; text-align: center; font-weight: 700; color: var(--txt); }
+  .campo input:focus { outline: none; border-color: var(--petroleo); }
+  .resumo { display: flex; justify-content: space-around; padding: 12px; border-radius: 10px; margin-bottom: 14px; font-size: 15px; }
+  .resumo .item { text-align: center; }
+  .resumo .item .n { font-size: 22px; font-weight: 800; }
+  .resumo .item .l { font-size: 12px; color: var(--suave); }
+  .dif-ok { background: var(--verde-bg); } .dif-ok .valdif { color: var(--verde-tx); }
+  .dif-mais { background: var(--verde-bg); } .dif-mais .valdif { color: var(--verde-tx); }
+  .dif-menos { background: var(--verm-bg); } .dif-menos .valdif { color: var(--verm-tx); }
+  .obs-tag { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+  .search-box { display: flex; gap: 8px; margin-bottom: 12px; }
+  .search-box input { flex: 1; border: 2px solid var(--borda); border-radius: 10px; padding: 12px; font-size: 15px; }
+  .search-box input:focus { outline: none; border-color: var(--petroleo); }
+  .lista-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--borda); }
+  .lista-item:last-child { border-bottom: none; }
+  .lista-item .nome { font-size: 14px; font-weight: 600; flex: 1; padding-right: 10px; }
+  .lista-item .qtd { font-size: 13px; color: var(--suave); white-space: nowrap; }
+  .lista-item .badge-dif { font-size: 12px; padding: 3px 8px; border-radius: 10px; font-weight: 700; margin-left: 6px; }
+  .empty { text-align: center; color: var(--suave); padding: 30px 10px; font-size: 15px; }
+  .tabbar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--borda); display: flex; z-index: 10; box-shadow: 0 -2px 8px rgba(0,0,0,.06); }
+  .tabbar button { flex: 1; border: none; background: none; padding: 12px 4px 10px; font-size: 11px; color: var(--suave); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .tabbar button.active { color: var(--petroleo); font-weight: 700; }
+  .tabbar button .ico { font-size: 22px; }
+  .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: var(--petroleo); color: #fff; padding: 12px 20px; border-radius: 24px; font-size: 14px; font-weight: 600; z-index: 50; box-shadow: 0 4px 12px rgba(0,0,0,.25); animation: pop .3s; white-space: nowrap; }
+  @keyframes pop { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+  .naoach { text-align: center; padding: 20px; }
+  .naoach .cod { font-family: monospace; font-size: 18px; background: var(--ambar-bg); color: var(--ambar-tx); padding: 8px 14px; border-radius: 8px; display: inline-block; margin: 10px 0; }
+  .row-actions { display: flex; gap: 10px; margin-top: 4px; }
+  .link-btn { background: none; border: none; color: var(--petroleo); font-size: 13px; text-decoration: underline; cursor: pointer; padding: 4px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+let DADOS = null;
+const { useState, useEffect, useRef, useCallback } = React;
+const h = React.createElement;
+
+// índice rápido
+let CODIGOS = {};   // "codigo" -> id
+let PRODUTOS = [];  // [{n,e,p,u}]
+
+function fmtPreco(p) { if (p === '' || p == null) return '—'; return 'R$ ' + Number(p).toFixed(2).replace('.', ','); }
+function num(v) { if (v === '' || v == null) return 0; const n = Number(v); return isNaN(n) ? 0 : n; }
+
+function App() {
+  const [tab, setTab] = useState('scan');
+  const [produtoAtivo, setProdutoAtivo] = useState(null); // {id, cod}
+  const [contagens, setContagens] = useState({}); // id -> {loja, estoque}
+  const [toast, setToast] = useState(null);
+  const [naoAchado, setNaoAchado] = useState(null);
+
+  useEffect(() => {
+    try { const s = localStorage.getItem('contagens'); if (s) setContagens(JSON.parse(s)); } catch(e){}
+  }, []);
+  useEffect(() => {
+    try { localStorage.setItem('contagens', JSON.stringify(contagens)); } catch(e){}
+  }, [contagens]);
+
+  const mostrarToast = useCallback((msg) => {
+    setToast(msg); setTimeout(() => setToast(null), 1800);
+  }, []);
+
+  const onCodigo = useCallback((cod) => {
+    cod = String(cod).trim();
+    const id = CODIGOS[cod];
+    if (id === undefined) {
+      // tentar sem zeros à esquerda / com variações
+      const alt = Object.keys(CODIGOS).find(k => k.replace(/^0+/, '') === cod.replace(/^0+/, ''));
+      if (alt !== undefined) { setProdutoAtivo({ id: CODIGOS[alt], cod: alt }); setNaoAchado(null); setTab('scan'); mostrarToast('Produto encontrado'); return; }
+      setNaoAchado(cod); setProdutoAtivo(null);
+      return;
+    }
+    setProdutoAtivo({ id, cod }); setNaoAchado(null); setTab('scan');
+    mostrarToast('Produto encontrado');
+  }, [mostrarToast]);
+
+  const salvarContagem = useCallback((id, loja, estoque) => {
+    setContagens(prev => {
+      const nv = { ...prev };
+      if ((loja === '' || loja == null) && (estoque === '' || estoque == null)) { delete nv[id]; }
+      else { nv[id] = { loja, estoque }; }
+      return nv;
+    });
+  }, []);
+
+  return h('div', null,
+    h('div', { className: 'topbar' },
+      h('h1', null, 'Contagem de Estoque'),
+      h('span', { className: 'badge' }, Object.keys(contagens).length + ' contados')
+    ),
+    h('div', { className: 'content' },
+      tab === 'scan' && h(ScanTab, { onCodigo, produtoAtivo, setProdutoAtivo, contagens, salvarContagem, naoAchado, setNaoAchado }),
+      tab === 'busca' && h(BuscaTab, { onSelect: (id) => { setProdutoAtivo({ id, cod: null }); setTab('scan'); }, contagens }),
+      tab === 'lista' && h(ListaTab, { contagens, onSelect: (id) => { setProdutoAtivo({ id, cod: null }); setTab('scan'); }, mostrarToast })
+    ),
+    h('div', { className: 'tabbar' },
+      h(TabBtn, { id: 'scan', atual: tab, set: setTab, ico: '📷', label: 'Escanear' }),
+      h(TabBtn, { id: 'busca', atual: tab, set: setTab, ico: '🔍', label: 'Buscar' }),
+      h(TabBtn, { id: 'lista', atual: tab, set: setTab, ico: '📋', label: 'Contagens' })
+    ),
+    toast && h('div', { className: 'toast' }, toast)
+  );
+}
+
+function TabBtn({ id, atual, set, ico, label }) {
+  return h('button', { className: atual === id ? 'active' : '', onClick: () => set(id) },
+    h('span', { className: 'ico' }, ico), h('span', null, label));
+}
+
+function ScanTab({ onCodigo, produtoAtivo, setProdutoAtivo, contagens, salvarContagem, naoAchado, setNaoAchado }) {
+  const [scanning, setScanning] = useState(false);
+  const scannerRef = useRef(null);
+  const divId = 'reader';
+
+  const iniciar = useCallback(async () => {
+    setScanning(true); setNaoAchado(null);
+    await new Promise(r => setTimeout(r, 100));
+    try {
+      const scanner = new Html5Qrcode(divId, { verbose: false });
+      scannerRef.current = scanner;
+      await scanner.start(
+        { facingMode: 'environment' },
+        { fps: 10, qrbox: { width: 260, height: 160 },
+          formatsToSupport: [
+            Html5QrcodeSupportedFormats.EAN_13, Html5QrcodeSupportedFormats.EAN_8,
+            Html5QrcodeSupportedFormats.UPC_A, Html5QrcodeSupportedFormats.UPC_E,
+            Html5QrcodeSupportedFormats.CODE_128, Html5QrcodeSupportedFormats.CODE_39,
+            Html5QrcodeSupportedFormats.QR_CODE
+          ]
+        },
+        (txt) => { parar(); onCodigo(txt); },
+        () => {}
+      );
+    } catch (e) { alert('Erro ao abrir a câmera: ' + e + '\n\nVerifique se deu permissão de câmera ao navegador.'); setScanning(false); }
+  }, [onCodigo]);
+
+  const parar = useCallback(async () => {
+    if (scannerRef.current) {
+      try { await scannerRef.current.stop(); await scannerRef.current.clear(); } catch(e){}
+      scannerRef.current = null;
+    }
+    setScanning(false);
+  }, []);
+
+  useEffect(() => () => { parar(); }, [parar]);
+
+  return h('div', null,
+    h('div', { className: 'card' },
+      !scanning && h('button', { className: 'btn btn-primary', onClick: iniciar }, '📷  Escanear código de barras'),
+      scanning && h('div', null,
+        h('div', { id: divId }),
+        h('p', { className: 'scan-hint' }, 'Aponte para o código de barras'),
+        h('button', { className: 'btn btn-ghost', style: { marginTop: 12 }, onClick: parar }, 'Cancelar')
+      )
+    ),
+    naoAchado && h('div', { className: 'card' },
+      h('div', { className: 'naoach' },
+        h('div', { style: { fontSize: 40 } }, '⚠️'),
+        h('p', { style: { fontWeight: 700, marginTop: 8 } }, 'Código não encontrado'),
+        h('div', { className: 'cod' }, naoAchado),
+        h('p', { style: { color: 'var(--suave)', fontSize: 14 } }, 'Esse código não está na base. Pode ser um produto novo ou sem cadastro. Tente buscar pelo nome.')
+      )
+    ),
+    produtoAtivo && h(ProdutoCard, { produtoAtivo, contagens, salvarContagem, onFechar: () => setProdutoAtivo(null) }),
+    !produtoAtivo && !naoAchado && !scanning && h('div', { className: 'empty' }, 'Escaneie um produto para ver as informações e registrar a contagem.')
+  );
+}
+
+function ProdutoCard({ produtoAtivo, contagens, salvarContagem, onFechar }) {
+  const p = PRODUTOS[produtoAtivo.id];
+  const cont = contagens[produtoAtivo.id] || {};
+  const [loja, setLoja] = useState(cont.loja ?? '');
+  const [estoque, setEstoque] = useState(cont.estoque ?? '');
+
+  useEffect(() => {
+    const c = contagens[produtoAtivo.id] || {};
+    setLoja(c.loja ?? ''); setEstoque(c.estoque ?? '');
+  }, [produtoAtivo.id]);
+
+  const temContagem = loja !== '' || estoque !== '';
+  const total = temContagem ? num(loja) + num(estoque) : null;
+  const estSist = num(p.e);
+  const dif = total === null ? null : total - estSist;
+
+  let difClass = 'dif-ok', obsTxt = 'OK', obsBg = 'var(--verde-bg)', obsTx = 'var(--verde-tx)';
+  if (dif !== null) {
+    if (dif > 0) { difClass = 'dif-mais'; obsTxt = 'Sobra (+' + dif + ')'; }
+    else if (dif < 0) { difClass = 'dif-menos'; obsTxt = 'Falta (' + dif + ')'; obsBg = 'var(--verm-bg)'; obsTx = 'var(--verm-tx)'; }
+    else { obsTxt = 'Bateu certo'; }
+  }
+
+  const salvar = () => { salvarContagem(produtoAtivo.id, loja, estoque); };
+  useEffect(() => { const t = setTimeout(salvar, 400); return () => clearTimeout(t); }, [loja, estoque]);
+
+  return h('div', { className: 'card' },
+    h('div', { className: 'prod-nome' }, p.n),
+    h('div', { className: 'prod-meta' },
+      'Unidade: ', h('b', null, p.u || '—'), '  ·  Preço: ', h('b', null, fmtPreco(p.p))
+    ),
+    h('div', { className: 'estoque-box' },
+      h('span', { className: 'lbl' }, 'Estoque no sistema:'),
+      h('span', { className: 'val' }, p.e === '' ? '—' : p.e)
+    ),
+    h('div', { className: 'campos' },
+      h('div', { className: 'campo' },
+        h('label', null, 'Qtd na loja'),
+        h('input', { type: 'number', inputMode: 'numeric', value: loja, placeholder: '0',
+          onChange: e => setLoja(e.target.value) })
+      ),
+      h('div', { className: 'campo' },
+        h('label', null, 'Qtd no estoque'),
+        h('input', { type: 'number', inputMode: 'numeric', value: estoque, placeholder: '0',
+          onChange: e => setEstoque(e.target.value) })
+      )
+    ),
+    temContagem && h('div', { className: 'resumo ' + difClass },
+      h('div', { className: 'item' }, h('div', { className: 'n' }, total), h('div', { className: 'l' }, 'Total contado')),
+      h('div', { className: 'item' }, h('div', { className: 'n' }, estSist), h('div', { className: 'l' }, 'Sistema')),
+      h('div', { className: 'item' }, h('div', { className: 'n valdif' }, dif > 0 ? '+' + dif : dif), h('div', { className: 'l' }, 'Diferença'))
+    ),
+    temContagem && h('div', { style: { textAlign: 'center', marginBottom: 12 } },
+      h('span', { className: 'obs-tag', style: { background: obsBg, color: obsTx } }, obsTxt)
+    ),
+    h('div', { className: 'row-actions' },
+      h('button', { className: 'btn btn-ghost btn-sm', onClick: () => { setLoja(''); setEstoque(''); } }, 'Limpar'),
+      h('button', { className: 'btn btn-outline btn-sm', onClick: onFechar }, 'Fechar')
+    )
+  );
+}
+
+function BuscaTab({ onSelect, contagens }) {
+  const [q, setQ] = useState('');
+  const termo = q.trim().toUpperCase();
+  let resultados = [];
+  if (termo.length >= 2) {
+    for (let i = 0; i < PRODUTOS.length && resultados.length < 50; i++) {
+      if (PRODUTOS[i].n.toUpperCase().includes(termo)) resultados.push(i);
+    }
+  }
+  return h('div', null,
+    h('div', { className: 'card' },
+      h('div', { className: 'search-box' },
+        h('input', { type: 'text', value: q, placeholder: 'Digite o nome do produto...', autoFocus: true,
+          onChange: e => setQ(e.target.value) })
+      ),
+      termo.length < 2 && h('p', { className: 'scan-hint' }, 'Digite pelo menos 2 letras'),
+      termo.length >= 2 && resultados.length === 0 && h('p', { className: 'empty' }, 'Nenhum produto encontrado'),
+      resultados.map(id => h('div', { key: id, className: 'lista-item', onClick: () => onSelect(id), style: { cursor: 'pointer' } },
+        h('span', { className: 'nome' }, PRODUTOS[id].n),
+        h('span', { className: 'qtd' },
+          contagens[id] ? '✓ contado' : (PRODUTOS[id].e === '' ? '' : 'sist: ' + PRODUTOS[id].e)
+        )
+      ))
+    )
+  );
+}
+
+function ListaTab({ contagens, onSelect, mostrarToast }) {
+  const ids = Object.keys(contagens);
+  const exportar = () => {
+    let linhas = ['Codigo;Produto;Qtd loja;Qtd estoque;Total;Estoque sistema;Diferenca'];
+    ids.forEach(id => {
+      const p = PRODUTOS[id]; const c = contagens[id];
+      const total = num(c.loja) + num(c.estoque);
+      const dif = total - num(p.e);
+      const codPrinc = Object.keys(CODIGOS).find(k => CODIGOS[k] == id) || '';
+      linhas.push([codPrinc, p.n, c.loja || 0, c.estoque || 0, total, p.e || 0, dif].join(';'));
+    });
+    const csv = '\ufeff' + linhas.join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const hoje = new Date().toISOString().slice(0,10);
+    a.href = url; a.download = 'contagem_' + hoje + '.csv'; a.click();
+    URL.revokeObjectURL(url);
+    mostrarToast('Arquivo exportado');
+  };
+  const limparTudo = () => {
+    if (confirm('Apagar TODAS as contagens? Isso não pode ser desfeito.\n\nSe ainda não exportou, exporte antes.')) {
+      localStorage.removeItem('contagens'); location.reload();
+    }
+  };
+  return h('div', null,
+    h('div', { className: 'card' },
+      h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 } },
+        h('h2', { style: { fontSize: 16 } }, ids.length + ' produto' + (ids.length === 1 ? '' : 's') + ' contado' + (ids.length === 1 ? '' : 's')),
+        ids.length > 0 && h('button', { className: 'btn btn-primary btn-sm', onClick: exportar }, '⬇ Exportar')
+      )
+    ),
+    ids.length === 0 && h('div', { className: 'empty' }, 'Nenhuma contagem ainda. Escaneie produtos e preencha as quantidades — elas aparecem aqui.'),
+    ids.length > 0 && h('div', { className: 'card' },
+      ids.map(id => {
+        const p = PRODUTOS[id]; const c = contagens[id];
+        const total = num(c.loja) + num(c.estoque);
+        const dif = total - num(p.e);
+        let bg = 'var(--verde-bg)', tx = 'var(--verde-tx)', txt = 'OK';
+        if (dif > 0) { txt = '+' + dif; } else if (dif < 0) { bg = 'var(--verm-bg)'; tx = 'var(--verm-tx)'; txt = dif; }
+        return h('div', { key: id, className: 'lista-item', onClick: () => onSelect(id), style: { cursor: 'pointer' } },
+          h('span', { className: 'nome' }, p.n),
+          h('span', null,
+            h('span', { className: 'qtd' }, 'L:' + (c.loja||0) + ' E:' + (c.estoque||0)),
+            h('span', { className: 'badge-dif', style: { background: bg, color: tx } }, txt)
+          )
+        );
+      })
+    ),
+    ids.length > 0 && h('div', { className: 'card' },
+      h('button', { className: 'link-btn', onClick: limparTudo, style: { color: 'var(--verm-tx)', display: 'block', margin: '0 auto' } }, 'Apagar todas as contagens')
+    )
+  );
+}
+
+// ---- carregar dados.json antes de iniciar ----
+function TelaCarregando(props) {
+  return h('div', { style: { display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', height:'100vh', color:'#0F3D3E', padding:'20px', textAlign:'center' } },
+    h('div', { style: { fontSize:48, marginBottom:16 } }, '📦'),
+    h('div', { style: { fontSize:18, fontWeight:700 } }, props.erro ? 'Erro ao carregar dados' : 'Carregando produtos...'),
+    props.erro && h('div', { style: { fontSize:14, color:'#721C24', marginTop:12, maxWidth:320 } }, props.erro),
+    !props.erro && h('div', { style: { fontSize:14, color:'#5A6A6A', marginTop:8 } }, 'Só um instante')
+  );
+}
+
+const rootEl = ReactDOM.createRoot(document.getElementById('root'));
+rootEl.render(h(TelaCarregando, {}));
+
+fetch('./dados.json')
+  .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+  .then(d => {
+    DADOS = d;
+    CODIGOS = d.codigos;
+    PRODUTOS = d.produtos;
+    rootEl.render(h(App));
+  })
+  .catch(e => {
+    rootEl.render(h(TelaCarregando, { erro: 'Não foi possível carregar dados.json (' + e.message + '). Verifique se o arquivo está na mesma pasta do index.html.' }));
+  });
+</script>
+</body>
+</html>
