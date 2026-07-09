@@ -24,14 +24,32 @@ Celular (GitHub Pages) → Apps Script (Web App) → Planilha "Contagens Loja da
 - Cada contagem vai pra aba **Contagens** e é atualizada (upsert) — nunca duplica.
 - Offline: fica salvo no aparelho (`localStorage`) e envia sozinho quando a net volta.
 
-### Fluxo de trabalho (por letra)
-1. Menu **🧮 Contagem → Carregar letra** traz todos os produtos daquela letra (os não
-   escaneados ficam `Não contado`).
-2. Você escaneia a loja → quantidades preenchem sozinhas, com a coluna **Ajuste** pronta.
-3. Resolve os `Não contado`, marca o **Status** (Feito / Inativado).
-4. Menu **→ Fechar letra** grava as contagens na Estoque_Principal (aba Estoque) e
-   registra os ajustes na aba Alterações. Marca as linhas como `Enviado`.
-5. **→ Limpar contagens** e parte pra próxima letra. A aba **Resumo** mostra o progresso.
+---
+
+## Menu 🧮 Contagem
+
+| Item                                              | O que faz                                                                                                                                                                               |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Carregar letra**                                | Baixa do `dados.json` todos os produtos daquela letra e joga na aba Contagens. Os que você não escanear ficam `Não contado`, pra nenhum produto passar batido.                          |
+| **Ordenar por produto (A→Z)**                     | Reordena a lista alfabeticamente (útil pra dados antigos fora de ordem).                                                                                                                |
+| **Fechar letra (enviar p/ Estoque_Principal)**    | Grava Qtd loja/estoque na aba Estoque (casando por código/nome) e registra os ajustes (`Feito`/`Inativado`) na aba Alterações. Mostra o que não casou e marca as linhas como `Enviado`. |
+| **Atualizar estoque do sistema (via dados.json)** | Sincroniza a coluna "Estoque sistema" na Contagens e na Estoque_Principal a partir do `dados.json`, sem tocar nas contagens.                                                            |
+| **Configurar / reestilizar**                      | Recria o layout: cabeçalho, larguras, zebra, cores, dropdown de Status. Roda 1x no setup e sempre que quiser reaplicar o visual.                                                        |
+| **Atualizar resumo**                              | Recalcula a aba Resumo (contagens gerais + progresso por letra).                                                                                                                        |
+| **Limpar contagens (nova letra/ciclo)**           | Zera a aba Contagens pra começar a próxima letra (faça só depois de fechar/enviar a atual).                                                                                             |
+
+> As ações que tocam a Estoque_Principal (**Fechar letra**, **Atualizar estoque**) rodam
+> **só pelo menu** — o endpoint público do site nunca as executa.
+
+## Rotina de contagem (por letra)
+
+1. **Carregar letra** (ex.: C) → traz todos os produtos "C".
+2. Escaneia a loja no app → quantidades e a coluna **Ajuste** aparecem sozinhas.
+3. Resolve os `Não contado` (digita a quantidade ou marca o Status na mão).
+4. Marca o **Status**: `Feito` (ajustou no SysPDV) ou `Inativado`. Quem bateu vira `OK` sozinho.
+5. **Fechar letra** → envia tudo pra Estoque_Principal. Revê o que "não casou", se houver.
+6. **Limpar contagens** e parte pra próxima. Acompanha no **Resumo** a coluna *Falta resolver*
+   por letra — quando zera, a letra acabou.
 
 ---
 
