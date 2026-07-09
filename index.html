@@ -644,6 +644,7 @@
 
     function ScanTab({ onCodigo, produtoAtivo, setProdutoAtivo, contagens, salvarContagem, naoAchado, setNaoAchado }) {
       const [scanning, setScanning] = useState(false);
+      const [torchOn, setTorchOn] = useState(false);
       const scannerRef = useRef(null);
       const divId = 'reader';
 
@@ -667,14 +668,28 @@
             (txt) => { parar(); onCodigo(txt); },
             () => { }
           );
+          setTorchOn(false);
         } catch (e) { alert('Erro ao abrir a câmera: ' + e + '\n\nVerifique se deu permissão de câmera ao navegador.'); setScanning(false); }
       }, [onCodigo]);
 
+      const toggleTorch = useCallback(async () => {
+        if (!scannerRef.current) return;
+        const novo = !torchOn;
+        try {
+          await scannerRef.current.applyVideoConstraints({ advanced: [{ torch: novo }] });
+          setTorchOn(novo);
+        } catch (e) {
+          alert('Não consegui controlar a lanterna neste aparelho/navegador. Em iPhone, o Safari não permite a lanterna pela câmera da web.');
+        }
+      }, [torchOn]);
+
       const parar = useCallback(async () => {
         if (scannerRef.current) {
+          try { await scannerRef.current.applyVideoConstraints({ advanced: [{ torch: false }] }); } catch (e) { }
           try { await scannerRef.current.stop(); await scannerRef.current.clear(); } catch (e) { }
           scannerRef.current = null;
         }
+        setTorchOn(false);
         setScanning(false);
       }, []);
 
@@ -686,7 +701,11 @@
           scanning && h('div', null,
             h('div', { id: divId }),
             h('p', { className: 'scan-hint' }, 'Aponte para o código de barras'),
-            h('button', { className: 'btn btn-ghost', style: { marginTop: 12 }, onClick: parar }, 'Cancelar')
+            h('div', { style: { display: 'flex', gap: 10, marginTop: 12 } },
+              h('button', { className: torchOn ? 'btn btn-primary' : 'btn btn-outline', onClick: toggleTorch },
+                torchOn ? '🔦  Lanterna ligada' : '🔦  Lanterna'),
+              h('button', { className: 'btn btn-ghost', onClick: parar }, 'Cancelar')
+            )
           )
         ),
         naoAchado && h('div', { className: 'card' },

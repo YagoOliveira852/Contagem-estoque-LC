@@ -1,10 +1,10 @@
 # Contagem de Estoque — Loja da Construção
 
-App web (mobile) pra fazer a contagem de inventário da loja escaneando o código de
-barras pelo celular. Compara a quantidade contada com o estoque do sistema, mostra a
-diferença na hora e **salva cada contagem automaticamente numa planilha do Google**.
+App web (mobile) pra fazer a contagem de inventário escaneando o código de barras pelo
+celular. Compara a quantidade contada com o estoque do sistema, já mostra **o ajuste a
+fazer no SysPDV** e salva tudo numa planilha do Google, organizada por letra.
 
-É uma página estática (React puro, sem build) hospedada no **GitHub Pages**.
+Página estática (React puro, sem build) hospedada no **GitHub Pages**.
 
 🔗 **Site:** https://yagooliveira852.github.io/Contagem-estoque-LC/
 
@@ -13,76 +13,80 @@ diferença na hora e **salva cada contagem automaticamente numa planilha do Goog
 ## Como funciona
 
 ```
-Celular (GitHub Pages)  →  Google Apps Script (Web App)  →  Planilha "Contagens Loja da Construção"
+Celular (GitHub Pages) → Apps Script (Web App) → Planilha "Contagens Loja da Construção"
+                                                        │  (menu 🧮 Contagem)
+                                                        └── "Fechar letra" → Estoque_Principal
 ```
 
-- **Escanear:** lê o código de barras (EAN, UPC, Code128, QR…) e abre o produto.
+- **Escanear:** lê o código (EAN, UPC, Code128, QR…) e abre o produto. Tem **lanterna**
+  pra ambientes escuros (Android/Chrome; iPhone/Safari não permite).
 - **Buscar:** acha o produto pelo nome quando não dá pra escanear.
-- **Contagens:** lista tudo que já foi contado, com a diferença (sobra / falta / OK).
-- As contagens ficam salvas **no aparelho** (`localStorage`) e são enviadas pra
-  planilha do Google. Sem internet, o envio acontece sozinho quando a conexão volta.
-- Cada produto ocupa **uma linha** na planilha; recontar o mesmo produto **atualiza**
-  a linha em vez de duplicar.
+- Cada contagem vai pra aba **Contagens** e é atualizada (upsert) — nunca duplica.
+- Offline: fica salvo no aparelho (`localStorage`) e envia sozinho quando a net volta.
+
+### Fluxo de trabalho (por letra)
+1. Menu **🧮 Contagem → Carregar letra** traz todos os produtos daquela letra (os não
+   escaneados ficam `Não contado`).
+2. Você escaneia a loja → quantidades preenchem sozinhas, com a coluna **Ajuste** pronta.
+3. Resolve os `Não contado`, marca o **Status** (Feito / Inativado).
+4. Menu **→ Fechar letra** grava as contagens na Estoque_Principal (aba Estoque) e
+   registra os ajustes na aba Alterações. Marca as linhas como `Enviado`.
+5. **→ Limpar contagens** e parte pra próxima letra. A aba **Resumo** mostra o progresso.
 
 ---
 
 ## Arquivos
 
-| Arquivo | O que é |
-|---|---|
-| `index.html` | O app inteiro (HTML + CSS + React via CDN). É o que roda no celular. |
-| `dados.json` | Base de produtos: `{ codigos: { "cod": id }, produtos: [{ n, e, p, u }] }`. |
-| `apps-script/Codigo.gs` | Backend (Google Apps Script) que grava as contagens na planilha. |
+| Arquivo                 | O que é                                                                                              |
+| ----------------------- | ---------------------------------------------------------------------------------------------------- |
+| `index.html`            | O app inteiro (HTML + CSS + React via CDN). Roda no celular.                                         |
+| `dados.json`            | Base de produtos: `{ codigos: { "cod": id }, produtos: [{ n, e, p, u }] }`.                          |
+| `apps-script/Codigo.gs` | Backend (Apps Script) da planilha: recebe o app, estiliza, "Carregar letra", "Fechar letra", Resumo. |
 
-**dados.json — campos de cada produto:**
-`n` = nome · `e` = estoque no sistema · `p` = preço · `u` = unidade.
-
----
-
-## Configuração (uma vez só)
-
-### 1. Publicar o backend (Apps Script)
-1. Abra a planilha **Contagens Loja da Construção** → **Extensões → Apps Script**.
-2. Cole o conteúdo de `apps-script/Codigo.gs` e salve.
-3. **Implantar → Nova implantação → App da Web.**
-   - Executar como: **Eu**
-   - Quem pode acessar: **Qualquer pessoa**
-4. Autorize e copie a **URL** (termina em `/exec`).
-5. Teste abrindo a URL no navegador — deve mostrar `{"ok":true,...}`.
-
-### 2. Ligar o site na planilha
-No `index.html`, preencha:
-```js
-const SYNC_URL = 'https://script.google.com/macros/s/.../exec'; // sua URL
-const SYNC_TOKEN = 'lc-2026'; // precisa ser igual ao do Codigo.gs
-```
-
-### 3. Publicar
-Suba o `index.html` no repositório. O GitHub Pages atualiza em 1–2 min.
-
-> Passo a passo detalhado em `INSTRUCOES.md`.
+`dados.json` — por produto: `n` = nome · `e` = estoque no sistema · `p` = preço · `u` = unidade.
 
 ---
 
-## Colunas da planilha de contagens
-`Código · Produto · Qtd loja · Qtd estoque · Total · Estoque sistema · Diferença · Observação · Atualizado em`
+## Colunas da aba Contagens
+`Letra · Código · Produto · Qtd loja · Qtd estoque · Total · Estoque sistema · Ajuste · Status · Atualizado em`
+
+- **Ajuste** (automático): `Aumentar N` / `Diminuir N` / `Conferir (0 no sist.)` / `—`.
+- **Status**: `Não contado` · `OK` · `Pendente` · `Feito` · `Inativado` · `Enviado`.
+
+---
+
+## Configuração (uma vez)
+
+**Backend:** planilha Contagens → Extensões → Apps Script → cole `Codigo.gs`, preencha
+`ESTOQUE_ID` (ID da Estoque_Principal em Google Sheets), rode `configurar`, autorize e
+**Implantar → App da Web** (Executar como: eu · Acesso: qualquer pessoa). Copie a URL `/exec`.
+
+**Site:** no `index.html`, preencha `SYNC_URL` (a URL do Web App) e `SYNC_TOKEN` (igual ao
+do `Codigo.gs`). Suba no GitHub — o Pages atualiza em 1–2 min.
+
+---
+
+## Atualizar o estoque quando a loja girar
+
+1. Gere a exportação nova do SysPDV (PDF "Posição de Estoque", uma linha por produto).
+2. Peça a atualização do **`dados.json`** (só o campo de estoque muda; nome/preço/ordem
+   e os índices ficam iguais) e **suba o novo `dados.json`** no GitHub.
+3. No menu **🧮 Contagem → Atualizar estoque do sistema (via dados.json)**: sincroniza o
+   "Estoque sistema" na aba Contagens e na Estoque_Principal, sem tocar nas suas contagens.
 
 ---
 
 ## Notas técnicas
 
-- **Sem servidor próprio:** o Apps Script faz o papel de backend, de graça.
-- **Envio (`no-cors`):** o app manda as contagens em lote e reenvia em caso de falha;
-  como o backend faz *upsert* por produto, reenviar não gera duplicata.
-- **Selo de status** no topo: `☁️ salvo`, `☁️ N p/ enviar`, `📴 pendentes`.
-- **Exportar CSV** continua disponível como backup extra.
-- **Segurança:** o `SYNC_TOKEN` no código do site é apenas anti-acesso-casual, não um
-  segredo real. O Web App só consegue escrever na planilha de contagens — não acessa o
-  resto do Drive. Se precisar, é só redeployar o Apps Script pra invalidar a URL antiga.
-- **Atualizar a base de produtos:** substitua o `dados.json`.
+- **Sem servidor:** o Apps Script é o backend, de graça. Envio `no-cors` em lote com
+  reenvio automático; upsert por produto evita duplicata.
+- **Sem fórmulas na planilha:** o script calcula os valores (evita erro de locale pt-BR).
+- **Segurança:** o `SYNC_TOKEN` no site é só anti-acesso-casual. O endpoint público do
+  Web App **só grava na aba Contagens** — não alcança a Estoque_Principal nem o resto do
+  Drive. As ações que tocam a Estoque_Principal ("Fechar letra", "Atualizar estoque")
+  rodam **só pelo menu**, nunca pela URL pública. Redeployar invalida a URL antiga.
 
 ---
 
 ## Stack
-HTML + CSS + **React 18** (UMD, sem build) · **html5-qrcode** (leitura de código de barras) ·
-**Google Apps Script** + **Google Sheets** (persistência) · **GitHub Pages** (hospedagem).
+HTML + CSS + **React 18** (UMD) · **html5-qrcode** · **Google Apps Script** + **Google Sheets** · **GitHub Pages**.
