@@ -1,29 +1,24 @@
 /**
- * Contagem de estoque — Loja da Construção  (v7 — versão completa)
+ * Contagem de estoque — Loja da Construção  (v8)
  * -----------------------------------------------------------------
- * Inclui tudo: sem fórmulas (corrige locale pt-BR), Carregar letra, Ordenar,
- * zebra, Fechar letra (envia p/ Estoque_Principal), Status, Resumo por letra,
- * e "Atualizar estoque do sistema (via dados.json)".
+ * Mudanças da v8 (marcadas com [v8]):
+ *  1. NOVO: "Pesquisar produto (código ou nome)" no menu — digite o código de
+ *     barras (com ou sem zeros à esquerda) ou parte do nome e ele pula pra linha.
+ *  2. ESTOQUE_ID atualizado para a Estoque_Principal ATUAL (antes apontava
+ *     para a Antigo_Estoque_Principal — confira se não era proposital!).
+ *  3. Anti-duplicado: carregarLetra e gravar_ (doPost) agora reconhecem produto
+ *     também pelo CÓDIGO (ignorando zeros à esquerda) e pelo NOME, não só pela
+ *     Chave (índice do dados.json, que muda quando o dados.json é regenerado —
+ *     era isso que criava linhas duplicadas).
+ *  4. fecharLetra: casamento de código com fallback sem zeros à esquerda e
+ *     marcação "Enviado" em lote (mais rápido, sem risco de timeout).
  *
- * "Fechar letra (enviar p/ Estoque_Principal)" no menu:
- *   - Grava Qtd loja/estoque na aba Estoque (casando por código/nome).
- *   - Adiciona as linhas na aba Alterações (Feito/Inativado).
- *   - Mostra o que NÃO casou pra você revisar; marca as enviadas como "Enviado".
- *   - Roda SÓ pelo menu (ação sua). O endpoint público do site nunca chama isso.
- *
- * Acesso do script: a própria planilha Contagens + leitura do dados.json (GitHub) +
- *   a Estoque_Principal convertida (ESTOQUE_ID), usada apenas no "Fechar letra".
- *
- * >>> TESTE PRIMEIRO NUMA CÓPIA: duplique a Estoque_Principal (Google Sheets),
- *     ponha o ID da CÓPIA em ESTOQUE_ID, rode "Fechar letra" uma vez, confira,
- *     e só depois volte o ID para a planilha de verdade.
- *
- * SETUP: cole, Salve, rode "configurar", autorize, reimplante NOVA VERSÃO do Web App.
+ * SETUP: cole, Salve, autorize, reimplante NOVA VERSÃO do Web App.
  */
 
 var SYNC_TOKEN='lc-2026';
 var DADOS_URL='https://raw.githubusercontent.com/YagoOliveira852/Contagem-estoque-LC/main/dados.json';
-var ESTOQUE_ID='15GKEgroU8b0avwcKCgCgDK_xoxdBGgurVinQkwVFGqU'; // <-- Estoque_Principal (Google Sheets). Troque pela CÓPIA no 1o teste.
+var ESTOQUE_ID='1DoUEO-QfwPcdYHFIsroEXpnmO0x4GSVIzFRamJEaoYc'; // [v8] Estoque_Principal ATUAL (antes: 15GKEgro... = Antigo_Estoque_Principal)
 var ABA='Contagens';
 var HDR=['Chave','Letra','Código','Produto','Qtd loja','Qtd estoque','Total','Estoque sistema','Ajuste','Status','Atualizado em'];
 var C_CHAVE=1,C_LETRA=2,C_COD=3,C_PROD=4,C_LOJA=5,C_EST=6,C_TOTAL=7,C_SIST=8,C_AJU=9,C_STATUS=10,C_DATA=11,NCOL=11;
@@ -38,6 +33,7 @@ function ss_(){ return SpreadsheetApp.getActiveSpreadsheet(); }
 function num_(v){ var n=Number(v); return isNaN(n)?0:n; }
 function resp_(o){ return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
 function norm_(x){ return String(x).replace(/\s+/g,' ').trim().toUpperCase(); }
+function desp_(c){ return String(c||'').trim().replace(/^0+/,''); } // [v8] tira zeros à esquerda
 function letraDe_(nome){ nome=String(nome||''); return nome? nome.charAt(0).toUpperCase() : ''; }
 function contou_(loja,est){ return (loja!=='' && loja!=null) || (est!=='' && est!=null); }
 function totalVal_(loja,est){ return contou_(loja,est)? (num_(loja)+num_(est)) : ''; }
@@ -69,6 +65,8 @@ function ajRealizado_(total,sist){
 
 function onOpen(){
   SpreadsheetApp.getUi().createMenu('🧮 Contagem')
+    .addItem('🔍 Pesquisar produto (código ou nome)','pesquisarProduto') // [v8]
+    .addSeparator()
     .addItem('Carregar letra (trazer todos os produtos)','carregarLetra')
     .addItem('Ordenar por produto (A→Z)','ordenar')
     .addSeparator()
@@ -80,6 +78,46 @@ function onOpen(){
     .addItem('Atualizar resumo','atualizarResumo')
     .addItem('Limpar contagens (nova letra/ciclo)','limparContagens')
     .addToUi();
+}
+
+// [v8] Pesquisa por código de barras (com/sem zeros à esquerda) ou por parte do nome
+function pesquisarProduto(){
+  var ui=SpreadsheetApp.getUi();
+  var r=ui.prompt('Pesquisar produto','Digite o código de barras ou parte do nome:',ui.ButtonSet.OK_CANCEL);
+  if(r.getSelectedButton()!==ui.Button.OK) return;
+  var q=String(r.getResponseText()||'').trim();
+  if(!q){ ui.alert('Digite um código ou nome.'); return; }
+  var sh=ss_().getSheetByName(ABA); var last=sh.getLastRow();
+  if(!sh || last<2){ ui.alert('A aba Contagens está vazia.'); return; }
+  var vals=sh.getRange(2,1,last-1,NCOL).getValues();
+  var achados=[];
+  var soDigitos=q.replace(/\s/g,'');
+  var ehCodigo=/^\d{4,}$/.test(soDigitos);
+
+  if(ehCodigo){
+    var alvo=desp_(soDigitos);
+    for(var i=0;i<vals.length;i++){
+      if(desp_(vals[i][C_COD-1])===alvo && vals[i][C_PROD-1]) achados.push(i);
+    }
+  }
+  if(!achados.length){ // busca por nome (também como fallback do código)
+    var t=norm_(q);
+    for(var j=0;j<vals.length && achados.length<30;j++){
+      var nm=norm_(vals[j][C_PROD-1]||'');
+      if(nm && nm.indexOf(t)>=0) achados.push(j);
+    }
+  }
+  if(!achados.length){ ui.alert('Nada encontrado para "'+q+'".'); return; }
+
+  var row=achados[0]+2;
+  sh.activate();
+  sh.setActiveRange(sh.getRange(row,C_PROD));
+  if(achados.length===1){
+    SpreadsheetApp.getActive().toast(String(vals[achados[0]][C_PROD-1])+' — linha '+row,'🔍 Encontrado',6);
+  } else {
+    var lista=achados.slice(0,15).map(function(k){ return '• linha '+(k+2)+': '+vals[k][C_PROD-1]; }).join('\n');
+    ui.alert(achados.length+' resultados (fui para o 1º):\n\n'+lista+(achados.length>15?'\n• ...':''));
+  }
 }
 
 function ordenar(){
@@ -120,6 +158,7 @@ function configurar(){
       out.push([x.chave, letraDe_(x.prod), x.cod, x.prod, x.loja, x.est,
                 totalVal_(x.loja,x.est), x.sist, ajusteVal_(x.loja,x.est,x.sist), st, x.data]);
     }
+    sh.getRange(2,C_COD,n,1).setNumberFormat('@'); // [v8] garante código como texto
     sh.getRange(2,1,n,NCOL).setValues(out);
   }
   aplicarEstilo_(sh);
@@ -137,6 +176,7 @@ function aplicarEstilo_(sh){
   sh.getRange(2,C_LETRA,LINHAS,1).setHorizontalAlignment('center');
   sh.getRange(2,C_LOJA,LINHAS,C_SIST-C_LOJA+1).setHorizontalAlignment('center');
   sh.getRange(2,C_STATUS,LINHAS,1).setHorizontalAlignment('center');
+  sh.getRange(2,C_COD,LINHAS,1).setNumberFormat('@'); // [v8] coluna Código sempre texto
   sh.getBandings().forEach(function(b){ b.remove(); });
   var lastData=Math.max(sh.getLastRow(),2);
   var band=sh.getRange(2,1,lastData-1,NCOL).applyRowBanding(SpreadsheetApp.BandingTheme.LIGHT_GREY,false,false);
@@ -174,16 +214,32 @@ function carregarLetra(){
   var produtos=d.produtos||[]; var codigos=d.codigos||{};
   var codeById={}; for(var c in codigos){ var id=codigos[c]; if(codeById[id]==null) codeById[id]=c; }
   var sh=ss_().getSheetByName(ABA); if(!sh){ configurar(); sh=ss_().getSheetByName(ABA); }
-  var last=sh.getLastRow(); var exist={};
-  if(last>=2){ var ch=sh.getRange(2,C_CHAVE,last-1,1).getValues(); for(var i=0;i<ch.length;i++) exist[String(ch[i][0])]=true; }
+  // [v8] anti-duplicado: reconhece o que já existe por chave, CÓDIGO (sem zeros) e NOME
+  var last=sh.getLastRow(); var exist={}, existCod={}, existNome={};
+  if(last>=2){
+    var cur=sh.getRange(2,1,last-1,NCOL).getValues();
+    for(var i=0;i<cur.length;i++){
+      var rw=cur[i];
+      if(rw[C_CHAVE-1]!=='' && rw[C_CHAVE-1]!=null) exist[String(rw[C_CHAVE-1])]=true;
+      var cz=desp_(rw[C_COD-1]); if(cz) existCod[cz]=true;
+      var nm=norm_(rw[C_PROD-1]||''); if(nm) existNome[nm]=true;
+    }
+  }
   var novas=[];
   for(var idx=0; idx<produtos.length; idx++){
     var p=produtos[idx]; var nome=String(p.n||''); if(!nome) continue;
     if(nome.charAt(0).toUpperCase()!==letra) continue;
+    var cod=codeById[idx]||''; var codZ=desp_(cod);
     if(exist[String(idx)]) continue;
-    novas.push([String(idx), letra, codeById[idx]||'', nome, '', '', '', num_(p.e), '', 'Não contado', '']);
+    if(codZ && existCod[codZ]) continue;           // [v8] já existe pelo código
+    if(!codZ && existNome[norm_(nome)]) continue;  // [v8] sem código: já existe pelo nome
+    novas.push([String(idx), letra, cod, nome, '', '', '', num_(p.e), '', 'Não contado', '']);
   }
-  if(novas.length) sh.getRange(sh.getLastRow()+1,1,novas.length,NCOL).setValues(novas);
+  if(novas.length){
+    var r0=sh.getLastRow()+1;
+    sh.getRange(r0,C_COD,novas.length,1).setNumberFormat('@'); // [v8] código como texto
+    sh.getRange(r0,1,novas.length,NCOL).setValues(novas);
+  }
   ordenar(); atualizarResumo();
   ui.alert('Letra '+letra+': '+novas.length+' produtos trazidos.');
 }
@@ -231,12 +287,12 @@ function fecharLetra(){
     if(hrow>=0 && cLoja>=0 && cEst>=0 && cNome>=0) break;
   }
   if(hrow<0||cLoja<0||cEst<0||cNome<0){ ui.alert('Não localizei o cabeçalho da aba Estoque (Qtd loja/estoque/Nome no SysPDV).'); return; }
-  var byCode={}, byName={};
+  var byCode={}, byCodeZ={}, byName={}; // [v8] byCodeZ: sem zeros à esquerda
   for(var dr=hrow+1; dr<eData.length; dr++){
     var rowd=eData[dr]; var nm=rowd[cNome]; if(nm===''||nm==null) continue;
     var sheetRow=dr+1;
-    if(cCod>=0 && rowd[cCod]) byCode[String(rowd[cCod]).trim()]=sheetRow;
-    if(cAdd>=0 && rowd[cAdd]){ String(rowd[cAdd]).split(/[,\s;]+/).forEach(function(x){ if(x) byCode[x.trim()]=sheetRow; }); }
+    if(cCod>=0 && rowd[cCod]){ var cs=String(rowd[cCod]).trim(); byCode[cs]=sheetRow; var csz=desp_(cs); if(csz) byCodeZ[csz]=sheetRow; }
+    if(cAdd>=0 && rowd[cAdd]){ String(rowd[cAdd]).split(/[,\s;]+/).forEach(function(x){ if(x){ byCode[x.trim()]=sheetRow; var xz=desp_(x); if(xz) byCodeZ[xz]=sheetRow; } }); }
     var kk=norm_(nm); if(byName[kk]==null) byName[kk]=sheetRow;
   }
 
@@ -244,6 +300,7 @@ function fecharLetra(){
   for(var j=0;j<alvo.length;j++){
     var a=alvo[j]; var sr=null;
     if(a.cod && byCode[a.cod]!=null) sr=byCode[a.cod];
+    else if(a.cod && byCodeZ[desp_(a.cod)]!=null) sr=byCodeZ[desp_(a.cod)]; // [v8] fallback sem zeros
     else if(byName[norm_(a.nome)]!=null) sr=byName[norm_(a.nome)];
     if(sr==null){ naoCasou.push(a.nome); continue; }
     if(a.loja!=='' && a.loja!=null) abaEst.getRange(sr,cLoja+1).setValue(num_(a.loja));
@@ -284,7 +341,9 @@ function fecharLetra(){
   }
   if(novasAlt.length) abaAlt.getRange(abaAlt.getLastRow()+1,1,novasAlt.length,aCols).setValues(novasAlt);
 
-  for(var m=0;m<alvo.length;m++) sh.getRange(alvo[m].rowSheet,C_STATUS).setValue('Enviado');
+  // [v8] marca "Enviado" em lote (uma chamada, não uma por linha)
+  var a1s=alvo.map(function(a){ return String.fromCharCode(64+C_STATUS)+a.rowSheet; });
+  sh.getRangeList(a1s).setValue('Enviado');
   atualizarResumo();
 
   var msg='Letra '+letra+':\n• '+enviados+' contagens gravadas na aba Estoque\n• '+novasAlt.length+' linhas adicionadas na Alterações';
@@ -388,16 +447,33 @@ function gravar_(itens){
   var ss=ss_(); var sh=ss.getSheetByName(ABA);
   if(!sh){ configurar(); sh=ss.getSheetByName(ABA); }
   if(sh.getLastRow()===0) sh.getRange(1,1,1,NCOL).setValues([HDR]);
-  var last=sh.getLastRow(); var mapa={};
-  if(last>=2){ var chaves=sh.getRange(2,C_CHAVE,last-1,1).getValues(); for(var i=0;i<chaves.length;i++){ var k=String(chaves[i][0]); if(k!=='') mapa[k]=i+2; } }
+  // [v8] anti-duplicado: localiza a linha por chave, depois por CÓDIGO (sem zeros), depois por NOME
+  var last=sh.getLastRow(); var mapa={}, mapaCod={}, mapaNome={};
+  if(last>=2){
+    var cur=sh.getRange(2,1,last-1,NCOL).getValues();
+    for(var i=0;i<cur.length;i++){
+      var rw=cur[i]; var rr=i+2;
+      var k=String(rw[C_CHAVE-1]); if(k!=='' && k!=='null') mapa[k]=rr;
+      var cz=desp_(rw[C_COD-1]); if(cz && mapaCod[cz]==null) mapaCod[cz]=rr;
+      var nm=norm_(rw[C_PROD-1]||''); if(nm && mapaNome[nm]==null) mapaNome[nm]=rr;
+    }
+  }
   var agora=new Date();
   for(var j=0;j<itens.length;j++){
     var it=itens[j];
     var chave=String(it.key!=null?it.key:(it.codigo||it.nome||''));
-    var r=mapa[chave]; var nova=false;
-    if(!r){ r=sh.getLastRow()+1; mapa[chave]=r; nova=true; }
-    var cur=nova?'':String(sh.getRange(r,C_STATUS).getValue()||'');
-    var st=(cur==='Feito'||cur==='Inativado'||cur==='Enviado')?cur:statusAuto_(it.qtdLoja,it.qtdEstoque,it.sistema);
+    var codZ=desp_(it.codigo); var nomeN=norm_(it.nome||'');
+    var r=mapa[chave];
+    if(!r && codZ) r=mapaCod[codZ];   // [v8]
+    if(!r && nomeN) r=mapaNome[nomeN]; // [v8]
+    var nova=false;
+    if(!r){ r=sh.getLastRow()+1; nova=true; }
+    mapa[chave]=r;
+    if(codZ) mapaCod[codZ]=r;
+    if(nomeN) mapaNome[nomeN]=r;
+    var cur2=nova?'':String(sh.getRange(r,C_STATUS).getValue()||'');
+    var st=(cur2==='Feito'||cur2==='Inativado'||cur2==='Enviado')?cur2:statusAuto_(it.qtdLoja,it.qtdEstoque,it.sistema);
+    sh.getRange(r,C_COD).setNumberFormat('@'); // [v8] código como texto
     sh.getRange(r,1,1,NCOL).setValues([[
       chave, letraDe_(it.nome), it.codigo||'', it.nome||'',
       num_(it.qtdLoja), num_(it.qtdEstoque), num_(it.qtdLoja)+num_(it.qtdEstoque),
@@ -416,70 +492,45 @@ function atualizarEstoqueSistema(){
   if(resp.getResponseCode()!==200){ ui.alert('Não consegui baixar o dados.json ('+resp.getResponseCode()+').'); return; }
   var d=JSON.parse(resp.getContentText());
   var produtos=d.produtos||[]; var codigos=d.codigos||{};
-  var eById={}; for(var i=0;i<produtos.length;i++) eById[String(i)]=num_(produtos[i].e);
-  var eByCode={}; for(var c in codigos){ var id=codigos[c]; if(produtos[id]) eByCode[String(c).trim()]=num_(produtos[id].e); }
-  var eByName={}; for(var k=0;k<produtos.length;k++){ var n=norm_(produtos[k].n); if(eByName[n]==null) eByName[n]=num_(produtos[k].e); }
-
-  var sh=ss_().getSheetByName(ABA); var cCont=0;
-  if(sh){
-    var last=sh.getLastRow();
-    if(last>=2){
-      var rng=sh.getRange(2,1,last-1,NCOL); var vals=rng.getValues();
-      for(var r=0;r<vals.length;r++){
-        var v=vals[r]; if(!v[C_PROD-1]) continue;
-        var chave=String(v[C_CHAVE-1]);
-        var novo=(eById[chave]!=null)?eById[chave]:eByName[norm_(v[C_PROD-1])];
-        if(novo==null) continue;
-        v[C_SIST-1]=novo;
-        var loja=v[C_LOJA-1], est=v[C_EST-1];
-        v[C_TOTAL-1]=totalVal_(loja,est);
-        v[C_AJU-1]=ajusteVal_(loja,est,novo);
-        var st=String(v[C_STATUS-1]||'');
-        if(st!=='Feito'&&st!=='Inativado'&&st!=='Enviado') v[C_STATUS-1]=statusAuto_(loja,est,novo);
-        cCont++;
-      }
-      rng.setValues(vals);
-    }
+  var eByCode={}, eByCodeZ={}, eByName={};
+  for(var c in codigos){ var id=codigos[c]; if(produtos[id]!=null){ var e=num_(produtos[id].e);
+    eByCode[String(c).trim()]=e; var z=desp_(c); if(z) eByCodeZ[z]=e; } }
+  for(var k=0;k<produtos.length;k++){ var n=norm_(produtos[k].n); if(eByName[n]==null) eByName[n]=num_(produtos[k].e); }
+  function estoqueDe_(cod,nome){
+    cod=String(cod||'').trim();
+    if(cod){ if(eByCode[cod]!=null) return eByCode[cod]; var z=desp_(cod); if(z&&eByCodeZ[z]!=null) return eByCodeZ[z]; }
+    var nm=norm_(nome); if(nm&&eByName[nm]!=null) return eByName[nm];
+    return null;
   }
-
+  var sh=ss_().getSheetByName(ABA); var cCont=0, semC=0;
+  if(sh){ var last=sh.getLastRow();
+    if(last>=2){ var rng=sh.getRange(2,1,last-1,NCOL); var vals=rng.getValues();
+      for(var r=0;r<vals.length;r++){ var v=vals[r]; if(!v[C_PROD-1]) continue;
+        var novo=estoqueDe_(v[C_COD-1], v[C_PROD-1]);
+        if(novo==null){ semC++; continue; }
+        v[C_SIST-1]=novo; var loja=v[C_LOJA-1], est=v[C_EST-1];
+        v[C_TOTAL-1]=totalVal_(loja,est); v[C_AJU-1]=ajusteVal_(loja,est,novo);
+        var st=String(v[C_STATUS-1]||''); if(st!=='Feito'&&st!=='Inativado'&&st!=='Enviado') v[C_STATUS-1]=statusAuto_(loja,est,novo);
+        cCont++; }
+      rng.setValues(vals); } }
   var cEst=0, semCasar=0;
-  if(ESTOQUE_ID){
-    var ext=SpreadsheetApp.openById(ESTOQUE_ID);
-    var abaEst=ext.getSheetByName('Estoque');
-    if(abaEst){
-      var eData=abaEst.getRange(1,1,abaEst.getLastRow(),abaEst.getLastColumn()).getValues();
+  if(ESTOQUE_ID){ var ext=SpreadsheetApp.openById(ESTOQUE_ID); var abaEst=ext.getSheetByName('Estoque');
+    if(abaEst){ var eData=abaEst.getRange(1,1,abaEst.getLastRow(),abaEst.getLastColumn()).getValues();
       var hrow=-1,cCod=-1,cAdd=-1,cNome=-1,cSist=-1;
-      for(var rr=0;rr<Math.min(eData.length,15);rr++){
-        for(var cc=0;cc<eData[rr].length;cc++){
-          var h=String(eData[rr][cc]).trim();
-          if(h==='Estoque sistema'){ hrow=rr; cSist=cc; }
-          if(h==='Código') cCod=cc;
-          if(h==='Cód. adicionais') cAdd=cc;
-          if(h==='Nome no SysPDV') cNome=cc;
-        }
-        if(hrow>=0&&cSist>=0&&cNome>=0) break;
-      }
-      if(hrow>=0&&cSist>=0&&cNome>=0){
-        var col=[];
-        for(var dr=hrow+1; dr<eData.length; dr++){
-          var rowd=eData[dr]; var nome=rowd[cNome]; var atual=rowd[cSist];
-          if(nome===''||nome==null){ col.push([atual]); continue; }
-          var nv=null;
-          if(cCod>=0 && rowd[cCod] && eByCode[String(rowd[cCod]).trim()]!=null) nv=eByCode[String(rowd[cCod]).trim()];
-          if(nv==null && cAdd>=0 && rowd[cAdd]){
-            var parts=String(rowd[cAdd]).split(/[,\s;]+/);
-            for(var pi=0;pi<parts.length;pi++){ var pc=parts[pi].trim(); if(pc && eByCode[pc]!=null){ nv=eByCode[pc]; break; } }
-          }
-          if(nv==null){ var kk=norm_(nome); if(eByName[kk]!=null) nv=eByName[kk]; }
-          if(nv==null){ semCasar++; col.push([atual]); }
-          else { col.push([nv]); cEst++; }
-        }
-        abaEst.getRange(hrow+2, cSist+1, col.length, 1).setValues(col);
-      }
-    }
-  }
+      for(var rr=0;rr<Math.min(eData.length,15);rr++){ for(var cc=0;cc<eData[rr].length;cc++){ var h=String(eData[rr][cc]).trim();
+        if(h==='Estoque sistema'){ hrow=rr; cSist=cc; } if(h==='Código'||h==='Códigos') cCod=cc;
+        if(h==='Cód. adicionais') cAdd=cc; if(h==='Nome no SysPDV') cNome=cc; } if(hrow>=0&&cSist>=0&&cNome>=0) break; }
+      if(hrow>=0&&cSist>=0&&cNome>=0){ var col=[];
+        for(var dr=hrow+1; dr<eData.length; dr++){ var rowd=eData[dr]; var nome=rowd[cNome]; var atual=rowd[cSist];
+          if(nome===''||nome==null){ col.push([atual]); continue; } var nv=null;
+          if(cCod>=0 && rowd[cCod]) nv=estoqueDe_(rowd[cCod], nome);
+          if(nv==null && cAdd>=0 && rowd[cAdd]){ var parts=String(rowd[cAdd]).split(/[,\s;\/]+/);
+            for(var pi=0;pi<parts.length;pi++){ var pc=parts[pi].trim(); if(pc){ var e2=estoqueDe_(pc,nome); if(e2!=null){ nv=e2; break; } } } }
+          if(nv==null) nv=estoqueDe_('',nome);
+          if(nv==null){ semCasar++; col.push([atual]); } else { col.push([nv]); cEst++; } }
+        abaEst.getRange(hrow+2, cSist+1, col.length, 1).setValues(col); } } }
   atualizarResumo();
-  ui.alert('Estoque sistema atualizado:\n• Contagens: '+cCont+' linhas\n• Estoque_Principal: '+cEst+' produtos'+(semCasar?('\n• '+semCasar+' não casaram (mantidos)'):''));
+  ui.alert('Estoque atualizado:\n• Contagens: '+cCont+' linhas'+(semC?(' ('+semC+' sem casar)'):'')+'\n• Estoque_Principal: '+cEst+' produtos'+(semCasar?('\n• '+semCasar+' sem casar'):''));
 }
 
-function doGet(){ return resp_({ok:true,servico:'contagem-estoque-lc',versao:7}); }
+function doGet(){ return resp_({ok:true,servico:'contagem-estoque-lc',versao:8}); }

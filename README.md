@@ -20,7 +20,8 @@ Celular (GitHub Pages) → Apps Script (Web App) → Planilha "Contagens Loja da
 
 - **Escanear:** lê o código (EAN, UPC, Code128, QR…) e abre o produto. Tem **lanterna**
   pra ambientes escuros (Android/Chrome; iPhone/Safari não permite).
-- **Buscar:** acha o produto pelo nome quando não dá pra escanear.
+- **Buscar:** acha o produto pelo nome **ou pelo código de barras** (digite os números da
+  etiqueta — com ou sem os zeros do começo) quando não dá pra escanear.
 - Cada contagem vai pra aba **Contagens** e é atualizada (upsert) — nunca duplica.
 - Offline: fica salvo no aparelho (`localStorage`) e envia sozinho quando a net volta.
 
@@ -30,6 +31,7 @@ Celular (GitHub Pages) → Apps Script (Web App) → Planilha "Contagens Loja da
 
 | Item                                              | O que faz                                                                                                                                                                               |
 | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **🔍 Pesquisar produto (código ou nome)**          | Pula direto pra linha do produto na aba Contagens. Aceita o código de barras (com ou sem zeros à esquerda) ou parte do nome; com vários resultados, lista todos.                        |
 | **Carregar letra**                                | Baixa do `dados.json` todos os produtos daquela letra e joga na aba Contagens. Os que você não escanear ficam `Não contado`, pra nenhum produto passar batido.                          |
 | **Ordenar por produto (A→Z)**                     | Reordena a lista alfabeticamente (útil pra dados antigos fora de ordem).                                                                                                                |
 | **Fechar letra (enviar p/ Estoque_Principal)**    | Grava Qtd loja/estoque na aba Estoque (casando por código/nome) e registra os ajustes (`Feito`/`Inativado`) na aba Alterações. Mostra o que não casou e marca as linhas como `Enviado`. |
@@ -97,7 +99,9 @@ do `Codigo.gs`). Suba no GitHub — o Pages atualiza em 1–2 min.
 ## Notas técnicas
 
 - **Sem servidor:** o Apps Script é o backend, de graça. Envio `no-cors` em lote com
-  reenvio automático; upsert por produto evita duplicata.
+  reenvio automático; upsert por produto evita duplicata (v8: o produto é reconhecido
+  pela chave, pelo **código** — ignorando zeros à esquerda — e pelo **nome**, então nem a
+  regeneração do `dados.json` cria linha repetida).
 - **Sem fórmulas na planilha:** o script calcula os valores (evita erro de locale pt-BR).
 - **Segurança:** o `SYNC_TOKEN` no site é só anti-acesso-casual. O endpoint público do
   Web App **só grava na aba Contagens** — não alcança a Estoque_Principal nem o resto do

@@ -790,8 +790,26 @@
     function BuscaTab({ onSelect, contagens }) {
       const [q, setQ] = useState('');
       const termo = q.trim().toUpperCase();
+      // busca por CÓDIGO: se digitou só números (4+ dígitos), procura no código de barras
+      const soDigitos = termo.replace(/[\s.\-]/g, '');
+      const ehCodigo = /^\d{4,}$/.test(soDigitos);
       let resultados = [];
-      if (termo.length >= 2) {
+      if (ehCodigo) {
+        const alvo = soDigitos.replace(/^0+/, ''); // ignora zeros à esquerda
+        const exatos = [], parciais = [], vistos = new Set();
+        for (const k in CODIGOS) {
+          const id = CODIGOS[k];
+          if (vistos.has(id)) continue;
+          const kz = k.replace(/^0+/, '');
+          if (kz === alvo) { vistos.add(id); exatos.push(id); }
+          else if (kz.indexOf(alvo) >= 0) { vistos.add(id); parciais.push(id); }
+          if (exatos.length + parciais.length >= 50) break;
+        }
+        resultados = exatos.concat(parciais);
+      }
+      // busca por NOME (também como fallback quando o número não achou código,
+      // pois muitos nomes têm números, ex.: "REF 4089")
+      if (!resultados.length && termo.length >= 2) {
         for (let i = 0; i < PRODUTOS.length && resultados.length < 50; i++) {
           if (PRODUTOS[i].n.toUpperCase().includes(termo)) resultados.push(i);
         }
@@ -800,16 +818,17 @@
         h('div', { className: 'card' },
           h('div', { className: 'search-box' },
             h('input', {
-              type: 'text', value: q, placeholder: 'Digite o nome do produto...', autoFocus: true,
+              type: 'text', value: q, placeholder: 'Nome ou código de barras...', autoFocus: true,
               onChange: e => setQ(e.target.value)
             })
           ),
-          termo.length < 2 && h('p', { className: 'scan-hint' }, 'Digite pelo menos 2 letras'),
+          termo.length < 2 && h('p', { className: 'scan-hint' }, 'Digite parte do nome ou o código de barras (com ou sem os zeros do começo)'),
           termo.length >= 2 && resultados.length === 0 && h('p', { className: 'empty' }, 'Nenhum produto encontrado'),
           resultados.map(id => h('div', { key: id, className: 'lista-item', onClick: () => onSelect(id), style: { cursor: 'pointer' } },
             h('span', { className: 'nome' }, PRODUTOS[id].n),
             h('span', { className: 'qtd' },
-              contagens[id] ? '✓ contado' : (PRODUTOS[id].e === '' ? '' : 'sist: ' + PRODUTOS[id].e)
+              (ehCodigo ? codigoDoId(id) + ' · ' : '') +
+              (contagens[id] ? '✓ contado' : (PRODUTOS[id].e === '' ? '' : 'sist: ' + PRODUTOS[id].e))
             )
           ))
         )
