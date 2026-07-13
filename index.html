@@ -916,7 +916,7 @@
     const rootEl = ReactDOM.createRoot(document.getElementById('root'));
     rootEl.render(h(TelaCarregando, {}));
 
-    fetch('./dados.json')
+    fetch('./dados.json', { cache: 'no-cache' })
       .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(d => {
         DADOS = d;
