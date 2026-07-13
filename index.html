@@ -436,6 +436,17 @@
       padding: 4px;
     }
 
+    .cod-chip {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12.5px;
+      background: var(--cinza-bg);
+      border: 1px solid var(--borda);
+      padding: 3px 9px;
+      border-radius: 7px;
+      color: var(--suave);
+      letter-spacing: .4px;
+    }
+
     .sync-line {
       display: flex;
       align-items: center;
@@ -522,6 +533,23 @@
     function fmtPreco(p) { if (p === '' || p == null) return '—'; return 'R$ ' + Number(p).toFixed(2).replace('.', ','); }
     function num(v) { if (v === '' || v == null) return 0; const n = Number(v); return isNaN(n) ? 0 : n; }
     function codigoDoId(id) { return Object.keys(CODIGOS).find(k => CODIGOS[k] == id) || ''; }
+    function codigosDoId(id) { const out = []; for (const k in CODIGOS) { if (CODIGOS[k] == id) out.push(k); } return out; }
+
+    // ---- seleção de câmera (celulares com várias lentes: Samsung, iPhone...) ----
+    let CAMERAS_CACHE = null;
+    async function listarCameras() {
+      if (CAMERAS_CACHE) return CAMERAS_CACHE;
+      try { CAMERAS_CACHE = (await Html5Qrcode.getCameras()) || []; } catch (e) { CAMERAS_CACHE = []; }
+      return CAMERAS_CACHE;
+    }
+    function pontuarCamera(c) {
+      const l = (c.label || '').toLowerCase();
+      let s = 0;
+      if (/back|rear|tras|environment/.test(l)) s += 10;      // traseira
+      if (/front|frontal|user|selfie/.test(l)) s -= 10;       // frontal
+      if (/ultra|0\.5|tele|zoom|macro|depth|bokeh/.test(l)) s -= 6; // lentes sem foco de perto
+      return s;
+    }
 
     function App() {
       const [tab, setTab] = useState('scan');
@@ -645,17 +673,45 @@
     function ScanTab({ onCodigo, produtoAtivo, setProdutoAtivo, contagens, salvarContagem, naoAchado, setNaoAchado }) {
       const [scanning, setScanning] = useState(false);
       const [torchOn, setTorchOn] = useState(false);
+      const [temVarias, setTemVarias] = useState(false);
       const scannerRef = useRef(null);
+      const camIdRef = useRef(null);
       const divId = 'reader';
 
-      const iniciar = useCallback(async () => {
+      const parar = useCallback(async () => {
+        if (scannerRef.current) {
+          try { await scannerRef.current.applyVideoConstraints({ advanced: [{ torch: false }] }); } catch (e) { }
+          try { await scannerRef.current.stop(); await scannerRef.current.clear(); } catch (e) { }
+          scannerRef.current = null;
+        }
+        setTorchOn(false);
+        setScanning(false);
+      }, []);
+
+      const iniciar = useCallback(async (cameraIdForcada) => {
         setScanning(true); setNaoAchado(null);
         await new Promise(r => setTimeout(r, 100));
         try {
           const scanner = new Html5Qrcode(divId, { verbose: false });
           scannerRef.current = scanner;
+
+          // escolhe a lente: usa a memorizada; senão, a traseira principal
+          // (evita ultrawide/tele/macro, que borram de perto em Samsung etc.)
+          let alvo = { facingMode: 'environment' };
+          const cams = await listarCameras();
+          if (cams.length) {
+            setTemVarias(cams.length > 1);
+            let id = cameraIdForcada || (function () { try { return localStorage.getItem('cameraId'); } catch (e) { return null; } })();
+            if (!id || !cams.some(c => c.id === id)) {
+              id = cams.slice().sort((a, b) => pontuarCamera(b) - pontuarCamera(a))[0].id;
+            }
+            camIdRef.current = id;
+            try { localStorage.setItem('cameraId', id); } catch (e) { }
+            alvo = id;
+          }
+
           await scanner.start(
-            { facingMode: 'environment' },
+            alvo,
             {
               fps: 10, qrbox: { width: 260, height: 160 },
               formatsToSupport: [
@@ -669,8 +725,26 @@
             () => { }
           );
           setTorchOn(false);
+          // foco contínuo + zoom leve: melhora foco de perto (Galaxy); ignorado onde não há suporte
+          try { await scanner.applyVideoConstraints({ advanced: [{ focusMode: 'continuous' }] }); } catch (e) { }
+          try {
+            const caps = scanner.getRunningTrackCapabilities();
+            if (caps && caps.zoom && caps.zoom.max > 1) {
+              await scanner.applyVideoConstraints({ advanced: [{ zoom: Math.min(2, caps.zoom.max) }] });
+            }
+          } catch (e) { }
         } catch (e) { alert('Erro ao abrir a câmera: ' + e + '\n\nVerifique se deu permissão de câmera ao navegador.'); setScanning(false); }
-      }, [onCodigo]);
+      }, [onCodigo, parar]);
+
+      // alterna entre as lentes disponíveis (memoriza a que funcionou)
+      const trocarCamera = useCallback(async () => {
+        const cams = await listarCameras();
+        if (cams.length < 2) return;
+        const i = Math.max(0, cams.findIndex(c => c.id === camIdRef.current));
+        const prox = cams[(i + 1) % cams.length].id;
+        await parar();
+        iniciar(prox);
+      }, [iniciar, parar]);
 
       const toggleTorch = useCallback(async () => {
         if (!scannerRef.current) return;
@@ -683,28 +757,19 @@
         }
       }, [torchOn]);
 
-      const parar = useCallback(async () => {
-        if (scannerRef.current) {
-          try { await scannerRef.current.applyVideoConstraints({ advanced: [{ torch: false }] }); } catch (e) { }
-          try { await scannerRef.current.stop(); await scannerRef.current.clear(); } catch (e) { }
-          scannerRef.current = null;
-        }
-        setTorchOn(false);
-        setScanning(false);
-      }, []);
-
       useEffect(() => () => { parar(); }, [parar]);
 
       return h('div', null,
         h('div', { className: 'card' },
-          !scanning && h('button', { className: 'btn btn-primary', onClick: iniciar }, '📷  Escanear código de barras'),
+          !scanning && h('button', { className: 'btn btn-primary', onClick: () => iniciar() }, '📷  Escanear código de barras'),
           scanning && h('div', null,
             h('div', { id: divId }),
-            h('p', { className: 'scan-hint' }, 'Aponte para o código de barras'),
-            h('div', { style: { display: 'flex', gap: 10, marginTop: 12 } },
-              h('button', { className: torchOn ? 'btn btn-primary' : 'btn btn-outline', onClick: toggleTorch },
-                torchOn ? '🔦  Lanterna ligada' : '🔦  Lanterna'),
-              h('button', { className: 'btn btn-ghost', onClick: parar }, 'Cancelar')
+            h('p', { className: 'scan-hint' }, temVarias ? 'Imagem borrada? Toque em "Lente"' : 'Aponte para o código de barras'),
+            h('div', { style: { display: 'flex', gap: 8, marginTop: 12 } },
+              h('button', { className: (torchOn ? 'btn btn-primary' : 'btn btn-outline') + ' btn-sm', style: { flex: 1 }, onClick: toggleTorch },
+                torchOn ? '🔦 Ligada' : '🔦 Lanterna'),
+              temVarias && h('button', { className: 'btn btn-outline btn-sm', style: { flex: 1 }, onClick: trocarCamera }, '🔄 Lente'),
+              h('button', { className: 'btn btn-ghost btn-sm', style: { flex: 1 }, onClick: parar }, 'Cancelar')
             )
           )
         ),
@@ -726,10 +791,13 @@
       const cont = contagens[produtoAtivo.id] || {};
       const [loja, setLoja] = useState(cont.loja ?? '');
       const [estoque, setEstoque] = useState(cont.estoque ?? '');
+      const [verTodosCods, setVerTodosCods] = useState(false);
+      const cods = codigosDoId(produtoAtivo.id);
 
       useEffect(() => {
         const c = contagens[produtoAtivo.id] || {};
         setLoja(c.loja ?? ''); setEstoque(c.estoque ?? '');
+        setVerTodosCods(false);
       }, [produtoAtivo.id]);
 
       const temContagem = loja !== '' || estoque !== '';
@@ -751,6 +819,13 @@
         h('div', { className: 'prod-nome' }, p.n),
         h('div', { className: 'prod-meta' },
           'Unidade: ', h('b', null, p.u || '—'), '  ·  Preço: ', h('b', null, fmtPreco(p.p))
+        ),
+        cods.length > 0 && h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center', marginBottom: 12 } },
+          (verTodosCods ? cods : cods.slice(0, 1)).map(c => h('span', { key: c, className: 'cod-chip' }, c)),
+          cods.length > 1 && h('button', {
+            className: 'link-btn', style: { fontSize: 12, padding: '2px 4px' },
+            onClick: () => setVerTodosCods(v => !v)
+          }, verTodosCods ? 'ocultar' : '+' + (cods.length - 1) + ' código' + (cods.length > 2 ? 's' : ''))
         ),
         h('div', { className: 'estoque-box' },
           h('span', { className: 'lbl' }, 'Estoque no sistema:'),

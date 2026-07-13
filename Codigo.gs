@@ -1,5 +1,5 @@
 /**
- * Contagem de estoque — Loja da Construção  (v8)
+ * Contagem de estoque — Loja da Construção  (v8.3)
  * -----------------------------------------------------------------
  * Mudanças da v8 (marcadas com [v8]):
  *  1. NOVO: "Pesquisar produto (código ou nome)" no menu — digite o código de
@@ -12,6 +12,19 @@
  *     era isso que criava linhas duplicadas).
  *  4. fecharLetra: casamento de código com fallback sem zeros à esquerda e
  *     marcação "Enviado" em lote (mais rápido, sem risco de timeout).
+ *
+ * v8.1: menu "🚨 Verificar duplicados / chaves" — vigia de duplicados e de chaves
+ *       desatualizadas em relação ao dados.json (o aviso prévio do duplicado).
+ * v8.2: CONGELAMENTO — "Atualizar estoque do sistema" não mexe mais em linhas já
+ *       contadas ou resolvidas (Feito/Inativado/Enviado ou com quantidade
+ *       preenchida). O Ajuste ("Diminuir 7" etc.) fica congelado relatando o que
+ *       você viu e fez na contagem. Pode atualizar o estoque todo dia; a ordem
+ *       "Fechar letra antes de atualizar" deixa de ser crítica (mas siga rodando
+ *       o Fechar letra no fim de cada dia de contagem).
+ * v8.3: gravar_ não confia mais na CHAVE sozinha — código e nome mandam, e a chave
+ *       só vale se o nome da linha for o mesmo. (Chaves velhas de produtos
+ *       inativados podiam colidir com ids novos do dados.json e fazer o app
+ *       SOBRESCREVER a linha de outro produto.)
  *
  * SETUP: cole, Salve, autorize, reimplante NOVA VERSÃO do Web App.
  */
@@ -66,6 +79,7 @@ function ajRealizado_(total,sist){
 function onOpen(){
   SpreadsheetApp.getUi().createMenu('🧮 Contagem')
     .addItem('🔍 Pesquisar produto (código ou nome)','pesquisarProduto') // [v8]
+    .addItem('🚨 Verificar duplicados / chaves','verificarDuplicados')   // [v8.1]
     .addSeparator()
     .addItem('Carregar letra (trazer todos os produtos)','carregarLetra')
     .addItem('Ordenar por produto (A→Z)','ordenar')
@@ -118,6 +132,47 @@ function pesquisarProduto(){
     var lista=achados.slice(0,15).map(function(k){ return '• linha '+(k+2)+': '+vals[k][C_PROD-1]; }).join('\n');
     ui.alert(achados.length+' resultados (fui para o 1º):\n\n'+lista+(achados.length>15?'\n• ...':''));
   }
+}
+
+// [v8.1] Vigia: aponta pares duplicados e chaves desatualizadas em relação ao dados.json.
+// Chave desatualizada é o AVISO PRÉVIO — é ela que gera duplicado/sobrescrita.
+function verificarDuplicados(){
+  var ui=SpreadsheetApp.getUi();
+  var sh=ss_().getSheetByName(ABA); var last=sh?sh.getLastRow():0;
+  if(!sh||last<2){ ui.alert('A aba Contagens está vazia.'); return; }
+  var vals=sh.getRange(2,1,last-1,NCOL).getValues();
+
+  var grupos={};
+  for(var i=0;i<vals.length;i++){
+    var r=vals[i]; if(r[C_PROD-1]===''||r[C_PROD-1]==null) continue;
+    var k=(desp_(r[C_COD-1])||'SEMCOD')+'|'+norm_(r[C_PROD-1]);
+    (grupos[k]=grupos[k]||[]).push(i+2);
+  }
+  var dups=[];
+  for(var g in grupos){ if(grupos[g].length>1) dups.push(g.split('|')[1]+' (linhas '+grupos[g].join(', ')+')'); }
+
+  var desatual=0, verificadas=0, erroFetch=null;
+  try{
+    var d=JSON.parse(UrlFetchApp.fetch(DADOS_URL,{muteHttpExceptions:true}).getContentText());
+    var idPorCod={}, idPorNome={};
+    for(var c in d.codigos){ var z=desp_(c); if(z&&idPorCod[z]==null) idPorCod[z]=d.codigos[c]; }
+    for(var p=0;p<d.produtos.length;p++){ var nm=norm_(d.produtos[p].n); if(idPorNome[nm]==null) idPorNome[nm]=p; }
+    for(var j=0;j<vals.length;j++){
+      var rw=vals[j]; if(rw[C_PROD-1]===''||rw[C_PROD-1]==null) continue;
+      var id=idPorCod[desp_(rw[C_COD-1])]; if(id==null) id=idPorNome[norm_(rw[C_PROD-1])];
+      if(id==null) continue; // produto fora do dados.json (inativado no SysPDV)
+      verificadas++;
+      if(String(rw[C_CHAVE-1])!==String(id)) desatual++;
+    }
+  }catch(e){ erroFetch=String(e); }
+
+  var msg='Verificação da aba Contagens:\n\n';
+  msg+=dups.length? ('🚨 '+dups.length+' produto(s) DUPLICADO(S):\n- '+dups.slice(0,15).join('\n- ')+(dups.length>15?'\n- ...':'')+'\n\n')
+                  : '✅ Nenhum duplicado.\n\n';
+  if(erroFetch) msg+='⚠️ Não consegui checar as chaves (dados.json inacessível): '+erroFetch;
+  else if(desatual) msg+='⚠️ '+desatual+' de '+verificadas+' chaves estão DESATUALIZADAS em relação ao dados.json.\nRode a reindexação (corrigirChaves) antes que gerem problemas.';
+  else msg+='✅ Todas as '+verificadas+' chaves batem com o dados.json atual.';
+  ui.alert(msg);
 }
 
 function ordenar(){
@@ -463,9 +518,15 @@ function gravar_(itens){
     var it=itens[j];
     var chave=String(it.key!=null?it.key:(it.codigo||it.nome||''));
     var codZ=desp_(it.codigo); var nomeN=norm_(it.nome||'');
-    var r=mapa[chave];
-    if(!r && codZ) r=mapaCod[codZ];   // [v8]
-    if(!r && nomeN) r=mapaNome[nomeN]; // [v8]
+    // [v8.3] código e nome mandam; chave só vale se o NOME da linha for o mesmo
+    // (chaves velhas de inativados podem colidir com ids novos e sobrescrever outra linha)
+    var r=null;
+    if(codZ) r=mapaCod[codZ];
+    if(!r && nomeN) r=mapaNome[nomeN];
+    if(!r){
+      var rc=mapa[chave];
+      if(rc && norm_(sh.getRange(rc,C_PROD).getValue()||'')===nomeN) r=rc;
+    }
     var nova=false;
     if(!r){ r=sh.getLastRow()+1; nova=true; }
     mapa[chave]=r;
@@ -502,15 +563,17 @@ function atualizarEstoqueSistema(){
     var nm=norm_(nome); if(nm&&eByName[nm]!=null) return eByName[nm];
     return null;
   }
-  var sh=ss_().getSheetByName(ABA); var cCont=0, semC=0;
+  var sh=ss_().getSheetByName(ABA); var cCont=0, semC=0, congeladas=0;
   if(sh){ var last=sh.getLastRow();
     if(last>=2){ var rng=sh.getRange(2,1,last-1,NCOL); var vals=rng.getValues();
       for(var r=0;r<vals.length;r++){ var v=vals[r]; if(!v[C_PROD-1]) continue;
+        // [v8.2] linha já contada ou resolvida: NÃO mexe — estoque/total/ajuste ficam
+        // congelados relatando o momento da contagem (o que você viu e o que fez).
+        var st=String(v[C_STATUS-1]||'');
+        if(st==='Feito'||st==='Inativado'||st==='Enviado'||contou_(v[C_LOJA-1],v[C_EST-1])){ congeladas++; continue; }
         var novo=estoqueDe_(v[C_COD-1], v[C_PROD-1]);
         if(novo==null){ semC++; continue; }
-        v[C_SIST-1]=novo; var loja=v[C_LOJA-1], est=v[C_EST-1];
-        v[C_TOTAL-1]=totalVal_(loja,est); v[C_AJU-1]=ajusteVal_(loja,est,novo);
-        var st=String(v[C_STATUS-1]||''); if(st!=='Feito'&&st!=='Inativado'&&st!=='Enviado') v[C_STATUS-1]=statusAuto_(loja,est,novo);
+        v[C_SIST-1]=novo;
         cCont++; }
       rng.setValues(vals); } }
   var cEst=0, semCasar=0;
@@ -530,7 +593,10 @@ function atualizarEstoqueSistema(){
           if(nv==null){ semCasar++; col.push([atual]); } else { col.push([nv]); cEst++; } }
         abaEst.getRange(hrow+2, cSist+1, col.length, 1).setValues(col); } } }
   atualizarResumo();
-  ui.alert('Estoque atualizado:\n• Contagens: '+cCont+' linhas'+(semC?(' ('+semC+' sem casar)'):'')+'\n• Estoque_Principal: '+cEst+' produtos'+(semCasar?('\n• '+semCasar+' sem casar'):''));
+  ui.alert('Estoque atualizado:\n• Contagens: '+cCont+' linhas não contadas atualizadas'+
+           (congeladas?('\n• '+congeladas+' linhas já contadas/resolvidas preservadas (não mexi)'):'')+
+           (semC?('\n• '+semC+' sem casar'):'')+
+           '\n• Estoque_Principal: '+cEst+' produtos'+(semCasar?('\n• '+semCasar+' sem casar'):''));
 }
 
-function doGet(){ return resp_({ok:true,servico:'contagem-estoque-lc',versao:8}); }
+function doGet(){ return resp_({ok:true,servico:'contagem-estoque-lc',versao:8.3}); }

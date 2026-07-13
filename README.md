@@ -4,7 +4,8 @@ App web (mobile) pra fazer a contagem de inventário escaneando o código de bar
 celular. Compara a quantidade contada com o estoque do sistema, já mostra **o ajuste a
 fazer no SysPDV** e salva tudo numa planilha do Google, organizada por letra.
 
-Página estática (React puro, sem build) hospedada no **GitHub Pages**.
+Página estática (React puro, sem build) hospedada no **GitHub Pages**. Funciona em
+qualquer celular (Android e iPhone) — pode ser usado por vários funcionários ao mesmo tempo.
 
 🔗 **Site:** https://yagooliveira852.github.io/Contagem-estoque-LC/
 
@@ -19,9 +20,15 @@ Celular (GitHub Pages) → Apps Script (Web App) → Planilha "Contagens Loja da
 ```
 
 - **Escanear:** lê o código (EAN, UPC, Code128, QR…) e abre o produto. Tem **lanterna**
-  pra ambientes escuros (Android/Chrome; iPhone/Safari não permite).
+  pra ambientes escuros (Android/Chrome; iPhone/Safari não permite) e botão **🔄 Lente**
+  em celulares com várias câmeras: o app escolhe sozinho a lente principal (evita a
+  ultrawide/macro, que borra de perto — caso típico dos Samsung Galaxy), e se ainda
+  vier borrado é só trocar de lente; a escolha fica memorizada no aparelho.
 - **Buscar:** acha o produto pelo nome **ou pelo código de barras** (digite os números da
   etiqueta — com ou sem os zeros do começo) quando não dá pra escanear.
+- **Card do produto:** mostra o código de barras num chip discreto (e "+N códigos" quando
+  o produto tem códigos adicionais) — dá pra conferir visualmente com a etiqueta física
+  sem digitar nada, útil pra produto sem embalagem.
 - Cada contagem vai pra aba **Contagens** e é atualizada (upsert) — nunca duplica.
 - Offline: fica salvo no aparelho (`localStorage`) e envia sozinho quando a net volta.
 
@@ -29,29 +36,41 @@ Celular (GitHub Pages) → Apps Script (Web App) → Planilha "Contagens Loja da
 
 ## Menu 🧮 Contagem
 
-| Item                                              | O que faz                                                                                                                                                                               |
-| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **🔍 Pesquisar produto (código ou nome)**          | Pula direto pra linha do produto na aba Contagens. Aceita o código de barras (com ou sem zeros à esquerda) ou parte do nome; com vários resultados, lista todos.                        |
-| **Carregar letra**                                | Baixa do `dados.json` todos os produtos daquela letra e joga na aba Contagens. Os que você não escanear ficam `Não contado`, pra nenhum produto passar batido.                          |
-| **Ordenar por produto (A→Z)**                     | Reordena a lista alfabeticamente (útil pra dados antigos fora de ordem).                                                                                                                |
-| **Fechar letra (enviar p/ Estoque_Principal)**    | Grava Qtd loja/estoque na aba Estoque (casando por código/nome) e registra os ajustes (`Feito`/`Inativado`) na aba Alterações. Mostra o que não casou e marca as linhas como `Enviado`. |
-| **Atualizar estoque do sistema (via dados.json)** | Sincroniza a coluna "Estoque sistema" na Contagens e na Estoque_Principal a partir do `dados.json`, sem tocar nas contagens.                                                            |
-| **Configurar / reestilizar**                      | Recria o layout: cabeçalho, larguras, zebra, cores, dropdown de Status. Roda 1x no setup e sempre que quiser reaplicar o visual.                                                        |
-| **Atualizar resumo**                              | Recalcula a aba Resumo (contagens gerais + progresso por letra).                                                                                                                        |
-| **Limpar contagens (nova letra/ciclo)**           | Zera a aba Contagens pra começar a próxima letra (faça só depois de fechar/enviar a atual).                                                                                             |
+| Item                                              | O que faz                                                                                                                                                                                                                                                                                     |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **🔍 Pesquisar produto (código ou nome)**          | Pula direto pra linha do produto na aba Contagens. Aceita o código de barras (com ou sem zeros à esquerda) ou parte do nome; com vários resultados, lista todos.                                                                                                                              |
+| **🚨 Verificar duplicados / chaves**               | Vigia: aponta produtos duplicados (com as linhas) e avisa se as chaves estão desatualizadas em relação ao `dados.json` — o sinal precoce de que duplicados poderiam surgir.                                                                                                                   |
+| **Carregar letra**                                | Baixa do `dados.json` todos os produtos daquela letra e joga na aba Contagens. Os que você não escanear ficam `Não contado`, pra nenhum produto passar batido.                                                                                                                                |
+| **Ordenar por produto (A→Z)**                     | Reordena a lista alfabeticamente (útil quando o app cria linhas novas no final).                                                                                                                                                                                                              |
+| **Fechar letra (enviar p/ Estoque_Principal)**    | Grava Qtd loja/estoque na aba Estoque (casando por código/nome) e registra os ajustes (`Feito`/`Inativado`) na aba Alterações. Mostra o que não casou e marca as linhas como `Enviado`. Pode (e deve) rodar **todo dia de contagem** — só envia o que está resolvido e ainda não foi enviado. |
+| **Atualizar estoque do sistema (via dados.json)** | Sincroniza a coluna "Estoque sistema" na Contagens e na Estoque_Principal a partir do `dados.json`. Linhas **já contadas ou resolvidas ficam congeladas** (v8.2): o Ajuste continua relatando o que você viu e fez na contagem.                                                               |
+| **Configurar / reestilizar**                      | Recria o layout: cabeçalho, larguras, zebra, cores, dropdown de Status. Roda 1x no setup e sempre que quiser reaplicar o visual.                                                                                                                                                              |
+| **Atualizar resumo**                              | Recalcula a aba Resumo (contagens gerais + progresso por letra).                                                                                                                                                                                                                              |
+| **Limpar contagens (nova letra/ciclo)**           | Zera a aba Contagens pra começar a próxima letra (faça só depois de fechar/enviar a atual).                                                                                                                                                                                                   |
 
 > As ações que tocam a Estoque_Principal (**Fechar letra**, **Atualizar estoque**) rodam
 > **só pelo menu** — o endpoint público do site nunca as executa.
 
-## Rotina de contagem (por letra)
+## Rotina de contagem
 
-1. **Carregar letra** (ex.: C) → traz todos os produtos "C".
-2. Escaneia a loja no app → quantidades e a coluna **Ajuste** aparecem sozinhas.
-3. Resolve os `Não contado` (digita a quantidade ou marca o Status na mão).
-4. Marca o **Status**: `Feito` (ajustou no SysPDV) ou `Inativado`. Quem bateu vira `OK` sozinho.
-5. **Fechar letra** → envia tudo pra Estoque_Principal. Revê o que "não casou", se houver.
-6. **Limpar contagens** e parte pra próxima. Acompanha no **Resumo** a coluna *Falta resolver*
-   por letra — quando zera, a letra acabou.
+Diária (a loja gira todo dia, então a ordem importa):
+
+1. Escaneia/conta no app → quantidades e a coluna **Ajuste** aparecem sozinhas.
+2. Ajustou algo no SysPDV? Marca `Feito`. Produto que não existe mais? `Inativado`.
+   Quem bateu vira `OK` sozinho.
+3. Fim do dia: **Fechar letra** → grava quantidades e o histórico do que você fez na
+   Estoque_Principal, e marca como `Enviado`. (Desde a v8.2 a ordem não é mais crítica —
+   o Atualizar estoque não mexe em linha contada — mas fechar diariamente continua
+   sendo a prática recomendada.)
+4. Precisando de estoque fresco: gera o PDF novo do SysPDV → atualiza o `dados.json` →
+   **Atualizar estoque do sistema**.
+
+Por letra:
+
+1. **Carregar letra** (ex.: C) → traz todos os produtos da letra.
+2. Vai contando ao longo dos dias (rotina diária acima).
+3. Acompanha no **Resumo** a coluna *Falta resolver* — quando zerar, a letra acabou.
+4. **Limpar contagens** e parte pra próxima letra.
 
 ---
 
@@ -84,15 +103,24 @@ Celular (GitHub Pages) → Apps Script (Web App) → Planilha "Contagens Loja da
 **Site:** no `index.html`, preencha `SYNC_URL` (a URL do Web App) e `SYNC_TOKEN` (igual ao
 do `Codigo.gs`). Suba no GitHub — o Pages atualiza em 1–2 min.
 
+**Ao atualizar o `Codigo.gs` depois disso:** colar e salvar NÃO basta — o site continua
+rodando a versão antiga. Vá em **Implantar → Gerenciar implantações → ✏️ → Versão: Nova
+versão → Implantar** (edite a implantação existente; "Nova implantação" trocaria a URL).
+Pra conferir qual versão está no ar, abra a URL `/exec` no navegador — responde algo como
+`{"ok":true,"servico":"contagem-estoque-lc","versao":8.3}`.
+
 ---
 
-## Atualizar o estoque quando a loja girar
+## Atualizar estoque e preço quando a loja girar
 
-1. Gere a exportação nova do SysPDV (PDF "Posição de Estoque", uma linha por produto).
-2. Peça a atualização do **`dados.json`** (só o campo de estoque muda; nome/preço/ordem
-   e os índices ficam iguais) e **suba o novo `dados.json`** no GitHub.
-3. No menu **🧮 Contagem → Atualizar estoque do sistema (via dados.json)**: sincroniza o
-   "Estoque sistema" na aba Contagens e na Estoque_Principal, sem tocar nas suas contagens.
+1. **Feche a letra antes** (garante o histórico dos ajustes já feitos).
+2. Gere a exportação nova do SysPDV (PDF "Posição de Estoque", uma linha por produto).
+3. Peça a atualização do **`dados.json`** (estoque e preço mudam; nomes, ordem e os
+   índices/chaves são preservados — isso é essencial pra não criar duplicados) e **suba
+   o novo `dados.json`** no GitHub.
+4. No menu **🧮 Contagem → Atualizar estoque do sistema (via dados.json)**.
+5. No celular, recarregue a página (o app usa `no-cache`: ~1–2 min após o commit já pega
+   a base nova).
 
 ---
 
@@ -101,7 +129,13 @@ do `Codigo.gs`). Suba no GitHub — o Pages atualiza em 1–2 min.
 - **Sem servidor:** o Apps Script é o backend, de graça. Envio `no-cors` em lote com
   reenvio automático; upsert por produto evita duplicata (v8: o produto é reconhecido
   pela chave, pelo **código** — ignorando zeros à esquerda — e pelo **nome**, então nem a
-  regeneração do `dados.json` cria linha repetida).
+  regeneração do `dados.json` cria linha repetida; v8.3: a chave sozinha nunca decide —
+  código e nome mandam, evitando que chaves velhas de produtos inativados sobrescrevam
+  a linha de outro produto).
+- **Câmera:** o app enumera as lentes (`getCameras`) e pontua pra escolher a traseira
+  principal; aplica `focusMode: continuous` + zoom 2x quando suportado (conserta o foco
+  de perto nos Galaxy). Preferência de lente salva por aparelho no `localStorage`.
+- **Base com `no-cache`:** o `dados.json` é revalidado a cada abertura (baixa só se mudou).
 - **Sem fórmulas na planilha:** o script calcula os valores (evita erro de locale pt-BR).
 - **Segurança:** o `SYNC_TOKEN` no site é só anti-acesso-casual. O endpoint público do
   Web App **só grava na aba Contagens** — não alcança a Estoque_Principal nem o resto do
