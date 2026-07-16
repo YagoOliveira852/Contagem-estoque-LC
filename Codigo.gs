@@ -1,5 +1,5 @@
 /**
- * Contagem de estoque — Loja da Construção  (v8.3)
+ * Contagem de estoque — Loja da Construção  (v8.5)
  * -----------------------------------------------------------------
  * Mudanças da v8 (marcadas com [v8]):
  *  1. NOVO: "Pesquisar produto (código ou nome)" no menu — digite o código de
@@ -25,6 +25,16 @@
  *       só vale se o nome da linha for o mesmo. (Chaves velhas de produtos
  *       inativados podiam colidir com ids novos do dados.json e fazer o app
  *       SOBRESCREVER a linha de outro produto.)
+ * v8.4: contagem avulsa fora da letra do ciclo, sem risco:
+ *       - "Fechar letra" aceita * para enviar TODAS as letras resolvidas de uma
+ *         vez (a aba Alterações recebe a letra correta de cada linha);
+ *       - "Limpar contagens" avisa (com detalhe por letra) se existir contagem ou
+ *         resolução ainda não enviada em QUALQUER letra antes de apagar.
+ * v8.5: congelamento completo — linha Enviado/Feito/Inativado agora também fica
+ *       protegida do APP: reenvio do celular com as mesmas quantidades (botão
+ *       "Sincronizar", fila antiga no localStorage, re-scan) não regrava a linha.
+ *       Só uma recontagem com números DIFERENTES regrava — e volta o status pra
+ *       OK/Pendente, reentrando no fluxo de envio.
  *
  * SETUP: cole, Salve, autorize, reimplante NOVA VERSÃO do Web App.
  */
@@ -303,10 +313,11 @@ function carregarLetra(){
 function fecharLetra(){
   var ui=SpreadsheetApp.getUi();
   if(!ESTOQUE_ID){ ui.alert('Configure o ESTOQUE_ID no topo do script.'); return; }
-  var r=ui.prompt('Fechar letra','Enviar qual letra para a Estoque_Principal? (ex.: C)',ui.ButtonSet.OK_CANCEL);
+  var r=ui.prompt('Fechar letra','Enviar qual letra para a Estoque_Principal? (ex.: C — ou * para TODAS as letras resolvidas)',ui.ButtonSet.OK_CANCEL);
   if(r.getSelectedButton()!==ui.Button.OK) return;
   var letra=String(r.getResponseText()||'').trim().toUpperCase().charAt(0);
-  if(!letra){ ui.alert('Digite uma letra.'); return; }
+  if(!letra){ ui.alert('Digite uma letra (ou * para todas).'); return; }
+  var todas=(letra==='*'); // [v8.4] envia itens avulsos de qualquer letra numa tacada só
 
   var sh=ss_().getSheetByName(ABA); var last=sh.getLastRow();
   if(last<2){ ui.alert('Sem contagens.'); return; }
@@ -314,11 +325,11 @@ function fecharLetra(){
   var alvo=[]; var pendentes=0;
   for(var i=0;i<vals.length;i++){
     var v=vals[i]; var prod=v[C_PROD-1]; if(!prod) continue;
-    if(String(v[C_LETRA-1]).toUpperCase()!==letra) continue;
+    if(!todas && String(v[C_LETRA-1]).toUpperCase()!==letra) continue;
     var st=String(v[C_STATUS-1]||'');
     if(st==='Enviado') continue;
     if(st==='Pendente'||st==='Não contado'){ pendentes++; continue; }
-    alvo.push({rowSheet:i+2, cod:String(v[C_COD-1]||'').trim(), nome:String(prod),
+    alvo.push({rowSheet:i+2, letra:String(v[C_LETRA-1]||'').toUpperCase(), cod:String(v[C_COD-1]||'').trim(), nome:String(prod),
                loja:v[C_LOJA-1], est:v[C_EST-1], total:num_(v[C_TOTAL-1]), sist:num_(v[C_SIST-1]), status:st});
   }
   if(!alvo.length){ ui.alert('Nada resolvido pra enviar na letra '+letra+(pendentes?(' ('+pendentes+' ainda pendentes/não contados).'):'.')); return; }
@@ -384,7 +395,7 @@ function fecharLetra(){
     var a2=alvo[k2];
     if(a2.status==='Feito' || a2.status==='Inativado'){
       var linha=[]; for(var z=0;z<aCols;z++) linha.push('');
-      if(aLetra>=0) linha[aLetra]=letra;
+      if(aLetra>=0) linha[aLetra]=a2.letra||letra; // [v8.4] letra da própria linha
       if(aCod>=0) linha[aCod]=a2.cod;
       if(aNome>=0) linha[aNome]=a2.nome;
       if(aObs>=0) linha[aObs]=obsAlter_(a2.total,a2.sist);
@@ -401,7 +412,7 @@ function fecharLetra(){
   sh.getRangeList(a1s).setValue('Enviado');
   atualizarResumo();
 
-  var msg='Letra '+letra+':\n• '+enviados+' contagens gravadas na aba Estoque\n• '+novasAlt.length+' linhas adicionadas na Alterações';
+  var msg=(todas?'Todas as letras':'Letra '+letra)+':\n• '+enviados+' contagens gravadas na aba Estoque\n• '+novasAlt.length+' linhas adicionadas na Alterações';
   if(naoCasou.length) msg+='\n\nNÃO casaram ('+naoCasou.length+') — reveja manualmente:\n- '+naoCasou.slice(0,20).join('\n- ')+(naoCasou.length>20?'\n- ...':'');
   if(pendentes) msg+='\n\nAtenção: '+pendentes+' itens desta letra ainda estão Pendentes/Não contados (não enviados).';
   ui.alert(msg);
@@ -459,6 +470,29 @@ function atualizarResumo(){
 
 function limparContagens(){
   var ui=SpreadsheetApp.getUi();
+  // [v8.4] antes de apagar, procura contagem/resolução NÃO enviada em qualquer letra
+  var sh0=ss_().getSheetByName(ABA); var last0=sh0?sh0.getLastRow():0;
+  var porLetra={};
+  if(last0>=2){
+    var vals0=sh0.getRange(2,1,last0-1,NCOL).getValues();
+    for(var i0=0;i0<vals0.length;i0++){
+      var v0=vals0[i0]; if(!v0[C_PROD-1]) continue;
+      var st0=String(v0[C_STATUS-1]||'');
+      if(st0==='Enviado'||st0==='Não contado') continue;
+      // OK/Pendente/Feito/Inativado = trabalho seu que ainda não foi pra Estoque_Principal
+      var L0=String(v0[C_LETRA-1]||'?').toUpperCase();
+      porLetra[L0]=(porLetra[L0]||0)+1;
+    }
+  }
+  var letras0=Object.keys(porLetra).sort();
+  if(letras0.length){
+    var detalhe=letras0.map(function(L){ return '• letra '+L+': '+porLetra[L]+' item(ns)'; }).join('\n');
+    var r0=ui.alert('⚠️ Contagens NÃO enviadas seriam apagadas!',
+      'Ainda existem contagens/resoluções que não foram enviadas pra Estoque_Principal:\n\n'+detalhe+
+      '\n\nRode "Fechar letra" (use * para todas) antes de limpar.\n\nApagar MESMO ASSIM, perdendo esses dados?',
+      ui.ButtonSet.YES_NO);
+    if(r0!==ui.Button.YES) return;
+  }
   var r=ui.alert('Nova letra / ciclo','Isso apaga as contagens atuais da aba Contagens. Faça só depois de fechar/enviar a letra. Continuar?',ui.ButtonSet.YES_NO);
   if(r!==ui.Button.YES) return;
   var sh=ss_().getSheetByName(ABA); var last=sh.getLastRow();
@@ -533,7 +567,19 @@ function gravar_(itens){
     if(codZ) mapaCod[codZ]=r;
     if(nomeN) mapaNome[nomeN]=r;
     var cur2=nova?'':String(sh.getRange(r,C_STATUS).getValue()||'');
-    var st=(cur2==='Feito'||cur2==='Inativado'||cur2==='Enviado')?cur2:statusAuto_(it.qtdLoja,it.qtdEstoque,it.sistema);
+    var st;
+    if(cur2==='Feito'||cur2==='Inativado'||cur2==='Enviado'){
+      // [v8.5] linha FECHADA: congelada também contra o app.
+      // Reenvio do celular com as MESMAS quantidades (botão Sincronizar, fila antiga)
+      // não toca na linha. Só regrava se a contagem mudou de verdade (recontagem) —
+      // e aí volta pro fluxo com status recalculado, pra ser enviada de novo.
+      var lojaAtual=num_(sh.getRange(r,C_LOJA).getValue());
+      var estAtual=num_(sh.getRange(r,C_EST).getValue());
+      if(lojaAtual===num_(it.qtdLoja) && estAtual===num_(it.qtdEstoque)) continue;
+      st=statusAuto_(it.qtdLoja,it.qtdEstoque,it.sistema);
+    } else {
+      st=statusAuto_(it.qtdLoja,it.qtdEstoque,it.sistema);
+    }
     sh.getRange(r,C_COD).setNumberFormat('@'); // [v8] código como texto
     sh.getRange(r,1,1,NCOL).setValues([[
       chave, letraDe_(it.nome), it.codigo||'', it.nome||'',
@@ -599,4 +645,4 @@ function atualizarEstoqueSistema(){
            '\n• Estoque_Principal: '+cEst+' produtos'+(semCasar?('\n• '+semCasar+' sem casar'):''));
 }
 
-function doGet(){ return resp_({ok:true,servico:'contagem-estoque-lc',versao:8.3}); }
+function doGet(){ return resp_({ok:true,servico:'contagem-estoque-lc',versao:8.5}); }
