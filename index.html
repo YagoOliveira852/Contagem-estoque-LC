@@ -462,6 +462,7 @@
   <div id="root"></div>
   <script>
     let DADOS = null;
+    let BASE_INFO = null; // "Estoque de DD/MM HH:MM" — mostrado no topo
     const { useState, useEffect, useRef, useCallback } = React;
     const h = React.createElement;
 
@@ -632,7 +633,10 @@
 
       return h('div', null,
         h('div', { className: 'topbar' },
-          h('h1', null, 'Contagem de Estoque'),
+          h('div', null,
+            h('h1', null, 'Contagem de Estoque'),
+            BASE_INFO && h('div', { style: { fontSize: 11, opacity: .78, marginTop: 1 } }, BASE_INFO)
+          ),
           h('div', { style: { display: 'flex', gap: 8, alignItems: 'center' } },
             h(SyncBadge, { sync }),
             h('span', { className: 'badge' }, Object.keys(contagens).length + ' contados')
@@ -991,10 +995,21 @@
     const rootEl = ReactDOM.createRoot(document.getElementById('root'));
     rootEl.render(h(TelaCarregando, {}));
 
+    let ULT_MOD = null;
     fetch('./dados.json', { cache: 'no-cache' })
-      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); ULT_MOD = r.headers.get('last-modified'); return r.json(); })
       .then(d => {
         DADOS = d;
+        // data da base: campo "atualizado" do dados.json (hora do relatório SysPDV);
+        // sem ele, cai na data de publicação do arquivo (cabeçalho HTTP)
+        if (d.atualizado) BASE_INFO = 'Estoque de ' + d.atualizado;
+        else if (ULT_MOD) {
+          try {
+            const dt = new Date(ULT_MOD);
+            BASE_INFO = 'Base de ' + dt.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) +
+              ' ' + dt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+          } catch (e) { }
+        }
         CODIGOS = d.codigos;
         PRODUTOS = d.produtos;
         rootEl.render(h(App));
