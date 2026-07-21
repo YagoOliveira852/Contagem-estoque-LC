@@ -531,6 +531,14 @@
     let CODIGOS = {};   // "codigo" -> id
     let PRODUTOS = [];  // [{n,e,p,u}]
 
+    // [v9] códigos vinculados manualmente neste aparelho (código não cadastrado -> produto
+    // existente). Fica só local até você revisar a aba "Códigos novos" na planilha e
+    // incluir no dados.json — daí a próxima base baixada já traz o código de verdade.
+    const CODEXTRA_KEY = 'codigos_extra';
+    function lerCodigosExtra() { try { return JSON.parse(localStorage.getItem(CODEXTRA_KEY) || '{}'); } catch (e) { return {}; } }
+    function salvarCodigosExtra(o) { try { localStorage.setItem(CODEXTRA_KEY, JSON.stringify(o)); } catch (e) { } }
+    let CODIGOS_EXTRA = lerCodigosExtra();
+
     function fmtPreco(p) { if (p === '' || p == null) return '—'; return 'R$ ' + Number(p).toFixed(2).replace('.', ','); }
     function num(v) { if (v === '' || v == null) return 0; const n = Number(v); return isNaN(n) ? 0 : n; }
     function codigoDoId(id) { return Object.keys(CODIGOS).find(k => CODIGOS[k] == id) || ''; }
@@ -586,6 +594,8 @@
           // tentar sem zeros à esquerda / com variações
           const alt = Object.keys(CODIGOS).find(k => k.replace(/^0+/, '') === cod.replace(/^0+/, ''));
           if (alt !== undefined) { setProdutoAtivo({ id: CODIGOS[alt], cod: alt }); setNaoAchado(null); setTab('scan'); mostrarToast('Produto encontrado'); return; }
+          // [v9] código já vinculado por você neste aparelho (ainda não está no dados.json)
+          if (CODIGOS_EXTRA[cod] !== undefined) { setProdutoAtivo({ id: CODIGOS_EXTRA[cod], cod }); setNaoAchado(null); setTab('scan'); mostrarToast('Produto encontrado (vinculado por você)'); return; }
           setNaoAchado(cod); setProdutoAtivo(null);
           return;
         }
@@ -593,8 +603,26 @@
         mostrarToast('Produto encontrado');
       }, [mostrarToast]);
 
+      // [v9] vincula um código não encontrado a um produto já existente, sem parar a
+      // contagem: reconhece localmente pros próximos scans e manda pra planilha (aba
+      // "Códigos novos") pra revisão e inclusão no dados.json.
+      const vincularCodigo = useCallback((codigo, id) => {
+        const p = PRODUTOS[id]; if (!p) return;
+        const extra = lerCodigosExtra(); extra[codigo] = id; salvarCodigosExtra(extra); CODIGOS_EXTRA = extra;
+        enfileirar({
+          key: 'cn_' + codigo + '_' + Date.now(),
+          tipo: 'codigo_novo',
+          codigo: codigo,
+          nome: p.n,
+          chave: id,
+          ts: Date.now()
+        });
+        setProdutoAtivo({ id, cod: codigo }); setNaoAchado(null); setTab('scan');
+        mostrarToast('Código vinculado a "' + p.n + '"');
+      }, [mostrarToast]);
+
       // registra a contagem na fila de sincronização com o Google Sheets
-      const registrarSync = useCallback((id, loja, estoque) => {
+      const registrarSync = useCallback((id, loja, estoque, etiqueta) => {
         const p = PRODUTOS[id]; if (!p) return;
         const total = num(loja) + num(estoque);
         const sist = num(p.e);
@@ -607,26 +635,28 @@
           total: total,
           sistema: sist,
           diferenca: total - sist,
+          etiqueta: !!etiqueta, // [v9]
           ts: Date.now()
         });
       }, []);
 
-      const salvarContagem = useCallback((id, loja, estoque) => {
+      const salvarContagem = useCallback((id, loja, estoque, etiqueta) => {
+        const semNada = (loja === '' || loja == null) && (estoque === '' || estoque == null) && !etiqueta; // [v9]
         setContagens(prev => {
           const nv = { ...prev };
-          if ((loja === '' || loja == null) && (estoque === '' || estoque == null)) { delete nv[id]; }
-          else { nv[id] = { loja, estoque }; }
+          if (semNada) { delete nv[id]; }
+          else { nv[id] = { loja, estoque, etiqueta: !!etiqueta }; }
           return nv;
         });
-        // só sincroniza quando há contagem de fato (limpar não remove da planilha)
-        if (!((loja === '' || loja == null) && (estoque === '' || estoque == null))) {
-          registrarSync(id, loja, estoque);
+        // só sincroniza quando há contagem ou marcação de etiqueta de fato
+        if (!semNada) {
+          registrarSync(id, loja, estoque, etiqueta);
         }
       }, [registrarSync]);
 
       const sincronizarTudo = useCallback(() => {
         const ids = Object.keys(contagens);
-        ids.forEach(id => { const c = contagens[id]; registrarSync(id, c.loja, c.estoque); });
+        ids.forEach(id => { const c = contagens[id]; registrarSync(id, c.loja, c.estoque, c.etiqueta); });
         agendarFlush(200);
         mostrarToast(ids.length ? 'Enviando ' + ids.length + ' pra planilha…' : 'Nada pra sincronizar');
       }, [contagens, registrarSync, mostrarToast]);
@@ -643,7 +673,7 @@
           )
         ),
         h('div', { className: 'content' },
-          tab === 'scan' && h(ScanTab, { onCodigo, produtoAtivo, setProdutoAtivo, contagens, salvarContagem, naoAchado, setNaoAchado }),
+          tab === 'scan' && h(ScanTab, { onCodigo, produtoAtivo, setProdutoAtivo, contagens, salvarContagem, naoAchado, setNaoAchado, vincularCodigo }),
           tab === 'busca' && h(BuscaTab, { onSelect: (id) => { setProdutoAtivo({ id, cod: null }); setTab('scan'); }, contagens }),
           tab === 'lista' && h(ListaTab, { contagens, onSelect: (id) => { setProdutoAtivo({ id, cod: null }); setTab('scan'); }, mostrarToast, sync, sincronizarTudo })
         ),
@@ -674,13 +704,16 @@
         h('span', { className: 'ico' }, ico), h('span', null, label));
     }
 
-    function ScanTab({ onCodigo, produtoAtivo, setProdutoAtivo, contagens, salvarContagem, naoAchado, setNaoAchado }) {
+    function ScanTab({ onCodigo, produtoAtivo, setProdutoAtivo, contagens, salvarContagem, naoAchado, setNaoAchado, vincularCodigo }) {
       const [scanning, setScanning] = useState(false);
       const [torchOn, setTorchOn] = useState(false);
       const [temVarias, setTemVarias] = useState(false);
+      const [vinculando, setVinculando] = useState(false); // [v9]
       const scannerRef = useRef(null);
       const camIdRef = useRef(null);
       const divId = 'reader';
+
+      useEffect(() => { setVinculando(false); }, [naoAchado]); // [v9] reseta a busca a cada código novo
 
       const parar = useCallback(async () => {
         if (scannerRef.current) {
@@ -782,11 +815,55 @@
             h('div', { style: { fontSize: 40 } }, '⚠️'),
             h('p', { style: { fontWeight: 700, marginTop: 8 } }, 'Código não encontrado'),
             h('div', { className: 'cod' }, naoAchado),
-            h('p', { style: { color: 'var(--suave)', fontSize: 14 } }, 'Esse código não está na base. Pode ser um produto novo ou sem cadastro. Tente buscar pelo nome.')
-          )
+            h('p', { style: { color: 'var(--suave)', fontSize: 14 } }, 'Esse código não está na base. Pode ser um produto novo ou sem cadastro.'),
+            !vinculando && h('button', {
+              className: 'btn btn-outline btn-sm', style: { marginTop: 10 },
+              onClick: () => setVinculando(true)
+            }, '🔗 Vincular a um produto existente')
+          ),
+          vinculando && h(VincularBusca, {
+            codigo: naoAchado,
+            onEscolher: (id) => { vincularCodigo(naoAchado, id); setVinculando(false); },
+            onCancelar: () => setVinculando(false)
+          })
         ),
         produtoAtivo && h(ProdutoCard, { produtoAtivo, contagens, salvarContagem, onFechar: () => setProdutoAtivo(null) }),
         !produtoAtivo && !naoAchado && !scanning && h('div', { className: 'empty' }, 'Escaneie um produto para ver as informações e registrar a contagem.')
+      );
+    }
+
+    // [v9] busca por nome (dentro do fluxo de código não encontrado) pra vincular o
+    // código escaneado a um produto já existente, sem sair da tela de contagem.
+    function VincularBusca({ codigo, onEscolher, onCancelar }) {
+      const [q, setQ] = useState('');
+      const termo = q.trim().toUpperCase();
+      let resultados = [];
+      if (termo.length >= 2) {
+        for (let i = 0; i < PRODUTOS.length && resultados.length < 30; i++) {
+          if (PRODUTOS[i].n.toUpperCase().includes(termo)) resultados.push(i);
+        }
+      }
+      return h('div', { style: { marginTop: 14, borderTop: '1px solid var(--borda)', paddingTop: 14 } },
+        h('div', { className: 'search-box' },
+          h('input', {
+            type: 'text', value: q, placeholder: 'Nome do produto...', autoFocus: true,
+            onChange: e => setQ(e.target.value)
+          })
+        ),
+        termo.length < 2 && h('p', { className: 'scan-hint' }, 'Digite parte do nome do produto pra vincular'),
+        termo.length >= 2 && resultados.length === 0 && h('p', { className: 'empty' }, 'Nenhum produto encontrado'),
+        resultados.map(id => h('div', {
+          key: id, className: 'lista-item', style: { cursor: 'pointer' },
+          onClick: () => {
+            if (confirm('Vincular o código ' + codigo + ' ao produto:\n\n"' + PRODUTOS[id].n + '"?\n\nIsso não muda o código principal do produto — só fica registrado pra você revisar na planilha (aba "Códigos novos") e incluir no dados.json.')) {
+              onEscolher(id);
+            }
+          }
+        },
+          h('span', { className: 'nome' }, PRODUTOS[id].n),
+          h('span', { className: 'qtd' }, PRODUTOS[id].e === '' ? '' : 'sist: ' + PRODUTOS[id].e)
+        )),
+        h('button', { className: 'btn btn-ghost btn-sm', style: { marginTop: 8 }, onClick: onCancelar }, 'Cancelar')
       );
     }
 
@@ -795,12 +872,14 @@
       const cont = contagens[produtoAtivo.id] || {};
       const [loja, setLoja] = useState(cont.loja ?? '');
       const [estoque, setEstoque] = useState(cont.estoque ?? '');
+      const [etiqueta, setEtiqueta] = useState(!!cont.etiqueta); // [v9]
       const [verTodosCods, setVerTodosCods] = useState(false);
       const cods = codigosDoId(produtoAtivo.id);
 
       useEffect(() => {
         const c = contagens[produtoAtivo.id] || {};
         setLoja(c.loja ?? ''); setEstoque(c.estoque ?? '');
+        setEtiqueta(!!c.etiqueta); // [v9]
         setVerTodosCods(false);
       }, [produtoAtivo.id]);
 
@@ -816,8 +895,8 @@
         else { obsTxt = 'Bateu certo'; }
       }
 
-      const salvar = () => { salvarContagem(produtoAtivo.id, loja, estoque); };
-      useEffect(() => { const t = setTimeout(salvar, 400); return () => clearTimeout(t); }, [loja, estoque]);
+      const salvar = () => { salvarContagem(produtoAtivo.id, loja, estoque, etiqueta); };
+      useEffect(() => { const t = setTimeout(salvar, 400); return () => clearTimeout(t); }, [loja, estoque, etiqueta]); // [v9]
 
       return h('div', { className: 'card' },
         h('div', { className: 'prod-nome' }, p.n),
@@ -859,6 +938,11 @@
         temContagem && h('div', { style: { textAlign: 'center', marginBottom: 12 } },
           h('span', { className: 'obs-tag', style: { background: obsBg, color: obsTx } }, obsTxt)
         ),
+        h('button', { // [v9]
+          className: 'btn btn-sm ' + (etiqueta ? 'btn-primary' : 'btn-outline'),
+          style: { width: '100%', marginBottom: 12 },
+          onClick: () => setEtiqueta(v => !v)
+        }, etiqueta ? '🏷️ Etiqueta nova marcada ✓' : '🏷️ Marcar: precisa de etiqueta nova'),
         h('div', { className: 'row-actions' },
           h('button', { className: 'btn btn-ghost btn-sm', onClick: () => { setLoja(''); setEstoque(''); } }, 'Limpar'),
           h('button', { className: 'btn btn-outline btn-sm', onClick: onFechar }, 'Fechar')
@@ -917,13 +1001,13 @@
     function ListaTab({ contagens, onSelect, mostrarToast, sync, sincronizarTudo }) {
       const ids = Object.keys(contagens);
       const exportar = () => {
-        let linhas = ['Codigo;Produto;Qtd loja;Qtd estoque;Total;Estoque sistema;Diferenca'];
+        let linhas = ['Codigo;Produto;Qtd loja;Qtd estoque;Total;Estoque sistema;Diferenca;Etiqueta nova'];
         ids.forEach(id => {
           const p = PRODUTOS[id]; const c = contagens[id];
           const total = num(c.loja) + num(c.estoque);
           const dif = total - num(p.e);
           const codPrinc = codigoDoId(id);
-          linhas.push([codPrinc, p.n, c.loja || 0, c.estoque || 0, total, p.e || 0, dif].join(';'));
+          linhas.push([codPrinc, p.n, c.loja || 0, c.estoque || 0, total, p.e || 0, dif, c.etiqueta ? 'Sim' : ''].join(';'));
         });
         const csv = '﻿' + linhas.join('\n');
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
@@ -968,7 +1052,7 @@
             let bg = 'var(--verde-bg)', tx = 'var(--verde-tx)', txt = 'OK';
             if (dif > 0) { txt = '+' + dif; } else if (dif < 0) { bg = 'var(--verm-bg)'; tx = 'var(--verm-tx)'; txt = dif; }
             return h('div', { key: id, className: 'lista-item', onClick: () => onSelect(id), style: { cursor: 'pointer' } },
-              h('span', { className: 'nome' }, p.n),
+              h('span', { className: 'nome' }, p.n, c.etiqueta && h('span', { style: { marginLeft: 6 }, title: 'Precisa de etiqueta nova' }, '🏷️')),
               h('span', null,
                 h('span', { className: 'qtd' }, 'L:' + (c.loja || 0) + ' E:' + (c.estoque || 0)),
                 h('span', { className: 'badge-dif', style: { background: bg, color: tx } }, txt)

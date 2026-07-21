@@ -1,5 +1,21 @@
 /**
- * Contagem de estoque — Loja da Construção  (v8.5)
+ * Contagem de estoque — Loja da Construção  (v9.0)
+ * -----------------------------------------------------------------
+ * v9.0: duas funcionalidades novas pra não perder tempo/produto durante a
+ *       contagem:
+ *  1. ETIQUETA NOVA: nova coluna "Etiqueta nova" na aba Contagens. O app
+ *     manda esse sinal junto da contagem (mesmo sem quantidade preenchida) —
+ *     a linha fica destacada em âmbar. Menu novo "🏷️ Ver produtos p/
+ *     etiqueta nova" lista tudo marcado; "🏷️ Limpar marcações de etiqueta"
+ *     zera depois de imprimir.
+ *  2. CÓDIGO NOVO (vincular sem parar a contagem): quando o app não acha um
+ *     código de barras, agora dá pra vincular na hora a um produto já
+ *     existente (buscado por nome). Isso NÃO mexe na aba Contagens — vai pra
+ *     uma aba nova "Códigos novos", só de revisão: você confere depois, no
+ *     computador, e adiciona o código ao dados.json (a skill de atualização
+ *     de estoque já faz isso a partir de uma lista). O app também lembra
+ *     esse vínculo localmente (no aparelho) pra reconhecer o código de novo
+ *     na mesma contagem, sem perguntar de novo.
  * -----------------------------------------------------------------
  * Mudanças da v8 (marcadas com [v8]):
  *  1. NOVO: "Pesquisar produto (código ou nome)" no menu — digite o código de
@@ -43,8 +59,10 @@ var SYNC_TOKEN='lc-2026';
 var DADOS_URL='https://raw.githubusercontent.com/YagoOliveira852/Contagem-estoque-LC/main/dados.json';
 var ESTOQUE_ID='1DoUEO-QfwPcdYHFIsroEXpnmO0x4GSVIzFRamJEaoYc'; // [v8] Estoque_Principal ATUAL (antes: 15GKEgro... = Antigo_Estoque_Principal)
 var ABA='Contagens';
-var HDR=['Chave','Letra','Código','Produto','Qtd loja','Qtd estoque','Total','Estoque sistema','Ajuste','Status','Atualizado em'];
-var C_CHAVE=1,C_LETRA=2,C_COD=3,C_PROD=4,C_LOJA=5,C_EST=6,C_TOTAL=7,C_SIST=8,C_AJU=9,C_STATUS=10,C_DATA=11,NCOL=11;
+var ABA_CODNOVOS='Códigos novos'; // [v9] revisão manual: vínculos feitos no app entre código escaneado e produto existente
+var HDR_CODNOVOS=['Data','Código escaneado','Produto vinculado','Chave produto','Letra'];
+var HDR=['Chave','Letra','Código','Produto','Qtd loja','Qtd estoque','Total','Estoque sistema','Ajuste','Status','Atualizado em','Etiqueta nova'];
+var C_CHAVE=1,C_LETRA=2,C_COD=3,C_PROD=4,C_LOJA=5,C_EST=6,C_TOTAL=7,C_SIST=8,C_AJU=9,C_STATUS=10,C_DATA=11,C_ETIQ=12,NCOL=12;
 var LINHAS=3000;
 var OPCOES_STATUS=['Não contado','OK','Pendente','Feito','Inativado','Enviado'];
 var VERDE_BG='#D4EDDA',VERDE_TX='#155724',VERM_BG='#F8D7DA',VERM_TX='#721C24';
@@ -101,6 +119,9 @@ function onOpen(){
     .addItem('Configurar / reestilizar','configurar')
     .addItem('Atualizar resumo','atualizarResumo')
     .addItem('Limpar contagens (nova letra/ciclo)','limparContagens')
+    .addSeparator()
+    .addItem('🏷️ Ver produtos p/ etiqueta nova','listarEtiquetas')       // [v9]
+    .addItem('🏷️ Limpar marcações de etiqueta (já imprimi)','limparEtiquetas') // [v9]
     .addToUi();
 }
 
@@ -200,14 +221,16 @@ function configurar(){
     var head=data[0].map(function(x){return String(x).trim();});
     function ix(n){ return head.indexOf(n); }
     var iCh=ix('Chave'),iCo=ix('Código'),iPr=ix('Produto'),iLo=ix('Qtd loja'),
-        iEs=ix('Qtd estoque'),iSi=ix('Estoque sistema'),iSt=ix('Status'),iIn=ix('Inativado?'),iDa=ix('Atualizado em');
+        iEs=ix('Qtd estoque'),iSi=ix('Estoque sistema'),iSt=ix('Status'),iIn=ix('Inativado?'),iDa=ix('Atualizado em'),
+        iEt=ix('Etiqueta nova'); // [v9]
     for(var r=1;r<data.length;r++){
       var row=data[r]; var prod=iPr>=0?row[iPr]:row[3];
       if(prod===''||prod==null) continue;
       var st=''; if(iSt>=0) st=row[iSt];
       else if(iIn>=0 && String(row[iIn]).toLowerCase()==='sim') st='Inativado';
       rows.push({chave:iCh>=0?row[iCh]:(row[0]||prod),cod:iCo>=0?row[iCo]:'',prod:prod,
-        loja:iLo>=0?row[iLo]:'',est:iEs>=0?row[iEs]:'',sist:iSi>=0?row[iSi]:'',status:st,data:iDa>=0?row[iDa]:''});
+        loja:iLo>=0?row[iLo]:'',est:iEs>=0?row[iEs]:'',sist:iSi>=0?row[iSi]:'',status:st,data:iDa>=0?row[iDa]:'',
+        etiqueta:iEt>=0?row[iEt]:''}); // [v9]
     }
   }
   rows.sort(function(a,b){ return String(a.prod).localeCompare(String(b.prod),'pt'); });
@@ -221,7 +244,8 @@ function configurar(){
       var x=rows[i]; var st=x.status;
       if(st!=='Feito'&&st!=='Inativado'&&st!=='Enviado') st=statusAuto_(x.loja,x.est,x.sist);
       out.push([x.chave, letraDe_(x.prod), x.cod, x.prod, x.loja, x.est,
-                totalVal_(x.loja,x.est), x.sist, ajusteVal_(x.loja,x.est,x.sist), st, x.data]);
+                totalVal_(x.loja,x.est), x.sist, ajusteVal_(x.loja,x.est,x.sist), st, x.data,
+                x.etiqueta==='Sim'?'Sim':'']); // [v9]
     }
     sh.getRange(2,C_COD,n,1).setNumberFormat('@'); // [v8] garante código como texto
     sh.getRange(2,1,n,NCOL).setValues(out);
@@ -238,9 +262,11 @@ function aplicarEstilo_(sh){
   sh.setColumnWidth(C_LETRA,55); sh.setColumnWidth(C_COD,120); sh.setColumnWidth(C_PROD,300);
   sh.setColumnWidth(C_LOJA,80); sh.setColumnWidth(C_EST,95); sh.setColumnWidth(C_TOTAL,70);
   sh.setColumnWidth(C_SIST,120); sh.setColumnWidth(C_AJU,160); sh.setColumnWidth(C_STATUS,115); sh.setColumnWidth(C_DATA,155);
+  sh.setColumnWidth(C_ETIQ,110); // [v9]
   sh.getRange(2,C_LETRA,LINHAS,1).setHorizontalAlignment('center');
   sh.getRange(2,C_LOJA,LINHAS,C_SIST-C_LOJA+1).setHorizontalAlignment('center');
   sh.getRange(2,C_STATUS,LINHAS,1).setHorizontalAlignment('center');
+  sh.getRange(2,C_ETIQ,LINHAS,1).setHorizontalAlignment('center'); // [v9]
   sh.getRange(2,C_COD,LINHAS,1).setNumberFormat('@'); // [v8] coluna Código sempre texto
   sh.getBandings().forEach(function(b){ b.remove(); });
   var lastData=Math.max(sh.getLastRow(),2);
@@ -248,6 +274,8 @@ function aplicarEstilo_(sh){
   band.setFirstRowColor(ZEBRA1); band.setSecondRowColor(ZEBRA2);
   var val=SpreadsheetApp.newDataValidation().requireValueInList(OPCOES_STATUS,true).setAllowInvalid(false).build();
   sh.getRange(2,C_STATUS,LINHAS,1).setDataValidation(val);
+  var valEt=SpreadsheetApp.newDataValidation().requireValueInList(['','Sim'],true).setAllowInvalid(false).build(); // [v9]
+  sh.getRange(2,C_ETIQ,LINHAS,1).setDataValidation(valEt);
   var rules=[];
   function contains(col,text,bg,fg){ return SpreadsheetApp.newConditionalFormatRule().whenTextContains(text).setBackground(bg).setFontColor(fg).setRanges([sh.getRange(2,col,LINHAS,1)]).build(); }
   function equals(col,text,bg,fg){ return SpreadsheetApp.newConditionalFormatRule().whenTextEqualTo(text).setBackground(bg).setFontColor(fg).setRanges([sh.getRange(2,col,LINHAS,1)]).build(); }
@@ -260,6 +288,7 @@ function aplicarEstilo_(sh){
   rules.push(equals(C_STATUS,'Inativado',VERM_BG,VERM_TX));
   rules.push(equals(C_STATUS,'Não contado',GRIS_BG,GRIS_TX));
   rules.push(equals(C_STATUS,'Enviado',AZUL_BG,AZUL_TX));
+  rules.push(equals(C_ETIQ,'Sim',AMBAR_BG,AMBAR_TX)); // [v9]
   sh.setConditionalFormatRules(rules);
   try{ var f=sh.getFilter(); if(f) f.remove(); }catch(e){}
   try{ sh.getRange(1,1,Math.max(sh.getLastRow(),2),NCOL).createFilter(); }catch(e){}
@@ -501,6 +530,53 @@ function limparContagens(){
   SpreadsheetApp.getActive().toast('Contagens zeradas.','🧮 Contagem',5);
 }
 
+// [v9] Lista as linhas marcadas com "Etiqueta nova" (pra imprimir de uma vez)
+function listarEtiquetas(){
+  var ui=SpreadsheetApp.getUi();
+  var sh=ss_().getSheetByName(ABA); var last=sh?sh.getLastRow():0;
+  if(!sh||last<2){ ui.alert('A aba Contagens está vazia.'); return; }
+  var vals=sh.getRange(2,1,last-1,NCOL).getValues();
+  var achados=[];
+  for(var i=0;i<vals.length;i++){
+    var v=vals[i]; if(!v[C_PROD-1]) continue;
+    if(String(v[C_ETIQ-1]||'')==='Sim') achados.push({linha:i+2,cod:v[C_COD-1],nome:v[C_PROD-1]});
+  }
+  if(!achados.length){ ui.alert('Nenhum produto marcado pra etiqueta nova no momento.'); return; }
+  var lista=achados.slice(0,40).map(function(a){ return '• '+a.nome+(a.cod?' — '+a.cod:'')+' (linha '+a.linha+')'; }).join('\n');
+  ui.alert('🏷️ '+achados.length+' produto(s) marcado(s) p/ etiqueta nova:\n\n'+lista+(achados.length>40?'\n• ...':''));
+}
+
+// [v9] Zera a coluna "Etiqueta nova" de tudo (rode depois de imprimir as etiquetas)
+function limparEtiquetas(){
+  var ui=SpreadsheetApp.getUi();
+  var sh=ss_().getSheetByName(ABA); var last=sh?sh.getLastRow():0;
+  if(!sh||last<2){ ui.alert('A aba Contagens está vazia.'); return; }
+  var vals=sh.getRange(2,1,last-1,NCOL).getValues();
+  var linhas=[];
+  for(var i=0;i<vals.length;i++){ if(String(vals[i][C_ETIQ-1]||'')==='Sim') linhas.push(i+2); }
+  if(!linhas.length){ ui.alert('Nenhuma marcação de etiqueta pra limpar.'); return; }
+  var r=ui.alert('Limpar marcações de etiqueta','Isso remove o destaque de "Etiqueta nova" de '+linhas.length+' produto(s). Confirma (já imprimiu)?',ui.ButtonSet.YES_NO);
+  if(r!==ui.Button.YES) return;
+  var rl=linhas.map(function(L){ return String.fromCharCode(64+C_ETIQ)+L; });
+  sh.getRangeList(rl).setValue('');
+  SpreadsheetApp.getActive().toast('Marcações de etiqueta limpas ('+linhas.length+').','🏷️ Etiqueta',5);
+}
+
+// [v9] Pega (ou cria) a aba de revisão dos códigos vinculados manualmente no app
+function abaCodigosNovos_(){
+  var ss=ss_(); var sh=ss.getSheetByName(ABA_CODNOVOS);
+  if(!sh){
+    sh=ss.insertSheet(ABA_CODNOVOS);
+    sh.getRange(1,1,1,HDR_CODNOVOS.length).setValues([HDR_CODNOVOS])
+      .setBackground(HEAD_BG).setFontColor(HEAD_TX).setFontWeight('bold');
+    sh.setFrozenRows(1);
+    sh.setColumnWidth(1,140); sh.setColumnWidth(2,150); sh.setColumnWidth(3,300); sh.setColumnWidth(4,90); sh.setColumnWidth(5,55);
+    sh.getRange(2,2,LINHAS,1).setNumberFormat('@'); // código sempre texto
+    sh.getRange(2,1,LINHAS,1).setNumberFormat('dd/mm/yyyy hh:mm');
+  }
+  return sh;
+}
+
 // Recalcula na hora se você digitar quantidade na mão
 function onEdit(e){
   try{
@@ -527,9 +603,24 @@ function doPost(e){
     if(SYNC_TOKEN && body.token!==SYNC_TOKEN) return resp_({ok:false,erro:'token invalido'});
     var itens=body.itens||(body.item?[body.item]:[]);
     if(!itens.length) return resp_({ok:false,erro:'sem itens'});
-    gravar_(itens);
+    // [v9] separa vínculos de código novo (vão pra aba de revisão) das contagens normais
+    var codNovos=[], contagens=[];
+    for(var i=0;i<itens.length;i++){ (itens[i].tipo==='codigo_novo'?codNovos:contagens).push(itens[i]); }
+    if(contagens.length) gravar_(contagens);
+    if(codNovos.length) gravarCodigosNovos_(codNovos);
     return resp_({ok:true,gravados:itens.length});
   }catch(err){ return resp_({ok:false,erro:String(err)}); }
+}
+
+// [v9] Registra na aba "Códigos novos" os vínculos feitos no app (código sem cadastro
+// ligado a um produto existente) — pra revisão manual e inclusão no dados.json.
+function gravarCodigosNovos_(itens){
+  var sh=abaCodigosNovos_();
+  var agora=new Date();
+  var linhas=itens.map(function(it){
+    return [it.ts?new Date(it.ts):agora, it.codigo||'', it.nome||'', it.chave!=null?String(it.chave):'', letraDe_(it.nome)];
+  });
+  sh.getRange(sh.getLastRow()+1,1,linhas.length,HDR_CODNOVOS.length).setValues(linhas);
 }
 
 function gravar_(itens){
@@ -568,6 +659,7 @@ function gravar_(itens){
     if(nomeN) mapaNome[nomeN]=r;
     var cur2=nova?'':String(sh.getRange(r,C_STATUS).getValue()||'');
     var st;
+    var etiqNovo=it.etiqueta?'Sim':''; // [v9]
     if(cur2==='Feito'||cur2==='Inativado'||cur2==='Enviado'){
       // [v8.5] linha FECHADA: congelada também contra o app.
       // Reenvio do celular com as MESMAS quantidades (botão Sincronizar, fila antiga)
@@ -575,17 +667,23 @@ function gravar_(itens){
       // e aí volta pro fluxo com status recalculado, pra ser enviada de novo.
       var lojaAtual=num_(sh.getRange(r,C_LOJA).getValue());
       var estAtual=num_(sh.getRange(r,C_EST).getValue());
-      if(lojaAtual===num_(it.qtdLoja) && estAtual===num_(it.qtdEstoque)) continue;
+      if(lojaAtual===num_(it.qtdLoja) && estAtual===num_(it.qtdEstoque)){
+        // [v9] mesmo com a linha congelada, a marcação de etiqueta nova pode mudar
+        if(it.etiqueta!==undefined && String(sh.getRange(r,C_ETIQ).getValue()||'')!==etiqNovo) sh.getRange(r,C_ETIQ).setValue(etiqNovo);
+        continue;
+      }
       st=statusAuto_(it.qtdLoja,it.qtdEstoque,it.sistema);
     } else {
       st=statusAuto_(it.qtdLoja,it.qtdEstoque,it.sistema);
     }
+    // [v9] se o item não trouxe o campo etiqueta (fila antiga/app desatualizado), preserva o que já estava na linha
+    var etiqOut=(it.etiqueta!==undefined)?etiqNovo:(nova?'':String(sh.getRange(r,C_ETIQ).getValue()||''));
     sh.getRange(r,C_COD).setNumberFormat('@'); // [v8] código como texto
     sh.getRange(r,1,1,NCOL).setValues([[
       chave, letraDe_(it.nome), it.codigo||'', it.nome||'',
       num_(it.qtdLoja), num_(it.qtdEstoque), num_(it.qtdLoja)+num_(it.qtdEstoque),
       num_(it.sistema), ajusteVal_(it.qtdLoja,it.qtdEstoque,it.sistema), st,
-      it.ts?new Date(it.ts):agora
+      it.ts?new Date(it.ts):agora, etiqOut
     ]]);
   }
   atualizarResumo();
@@ -645,4 +743,4 @@ function atualizarEstoqueSistema(){
            '\n• Estoque_Principal: '+cEst+' produtos'+(semCasar?('\n• '+semCasar+' sem casar'):''));
 }
 
-function doGet(){ return resp_({ok:true,servico:'contagem-estoque-lc',versao:8.5}); }
+function doGet(){ return resp_({ok:true,servico:'contagem-estoque-lc',versao:9.0}); }
