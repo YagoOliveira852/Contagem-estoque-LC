@@ -38,7 +38,7 @@
         },
         {
             "n": "ABRACAD BORB S/FIM 1/2X3/4",
-            "e": 5,
+            "e": 1,
             "p": 2.95,
             "u": "UN"
         },
@@ -50,7 +50,7 @@
         },
         {
             "n": "ABRACAD NYLON BCO 100X2.5 PCT C/100 MAX FERRAGENS",
-            "e": 68,
+            "e": 67,
             "p": 4.9,
             "u": "UN"
         },
@@ -62,7 +62,7 @@
         },
         {
             "n": "ABRACAD NYLON BCO 200X2.5 PCT C/100 MAX FERRAGENS",
-            "e": 61,
+            "e": 60,
             "p": 6.4,
             "u": "UN"
         },
@@ -122,7 +122,7 @@
         },
         {
             "n": "ABRACAD NYLON PTO 100X2.5 PCT C/100 MAX FERRAGENS",
-            "e": 99,
+            "e": 95,
             "p": 4.9,
             "u": "UN"
         },
@@ -140,19 +140,19 @@
         },
         {
             "n": "ABRACAD NYLON PTO 160X2.5 PCT C/100 MAX FERRAGENS",
-            "e": 35,
+            "e": 32,
             "p": 4.9,
             "u": "UN"
         },
         {
             "n": "ABRACAD NYLON PTO 200X2.5 PCT C/100 MAX FERRAGENS",
-            "e": 61,
+            "e": 60,
             "p": 5.7,
             "u": "UN"
         },
         {
             "n": "ABRACAD NYLON PTO 200X3.5 PCT C/100",
-            "e": 51,
+            "e": 49,
             "p": 8.4,
             "u": "UN"
         },
@@ -164,7 +164,7 @@
         },
         {
             "n": "ABRACAD NYLON PTO 200X4.8 PCT C/100",
-            "e": 9,
+            "e": 8,
             "p": 27.6,
             "u": "UN"
         },
@@ -194,7 +194,7 @@
         },
         {
             "n": "ABRACAD NYLON PTO 400X4.8 PCT C/100 MAX FERRAGENS",
-            "e": 25,
+            "e": 24,
             "p": 36.7,
             "u": "UN"
         },
@@ -302,7 +302,7 @@
         },
         {
             "n": "ABRACAD ROSCA S/FIM 10-13 (3/8X1/2)",
-            "e": 547,
+            "e": 545,
             "p": 1.9,
             "u": "UN"
         },
@@ -326,7 +326,7 @@
         },
         {
             "n": "ABRACAD ROSCA S/FIM 13-19",
-            "e": 186,
+            "e": 182,
             "p": 1.8,
             "u": "UN"
         },
@@ -344,7 +344,7 @@
         },
         {
             "n": "ABRACAD ROSCA S/FIM 19-25",
-            "e": 129,
+            "e": 126,
             "p": 2,
             "u": "UN"
         },
@@ -428,7 +428,7 @@
         },
         {
             "n": "ABRACAD TIPO D 3/4\"C/CUNHA S/P",
-            "e": 269,
+            "e": 259,
             "p": 3.5,
             "u": "UN"
         },
@@ -452,7 +452,7 @@
         },
         {
             "n": "ABRACAD TIPO U 1/2\" S/P UND",
-            "e": 167,
+            "e": 164,
             "p": 0.89,
             "u": "UN"
         },
@@ -482,7 +482,7 @@
         },
         {
             "n": "ABRACAD TIPO U 3/4\" S/P UND",
-            "e": 274,
+            "e": 262,
             "p": 1.4,
             "u": "UN"
         },
@@ -543,7 +543,7 @@
         {
             "n": "ACABAMENTO ABS P/REG C-23 MESANO",
             "e": 10,
-            "p": 8.9,
+            "p": 9.9,
             "u": "UN"
         },
         {
@@ -561,7 +561,7 @@
         {
             "n": "ACABAMENTO ABS P/REG C-33 MESANO",
             "e": 10,
-            "p": 9.4,
+            "p": 11.3,
             "u": "UN"
         },
         {
@@ -573,13 +573,13 @@
         {
             "n": "ACABAMENTO ABS P/REG C-40 MESANO",
             "e": 30,
-            "p": 14.6,
+            "p": 17.8,
             "u": "UN"
         },
         {
             "n": "ACABAMENTO ABS P/REG C-50 MESANO",
             "e": 11,
-            "p": 13.9,
+            "p": 17.8,
             "u": "UN"
         },
         {
@@ -597,7 +597,7 @@
         {
             "n": "ACABAMENTO ABS P/TORN C-33 MESANO",
             "e": 15,
-            "p": 8.2,
+            "p": 6.7,
             "u": "UN"
         },
         {
@@ -620,7 +620,7 @@
         },
         {
             "n": "ACABAMENTO C40 1000 LIGHT BOGNAR",
-            "e": 39,
+            "e": 36,
             "p": 14.9,
             "u": "UN"
         },
@@ -668,7 +668,7 @@
         },
         {
             "n": "ACABAMENTO METAL P/REG C-40 MESANO",
-            "e": 19,
+            "e": 18,
             "p": 27.9,
             "u": "UN"
         },
@@ -728,7 +728,7 @@
         },
         {
             "n": "ACENDEDOR MULTIUSO HANDY BIC",
-            "e": 26,
+            "e": 25,
             "p": 23.9,
             "u": "UN"
         },
@@ -794,7 +794,7 @@
         },
         {
             "n": "ADAP FLANGE P/CX D AG 25MMX3/4 AMANCO/TIGRE",
-            "e": 27,
+            "e": 67,
             "p": 18.7,
             "u": "UN"
         },
@@ -950,7 +950,7 @@
         },
         {
             "n": "ADAP SOLD.CURTO 25MMX3/4 AMANCO",
-            "e": 267,
+            "e": 264,
             "p": 1.5,
             "u": "UN"
         },
@@ -968,7 +968,7 @@
         },
         {
             "n": "ADAP SOLD.CURTO 40MMX1.1/4 AMANCO/TIGRE",
-            "e": 28,
+            "e": 26,
             "p": 5.4,
             "u": "UN"
         },
@@ -1016,13 +1016,13 @@
         },
         {
             "n": "ADESIVO COLA GEL 20G CIBRA",
-            "e": 158,
+            "e": 155,
             "p": 6.9,
             "u": "UN"
         },
         {
             "n": "ADESIVO CONTATO BISNAGA 75G BRASCOPLAST",
-            "e": 39,
+            "e": 38,
             "p": 9.9,
             "u": "UN"
         },
@@ -1070,7 +1070,7 @@
         },
         {
             "n": "ADESIVO FIXA CUBA BCO 85G TEKBOND",
-            "e": 18,
+            "e": 17,
             "p": 23.4,
             "u": "UN"
         },
@@ -1082,7 +1082,7 @@
         },
         {
             "n": "ADESIVO INSTANTANEO 20G CIBRABOND",
-            "e": 795,
+            "e": 794,
             "p": 5.8,
             "u": "UN"
         },
@@ -1094,7 +1094,7 @@
         },
         {
             "n": "ADESIVO INSTANTANEO 793 20G TEKBOND",
-            "e": 46,
+            "e": 40,
             "p": 10.9,
             "u": "UN"
         },
@@ -1124,25 +1124,25 @@
         },
         {
             "n": "ADESIVO PLASTICO BCO C/CAT 400G MAZA",
-            "e": 9,
+            "e": 7,
             "p": 15.9,
             "u": "UN"
         },
         {
             "n": "ADESIVO POLYTUBES 17G",
-            "e": 152,
+            "e": 148,
             "p": 3.2,
             "u": "UN"
         },
         {
             "n": "ADESIVO POLYTUBES 75G",
-            "e": 227,
+            "e": 226,
             "p": 7.8,
             "u": "UN"
         },
         {
             "n": "AGUA DESTILADA 1LT",
-            "e": 0,
+            "e": 480,
             "p": 3.5,
             "u": "UN"
         },
@@ -1184,7 +1184,7 @@
         },
         {
             "n": "ALCOOL 70% SANTA CRUZ 500ML",
-            "e": 1,
+            "e": 0,
             "p": 8.6,
             "u": "UN"
         },
@@ -1298,7 +1298,7 @@
         },
         {
             "n": "ALGARISMO VIDRO FUME 0 14X11 S/P PQ",
-            "e": 32,
+            "e": 31,
             "p": 9.9,
             "u": "UN"
         },
@@ -1334,7 +1334,7 @@
         },
         {
             "n": "ALGARISMO VIDRO FUME 3 14X11 S/P PQ",
-            "e": 21,
+            "e": 20,
             "p": 9.9,
             "u": "UN"
         },
@@ -1358,7 +1358,7 @@
         },
         {
             "n": "ALGARISMO VIDRO FUME 5 14X11 S/P PQ",
-            "e": 28,
+            "e": 27,
             "p": 9.9,
             "u": "UN"
         },
@@ -1382,7 +1382,7 @@
         },
         {
             "n": "ALGARISMO VIDRO FUME 7 14X11 S/P PQ",
-            "e": 19,
+            "e": 17,
             "p": 9.9,
             "u": "UN"
         },
@@ -1406,7 +1406,7 @@
         },
         {
             "n": "ALGARISMO VIDRO FUME 9 14X11 S/P PQ",
-            "e": 27,
+            "e": 26,
             "p": 9.9,
             "u": "UN"
         },
@@ -1454,7 +1454,7 @@
         },
         {
             "n": "ALICATE BOMBA D AGUA 10\" FAMASTIL/FOX LUX",
-            "e": 2,
+            "e": 1,
             "p": 49.7,
             "u": "UN"
         },
@@ -1514,7 +1514,7 @@
         },
         {
             "n": "ALICATE MULTIUSO 8\" TRAMONTINA",
-            "e": 6,
+            "e": 5,
             "p": 49.9,
             "u": "UN"
         },
@@ -1617,7 +1617,7 @@
         {
             "n": "ALONGADOR DE 1/2 6CM MESANO",
             "e": 22,
-            "p": 11.9,
+            "p": 11.7,
             "u": "UN"
         },
         {
@@ -1676,7 +1676,7 @@
         },
         {
             "n": "ANEL DE VEDACAO P/ESG 150MM AMANCO",
-            "e": 61,
+            "e": 60,
             "p": 14.9,
             "u": "UN"
         },
@@ -1742,7 +1742,7 @@
         },
         {
             "n": "ANTENA DIGITAL PORTATIL AI-920I 1.5MT INDUSAT",
-            "e": 92,
+            "e": 91,
             "p": 19.9,
             "u": "UN"
         },
@@ -1790,7 +1790,7 @@
         },
         {
             "n": "ARAME 18 GALVANIZADO 1KG",
-            "e": 27.7,
+            "e": 27.6,
             "p": 27.9,
             "u": "KG"
         },
@@ -1808,7 +1808,7 @@
         },
         {
             "n": "ARAME 18 RECOZIDO (PRETO) CIBRA 1KG",
-            "e": 149,
+            "e": 146,
             "p": 15.9,
             "u": "UN"
         },
@@ -2030,7 +2030,7 @@
         },
         {
             "n": "ARCO DE SERRA REGULAVEL 12\" MAX FERRAGENS",
-            "e": 11,
+            "e": 10,
             "p": 19.9,
             "u": "UN"
         },
@@ -2048,7 +2048,7 @@
         },
         {
             "n": "AREIA GROSSA PCT 20KG",
-            "e": 413,
+            "e": 407,
             "p": 8.95,
             "u": "UN"
         },
@@ -2072,31 +2072,31 @@
         },
         {
             "n": "ARGAMASSA AC-2 15KG REJUNTAMIX",
-            "e": 91,
+            "e": 76,
             "p": 19.9,
             "u": "UN"
         },
         {
             "n": "ARGAMASSA AC-2 15KG ULTRAMASSA",
-            "e": 595,
+            "e": 551,
             "p": 10.9,
             "u": "UN"
         },
         {
             "n": "ARGAMASSA AC-3 15KG CONSTRUMIX",
-            "e": 245,
+            "e": 233,
             "p": 19.9,
             "u": "UN"
         },
         {
             "n": "ARGAMASSA AC-3 15KG ULTRAMASSA",
-            "e": 234,
+            "e": 226,
             "p": 19.9,
             "u": "UN"
         },
         {
             "n": "ARGAMASSA AC-3 PORC/PISO EXT QUARTZOLIT",
-            "e": 269,
+            "e": 265,
             "p": 32.8,
             "u": "UN"
         },
@@ -2108,13 +2108,13 @@
         },
         {
             "n": "ARGAMASSA AC-3 TOP 10 CINZA COLAMIX 15KG",
-            "e": 102,
+            "e": 81,
             "p": 29.9,
             "u": "UN"
         },
         {
             "n": "ARGAMASSA VAR E QUINTAIS AC-2 15KG QUARTZOLIT",
-            "e": 166,
+            "e": 150,
             "p": 19.95,
             "u": "UN"
         },
@@ -2168,7 +2168,7 @@
         },
         {
             "n": "ARMADOR FIXAR ZINC S/PARAF UND",
-            "e": 99,
+            "e": 96,
             "p": 9.9,
             "u": "UN"
         },
@@ -2210,7 +2210,7 @@
         },
         {
             "n": "ARMARIO EMB/SOB C/GAV 32.8X44.5 BCO HERC",
-            "e": 10,
+            "e": 9,
             "p": 93.7,
             "u": "UN"
         },
@@ -2420,7 +2420,7 @@
         },
         {
             "n": "AROMATIZADOR ESSENCIA HS TUTIFRUT 100ML",
-            "e": 6,
+            "e": 5,
             "p": 10.9,
             "u": "UN"
         },
@@ -2444,7 +2444,7 @@
         },
         {
             "n": "ARRUELA LISA 1/4 UND",
-            "e": 3458,
+            "e": 3448,
             "p": 0.23,
             "u": "UN"
         },
@@ -2456,7 +2456,7 @@
         },
         {
             "n": "ARRUELA LISA 3/16 UND",
-            "e": 1114,
+            "e": 1104,
             "p": 0.19,
             "u": "UN"
         },
@@ -2612,13 +2612,13 @@
         },
         {
             "n": "ASSENTO SANIT ALM PRIME 2385 BCO HERC",
-            "e": 146,
+            "e": 145,
             "p": 59.9,
             "u": "UN"
         },
         {
             "n": "ASSENTO SANIT ALM PRIME 2386 CZ HERC",
-            "e": 24,
+            "e": 23,
             "p": 59.9,
             "u": "UN"
         },
@@ -2636,7 +2636,7 @@
         },
         {
             "n": "ASSENTO SANIT ENVOLVENTE 385 BCO HERC",
-            "e": 47,
+            "e": 46,
             "p": 34.9,
             "u": "UN"
         },
@@ -2732,7 +2732,7 @@
         },
         {
             "n": "ASSENTO SANIT. ALMOF SLIM BCO ASTRA",
-            "e": 100,
+            "e": 99,
             "p": 59.9,
             "u": "UN"
         },
@@ -2912,7 +2912,7 @@
         },
         {
             "n": "AVENTAL G",
-            "e": 7,
+            "e": 6,
             "p": 19.9,
             "u": "UN"
         },
@@ -2978,7 +2978,7 @@
         },
         {
             "n": "BACIA C/CAIXA ACOP GARD.6L BCA MARI",
-            "e": 164,
+            "e": 163,
             "p": 399.9,
             "u": "UN"
         },
@@ -3038,7 +3038,7 @@
         },
         {
             "n": "BALDE PLASTICO COMUM",
-            "e": 39,
+            "e": 38,
             "p": 14.9,
             "u": "UN"
         },
@@ -3074,7 +3074,7 @@
         },
         {
             "n": "BARATICIDA GEL 10GR",
-            "e": 21,
+            "e": 19,
             "p": 12.6,
             "u": "UN"
         },
@@ -3087,7 +3087,7 @@
         {
             "n": "BARRA DE APOIO METAL 30CM",
             "e": 12,
-            "p": 72.9,
+            "p": 51.8,
             "u": "UN"
         },
         {
@@ -3099,7 +3099,7 @@
         {
             "n": "BARRA DE APOIO METAL 50CM",
             "e": 13,
-            "p": 92.9,
+            "p": 64.8,
             "u": "UN"
         },
         {
@@ -3452,7 +3452,7 @@
         },
         {
             "n": "BATERIA 3V CR2032 LITHIUM ELGIN UND",
-            "e": 100,
+            "e": 99,
             "p": 2.9,
             "u": "UN"
         },
@@ -3506,7 +3506,7 @@
         },
         {
             "n": "BAYGON ACAO TOTAL AEROSOL 360ML",
-            "e": 3,
+            "e": 2,
             "p": 19.9,
             "u": "UN"
         },
@@ -3518,7 +3518,7 @@
         },
         {
             "n": "BIANCO ADESIVO 18KG",
-            "e": 7,
+            "e": 5,
             "p": 419.9,
             "u": "UN"
         },
@@ -3758,7 +3758,7 @@
         },
         {
             "n": "BOLSA DE VEDACAO PRETA KS/BV ASTRA",
-            "e": 23,
+            "e": 22,
             "p": 15.7,
             "u": "UN"
         },
@@ -3794,7 +3794,7 @@
         },
         {
             "n": "BOLSA VEDACAO CX ACOP 9585 CENSI",
-            "e": 8,
+            "e": 7,
             "p": 15.4,
             "u": "UN"
         },
@@ -3836,7 +3836,7 @@
         },
         {
             "n": "BOMBA PERIF XKM60 1/2HP 220W 40L/MIM AMANCO",
-            "e": 9,
+            "e": 8,
             "p": 459.9,
             "u": "UN"
         },
@@ -3986,7 +3986,7 @@
         },
         {
             "n": "BOTA PVC CURTA BCA N 39",
-            "e": 2,
+            "e": 1,
             "p": 59.9,
             "u": "PAR"
         },
@@ -4286,7 +4286,7 @@
         },
         {
             "n": "BOTAO ACION DUPLO . P/TAMPA CX DESC MBD ASTRA",
-            "e": 16,
+            "e": 15,
             "p": 33.8,
             "u": "UN"
         },
@@ -4394,7 +4394,7 @@
         },
         {
             "n": "BOTINA B.FERRO C/ELAST 43",
-            "e": 5,
+            "e": 4,
             "p": 84.9,
             "u": "PAR"
         },
@@ -4448,7 +4448,7 @@
         },
         {
             "n": "BRITA GRAND PCT 20KG BARREIRINHA",
-            "e": 88,
+            "e": 84,
             "p": 10.8,
             "u": "UN"
         },
@@ -4466,37 +4466,37 @@
         },
         {
             "n": "BROCA ACO RAPIDO 1/4\"",
-            "e": 7,
+            "e": 5,
             "p": 13.95,
             "u": "UN"
         },
         {
             "n": "BROCA ACO RAPIDO 1/8\"",
-            "e": 28,
+            "e": 128,
             "p": 6.4,
             "u": "UN"
         },
         {
             "n": "BROCA ACO RAPIDO 10MM",
-            "e": 12,
+            "e": 22,
             "p": 25.9,
             "u": "UN"
         },
         {
             "n": "BROCA ACO RAPIDO 11/64\"",
-            "e": 5,
+            "e": 4,
             "p": 7.2,
             "u": "UN"
         },
         {
             "n": "BROCA ACO RAPIDO 12MM",
-            "e": 3,
+            "e": 2,
             "p": 39.9,
             "u": "UN"
         },
         {
             "n": "BROCA ACO RAPIDO 13/64\"",
-            "e": 7,
+            "e": 26,
             "p": 8.2,
             "u": "UN"
         },
@@ -4526,19 +4526,19 @@
         },
         {
             "n": "BROCA ACO RAPIDO 3/16\"",
-            "e": 35,
+            "e": 85,
             "p": 7.8,
             "u": "UN"
         },
         {
             "n": "BROCA ACO RAPIDO 3/32\"",
-            "e": 5,
+            "e": 35,
             "p": 5.9,
             "u": "UN"
         },
         {
             "n": "BROCA ACO RAPIDO 3/8\"",
-            "e": 23,
+            "e": 73,
             "p": 24.9,
             "u": "UN"
         },
@@ -4550,19 +4550,19 @@
         },
         {
             "n": "BROCA ACO RAPIDO 4MM",
-            "e": 3,
+            "e": 32,
             "p": 4.9,
             "u": "UN"
         },
         {
             "n": "BROCA ACO RAPIDO 5/16\"",
-            "e": 13,
+            "e": 113,
             "p": 25.9,
             "u": "UN"
         },
         {
             "n": "BROCA ACO RAPIDO 5/32\"",
-            "e": 30,
+            "e": 128,
             "p": 9.8,
             "u": "UN"
         },
@@ -4574,13 +4574,13 @@
         },
         {
             "n": "BROCA ACO RAPIDO 5MM",
-            "e": 0,
+            "e": 20,
             "p": 7.4,
             "u": "UN"
         },
         {
             "n": "BROCA ACO RAPIDO 6MM",
-            "e": 0,
+            "e": 40,
             "p": 8.85,
             "u": "UN"
         },
@@ -4598,19 +4598,19 @@
         },
         {
             "n": "BROCA ACO RAPIDO 7/64\"",
-            "e": 20,
+            "e": 40,
             "p": 3.9,
             "u": "UN"
         },
         {
             "n": "BROCA ACO RAPIDO 8MM",
-            "e": 7,
+            "e": 107,
             "p": 16.7,
             "u": "UN"
         },
         {
             "n": "BROCA ACO RAPIDO 9/64\"",
-            "e": 24,
+            "e": 84,
             "p": 6.4,
             "u": "UN"
         },
@@ -4670,7 +4670,7 @@
         },
         {
             "n": "BROCA ENCAIXE VIDEA 06X160MM",
-            "e": 7,
+            "e": 6,
             "p": 10.4,
             "u": "UN"
         },
@@ -4814,7 +4814,7 @@
         },
         {
             "n": "BROCA PORCE/VIDRO 08MM",
-            "e": 14,
+            "e": 13,
             "p": 12.4,
             "u": "UN"
         },
@@ -4832,7 +4832,7 @@
         },
         {
             "n": "BROCA VIDEA 06MM",
-            "e": 25,
+            "e": 23,
             "p": 9.2,
             "u": "UN"
         },
@@ -4844,7 +4844,7 @@
         },
         {
             "n": "BROCA VIDEA 08MM",
-            "e": 29,
+            "e": 26,
             "p": 13.4,
             "u": "UN"
         },
@@ -4994,7 +4994,7 @@
         },
         {
             "n": "BUCHA DE RED ROSC 3/4X1/2 AMANCO/KRONA",
-            "e": 184,
+            "e": 182,
             "p": 2.15,
             "u": "UN"
         },
@@ -5048,13 +5048,13 @@
         },
         {
             "n": "BUCHA DE RED SOLD LON 50X25MM AMANC/TIG",
-            "e": 59,
+            "e": 58,
             "p": 5.7,
             "u": "UN"
         },
         {
             "n": "BUCHA DE RED SOLD LON 50X32MM AMANCO/TIGRE",
-            "e": 22,
+            "e": 21,
             "p": 8.2,
             "u": "UN"
         },
@@ -5090,7 +5090,7 @@
         },
         {
             "n": "BUCHA GESSO 1 S/P (15-23) 6MM UND",
-            "e": 439,
+            "e": 433,
             "p": 0.91,
             "u": "UN"
         },
@@ -5102,7 +5102,7 @@
         },
         {
             "n": "BUCHA GESSO 2 S/P(15-19) 8MM UND",
-            "e": 430,
+            "e": 410,
             "p": 0.75,
             "u": "UN"
         },
@@ -5126,25 +5126,25 @@
         },
         {
             "n": "BUCHA P/PARAFUSO 06MM FIXADURA",
-            "e": 4468,
+            "e": 4436,
             "p": 0.09,
             "u": "UN"
         },
         {
             "n": "BUCHA P/PARAFUSO 07MM FIXADURA",
-            "e": 2321,
+            "e": 2301,
             "p": 0.13,
             "u": "UN"
         },
         {
             "n": "BUCHA P/PARAFUSO 08MM FIXADURA",
-            "e": 1554,
+            "e": 1424,
             "p": 0.17,
             "u": "UN"
         },
         {
             "n": "BUCHA P/PARAFUSO 10MM FIXADURA",
-            "e": 2909,
+            "e": 2849,
             "p": 0.26,
             "u": "UN"
         },
@@ -5228,7 +5228,7 @@
         },
         {
             "n": "CABECOTE C23 1014 CROMADO BOGNAR",
-            "e": 13,
+            "e": 12,
             "p": 25.9,
             "u": "UN"
         },
@@ -5462,7 +5462,7 @@
         },
         {
             "n": "CABO 10MM VERMELHO MT",
-            "e": 292,
+            "e": 290,
             "p": 17.7,
             "u": "M"
         },
@@ -5546,7 +5546,7 @@
         },
         {
             "n": "CABO 2.5MM AZUL MT",
-            "e": 5521,
+            "e": 5491,
             "p": 4.2,
             "u": "M"
         },
@@ -5564,7 +5564,7 @@
         },
         {
             "n": "CABO 2.5MM BRANCO MT",
-            "e": 7549,
+            "e": 7519,
             "p": 4.2,
             "u": "M"
         },
@@ -5600,13 +5600,13 @@
         },
         {
             "n": "CABO 2.5MM VERMELHO MT",
-            "e": 9144,
+            "e": 9141,
             "p": 4.2,
             "u": "M"
         },
         {
             "n": "CABO 4MM AZUL MT",
-            "e": 1579,
+            "e": 1559,
             "p": 6.8,
             "u": "M"
         },
@@ -5708,7 +5708,7 @@
         },
         {
             "n": "CABO 6MM VERDE MT",
-            "e": 700,
+            "e": 693,
             "p": 9.8,
             "u": "M"
         },
@@ -5960,7 +5960,7 @@
         },
         {
             "n": "CABO PP 2X1.50 MT",
-            "e": 1161,
+            "e": 1140,
             "p": 6.65,
             "u": "M"
         },
@@ -5984,7 +5984,7 @@
         },
         {
             "n": "CABO PP 2X4.00 MT",
-            "e": 380,
+            "e": 378,
             "p": 18.7,
             "u": "M"
         },
@@ -6446,7 +6446,7 @@
         },
         {
             "n": "CAIXA DE DESCARG S/ENGATE ASTRA BCO C21/S*BR1",
-            "e": 83,
+            "e": 82,
             "p": 44.9,
             "u": "UN"
         },
@@ -6572,7 +6572,7 @@
         },
         {
             "n": "CAIXA P/LAJE PRETA 3007 COMUM",
-            "e": 44,
+            "e": 42,
             "p": 4.3,
             "u": "UN"
         },
@@ -6680,7 +6680,7 @@
         },
         {
             "n": "CAIXA PLAST 4X2 AMARELA POLYFORT",
-            "e": 193,
+            "e": 190,
             "p": 1.6,
             "u": "UN"
         },
@@ -6692,7 +6692,7 @@
         },
         {
             "n": "CAIXA PLAST 4X4 OCT 3006 PTA ROMAZI/POLYFORT",
-            "e": 13,
+            "e": 7,
             "p": 2.9,
             "u": "UN"
         },
@@ -6788,7 +6788,7 @@
         },
         {
             "n": "CAIXA SOB 4X2 4010 JANGADA ROMAZI",
-            "e": 6,
+            "e": 5,
             "p": 4.9,
             "u": "UN"
         },
@@ -6950,7 +6950,7 @@
         },
         {
             "n": "CALHA PVC PLUV MT (PERFIL) TIGRE",
-            "e": 33,
+            "e": 32,
             "p": 73.9,
             "u": "M"
         },
@@ -6992,7 +6992,7 @@
         },
         {
             "n": "CAMARA DE AR 3.25X8 COMUM",
-            "e": 10,
+            "e": 9,
             "p": 19.2,
             "u": "UN"
         },
@@ -7070,13 +7070,13 @@
         },
         {
             "n": "CANALETA DUPLA FACE BC 10X10X2MT",
-            "e": 24,
+            "e": 17,
             "p": 7.2,
             "u": "UN"
         },
         {
             "n": "CANALETA DUPLA FACE BC 20X10X2MT ILUMI",
-            "e": 3756,
+            "e": 3752,
             "p": 6.9,
             "u": "UN"
         },
@@ -7142,7 +7142,7 @@
         },
         {
             "n": "CANTONEIRA ALUM EM L 3/4 BRANCA 3MT",
-            "e": 7,
+            "e": 0,
             "p": 26.7,
             "u": "UN"
         },
@@ -7286,13 +7286,13 @@
         },
         {
             "n": "CANTONEIRA P/ MOVEIS BCA 3FUROS OVERTIME C/4 UNID",
-            "e": 25,
+            "e": 23,
             "p": 14.5,
             "u": "UN"
         },
         {
             "n": "CANTONEIRA P/ MOVEIS BIC 2 1/2\" OVERTIME C/4 UNID",
-            "e": 8,
+            "e": 7,
             "p": 13.8,
             "u": "UN"
         },
@@ -7346,7 +7346,7 @@
         },
         {
             "n": "CANTONEIRA RIGIDA 25X25X2800MM 2.8MT FAME",
-            "e": 27,
+            "e": 21,
             "p": 29.9,
             "u": "UN"
         },
@@ -7484,7 +7484,7 @@
         },
         {
             "n": "CAP SOLDAVEL 25MM AMANCO",
-            "e": 24,
+            "e": 23,
             "p": 1.9,
             "u": "UN"
         },
@@ -7646,7 +7646,7 @@
         },
         {
             "n": "CAPA P/MAQUINA DE LAVAR C/ZIPER 10 A15KG",
-            "e": 12,
+            "e": 22,
             "p": 69.9,
             "u": "UN"
         },
@@ -8198,7 +8198,7 @@
         },
         {
             "n": "CENTRO DE DISTR P/3/4 DISJ SOB TIGRE",
-            "e": 7,
+            "e": 6,
             "p": 73.9,
             "u": "UN"
         },
@@ -8216,7 +8216,7 @@
         },
         {
             "n": "CENTRO DE DISTR SOBR P/3/4 DISJ S/BARR FAME",
-            "e": 1,
+            "e": 0,
             "p": 56.9,
             "u": "UN"
         },
@@ -8342,7 +8342,7 @@
         },
         {
             "n": "CHAPA FIBROTEX 5MM (TELHA) 1.83X1.10M",
-            "e": 324,
+            "e": 321,
             "p": 69.9,
             "u": "UN"
         },
@@ -8528,7 +8528,7 @@
         },
         {
             "n": "CHAVE CANHAO 09MM BELZER/GEDORE",
-            "e": 10,
+            "e": 9,
             "p": 34.2,
             "u": "UN"
         },
@@ -8660,7 +8660,7 @@
         },
         {
             "n": "CHAVE COMBINADA 10MM MAYLE",
-            "e": 1,
+            "e": 0,
             "p": 12.45,
             "u": "UN"
         },
@@ -8678,13 +8678,13 @@
         },
         {
             "n": "CHAVE COMBINADA 13MM MAYLE",
-            "e": 7,
+            "e": 5,
             "p": 14.95,
             "u": "UN"
         },
         {
             "n": "CHAVE COMBINADA 14MM MAYLE",
-            "e": 8,
+            "e": 7,
             "p": 17.6,
             "u": "UN"
         },
@@ -8888,7 +8888,7 @@
         },
         {
             "n": "CHAVE FENDA 3/16\"X04\"TRAMONTINA",
-            "e": 8,
+            "e": 7,
             "p": 7.9,
             "u": "UN"
         },
@@ -9026,7 +9026,7 @@
         },
         {
             "n": "CHAVE GRIFO 14\"",
-            "e": 2,
+            "e": 1,
             "p": 59.9,
             "u": "UN"
         },
@@ -9200,7 +9200,7 @@
         },
         {
             "n": "CHAVE L C/FURO PASSANTE 10MM",
-            "e": 6,
+            "e": 5,
             "p": 30.4,
             "u": "UN"
         },
@@ -9278,7 +9278,7 @@
         },
         {
             "n": "CHAVE P/MANDRIL 10MM MAX 10513",
-            "e": 18,
+            "e": 17,
             "p": 4.9,
             "u": "UN"
         },
@@ -9356,7 +9356,7 @@
         },
         {
             "n": "CHAVE PHILIPS 3/16\"X03\"TRAMONTINA",
-            "e": 10,
+            "e": 8,
             "p": 11.9,
             "u": "UN"
         },
@@ -9368,7 +9368,7 @@
         },
         {
             "n": "CHAVE PHILIPS 3/16\"X06\"TRAMONTINA",
-            "e": 13,
+            "e": 12,
             "p": 12.5,
             "u": "UN"
         },
@@ -9398,7 +9398,7 @@
         },
         {
             "n": "CHAVE PHILIPS MAGNETICA 1/4\"X04\"MAX",
-            "e": 27,
+            "e": 26,
             "p": 7.1,
             "u": "UN"
         },
@@ -9446,7 +9446,7 @@
         },
         {
             "n": "CHAVE PHILLIPS 1/4\"X05\" TRAMONTINA",
-            "e": 3,
+            "e": 2,
             "p": 15.4,
             "u": "UN"
         },
@@ -9488,7 +9488,7 @@
         },
         {
             "n": "CHAVE TESTE NEON 1/8X3 TRAMONTINA",
-            "e": 12,
+            "e": 11,
             "p": 28.9,
             "u": "UN"
         },
@@ -9662,7 +9662,7 @@
         },
         {
             "n": "CHUVEIRINHO P/DUCHA ELE BCO ASTRA D/CHM*BR",
-            "e": 9,
+            "e": 8,
             "p": 27.9,
             "u": "UN"
         },
@@ -9692,19 +9692,19 @@
         },
         {
             "n": "CHUVEIRO ARTIC QUAD 10865 ABS CROM SORTE METAIS",
-            "e": 24,
+            "e": 23,
             "p": 29.6,
             "u": "UN"
         },
         {
             "n": "CHUVEIRO ARTIC RED 10864 ABS CROM SORTE METAIS",
-            "e": 25,
+            "e": 26,
             "p": 22.9,
             "u": "UN"
         },
         {
             "n": "CHUVEIRO ARTIC RUBI 1970 QUAD SOFT BOGNAR",
-            "e": 20,
+            "e": 18,
             "p": 72.8,
             "u": "UN"
         },
@@ -9716,7 +9716,7 @@
         },
         {
             "n": "CHUVEIRO ARTIC SAFIRA 1970 CR BOGNAR",
-            "e": 11,
+            "e": 9,
             "p": 139.8,
             "u": "UN"
         },
@@ -9770,7 +9770,7 @@
         },
         {
             "n": "CHUVEIRO PLAST 5 BCO HERC",
-            "e": 106,
+            "e": 105,
             "p": 10.8,
             "u": "UN"
         },
@@ -9908,7 +9908,7 @@
         },
         {
             "n": "CHUVEIRO PLAST CROMADO 6\" FRANMIG",
-            "e": 5,
+            "e": 4,
             "p": 49.9,
             "u": "UN"
         },
@@ -10142,7 +10142,7 @@
         },
         {
             "n": "CILINDRO STAM BUZ.601/603 74MM CROM",
-            "e": 15,
+            "e": 14,
             "p": 49.9,
             "u": "UN"
         },
@@ -10184,19 +10184,19 @@
         },
         {
             "n": "CIMENTO EMBALADO 1KG",
-            "e": 357,
+            "e": 354,
             "p": 2.95,
             "u": "UN"
         },
         {
             "n": "CIMENTO TODAS OBRAS POTY 25KG",
-            "e": 29,
+            "e": 27,
             "p": 32.9,
             "u": "SC"
         },
         {
             "n": "CIMENTO TODAS OBRAS POTY 50 KG",
-            "e": 76,
+            "e": 73,
             "p": 59.9,
             "u": "SC"
         },
@@ -10262,7 +10262,7 @@
         },
         {
             "n": "CJ GRELHA+P.GRELHA QUAD 1297 HERC",
-            "e": 3,
+            "e": 2,
             "p": 13.3,
             "u": "UN"
         },
@@ -10358,19 +10358,19 @@
         },
         {
             "n": "CLORO GRANULADO 1KG",
-            "e": 201,
+            "e": 200,
             "p": 29.9,
             "u": "UN"
         },
         {
             "n": "CLORO TABLETE 200GR",
-            "e": 72,
+            "e": 70,
             "p": 10.9,
             "u": "UN"
         },
         {
             "n": "COLA BRANCA 1KG BRANCOLA",
-            "e": 180,
+            "e": 177,
             "p": 15.8,
             "u": "UN"
         },
@@ -10382,7 +10382,7 @@
         },
         {
             "n": "COLA BRANCA 500G BRANCOLA",
-            "e": 192,
+            "e": 191,
             "p": 8.8,
             "u": "UN"
         },
@@ -10496,7 +10496,7 @@
         },
         {
             "n": "COLA QUENTE REFIL FINA UND",
-            "e": 337,
+            "e": 325,
             "p": 2,
             "u": "UN"
         },
@@ -10610,7 +10610,7 @@
         },
         {
             "n": "COLHEDOR FRUTAS S/CABO KALA",
-            "e": 2,
+            "e": 1,
             "p": 29.9,
             "u": "UN"
         },
@@ -10706,7 +10706,7 @@
         },
         {
             "n": "COMPOUND ADESIVO TIX VEDACIT 1KG",
-            "e": 22,
+            "e": 20,
             "p": 119.9,
             "u": "UN"
         },
@@ -10778,7 +10778,7 @@
         },
         {
             "n": "CONECTOR 6MM 3BORNES P/COND 1735 FAME",
-            "e": 100,
+            "e": 99,
             "p": 9.5,
             "u": "UN"
         },
@@ -10910,7 +10910,7 @@
         },
         {
             "n": "CONECTOR P/FITA LED DOB 10W",
-            "e": 8,
+            "e": 14,
             "p": 9.8,
             "u": "UN"
         },
@@ -10934,7 +10934,7 @@
         },
         {
             "n": "CONECTOR PARA HASTE TERRA",
-            "e": 99,
+            "e": 96,
             "p": 4.4,
             "u": "UN"
         },
@@ -11078,13 +11078,13 @@
         },
         {
             "n": "CONJ.FIXACAO PARAF P/CX KPF ASTRA",
-            "e": 3,
+            "e": 2,
             "p": 17.2,
             "u": "UN"
         },
         {
             "n": "CONJ.FIXACAO PARAF P/CX PADOVA",
-            "e": 12,
+            "e": 11,
             "p": 9.9,
             "u": "UN"
         },
@@ -11120,7 +11120,7 @@
         },
         {
             "n": "CONJUNTO COMP P/CX ACOP COMBO EASY ROCO 1255 26",
-            "e": 25,
+            "e": 23,
             "p": 93.5,
             "u": "UN"
         },
@@ -11246,7 +11246,7 @@
         },
         {
             "n": "CORANTE LIQUIDO HX HIDRACOR 50ML AZUL",
-            "e": 113,
+            "e": 108,
             "p": 5.9,
             "u": "UN"
         },
@@ -11270,7 +11270,7 @@
         },
         {
             "n": "CORANTE LIQUIDO HX HIDRACOR 50ML PTO",
-            "e": 27,
+            "e": 26,
             "p": 5.9,
             "u": "UN"
         },
@@ -11282,13 +11282,13 @@
         },
         {
             "n": "CORANTE LIQUIDO HX HIDRACOR 50ML VERMELHO",
-            "e": 27,
+            "e": 21,
             "p": 5.9,
             "u": "UN"
         },
         {
             "n": "CORANTE LIQUIDO HX HIDRACOR 50ML VIOLETA",
-            "e": 55,
+            "e": 61,
             "p": 5.9,
             "u": "UN"
         },
@@ -11300,13 +11300,13 @@
         },
         {
             "n": "CORDA 03MM MULTICOR MT",
-            "e": 461,
+            "e": 446,
             "p": 2.1,
             "u": "M"
         },
         {
             "n": "CORDA 04MM MT",
-            "e": 577,
+            "e": 561,
             "p": 2.4,
             "u": "M"
         },
@@ -11384,7 +11384,7 @@
         },
         {
             "n": "CORDA REVESTIDA P/VARAL 15MT MOR 006090REV02",
-            "e": 36,
+            "e": 34,
             "p": 9.9,
             "u": "UN"
         },
@@ -11420,7 +11420,7 @@
         },
         {
             "n": "CORDAO PARALELO (FIO) 2X1.50 MT",
-            "e": 1582,
+            "e": 1532,
             "p": 5.9,
             "u": "M"
         },
@@ -11432,7 +11432,7 @@
         },
         {
             "n": "CORDAO PARALELO (FIO) 2X2.50 MT",
-            "e": 1794,
+            "e": 1776,
             "p": 8.95,
             "u": "M"
         },
@@ -11540,7 +11540,7 @@
         },
         {
             "n": "CORRENTE CADEAD0 KA/CRF ASTRA",
-            "e": 27,
+            "e": 26,
             "p": 6.7,
             "u": "UN"
         },
@@ -11672,7 +11672,7 @@
         },
         {
             "n": "CORTADOR DE PISO PEC 53 CORTAG",
-            "e": 4,
+            "e": 3,
             "p": 269,
             "u": "UN"
         },
@@ -11726,13 +11726,13 @@
         },
         {
             "n": "CORTINA P/BOX ESTAMPADA 1.40X1.90",
-            "e": 4,
+            "e": 10,
             "p": 48.8,
             "u": "UN"
         },
         {
             "n": "CORTINA P/BOX LISA 1.80X1.38",
-            "e": 6,
+            "e": 12,
             "p": 24.9,
             "u": "UN"
         },
@@ -11966,7 +11966,7 @@
         },
         {
             "n": "CUPINICIDA LIQUIDO 30ML KELLDRIN",
-            "e": 16,
+            "e": 14,
             "p": 15.9,
             "u": "UN"
         },
@@ -12008,7 +12008,7 @@
         },
         {
             "n": "CURVA 180 P/ELET ROSC 2 AMANCO/TIGRE",
-            "e": 9,
+            "e": 8,
             "p": 29.9,
             "u": "UN"
         },
@@ -12122,7 +12122,7 @@
         },
         {
             "n": "CURVA 90 P/ELET LONGA ROSC 1 AMANC",
-            "e": 25,
+            "e": 21,
             "p": 3.7,
             "u": "UN"
         },
@@ -12146,7 +12146,7 @@
         },
         {
             "n": "CURVA 90 P/ELET LONGA ROSC 2 AM/TIG/KRONA",
-            "e": 22,
+            "e": 21,
             "p": 15.9,
             "u": "UN"
         },
@@ -12224,7 +12224,7 @@
         },
         {
             "n": "CURVA BOX 2\"",
-            "e": 10,
+            "e": 8,
             "p": 27.2,
             "u": "UN"
         },
@@ -12236,7 +12236,7 @@
         },
         {
             "n": "CURVA ESGOTO LONGA 100MM AMANCO",
-            "e": 8,
+            "e": 7,
             "p": 63.6,
             "u": "UN"
         },
@@ -12722,13 +12722,13 @@
         },
         {
             "n": "DESENTUPIDOR LIQ DIABO VERDE 1L",
-            "e": 10,
+            "e": 9,
             "p": 72.8,
             "u": "UN"
         },
         {
             "n": "DESENTUPIDOR MAN BOMBA SUCCAO 11003 MAX",
-            "e": 14,
+            "e": 13,
             "p": 25.7,
             "u": "UN"
         },
@@ -12890,7 +12890,7 @@
         },
         {
             "n": "DIRETOGESSO BCO.NEVE 3.6L CORAL",
-            "e": 4,
+            "e": 3,
             "p": 130.3,
             "u": "UN"
         },
@@ -12992,7 +12992,7 @@
         },
         {
             "n": "DISCO CIRCUL MAD 72D MAX",
-            "e": 53,
+            "e": 52,
             "p": 6.8,
             "u": "UN"
         },
@@ -13004,19 +13004,19 @@
         },
         {
             "n": "DISCO CORTE 4.1/2\" STANDARD NORTON",
-            "e": 65,
+            "e": 62,
             "p": 2.8,
             "u": "UN"
         },
         {
             "n": "DISCO CORTE ACO INOX 115MM BOSCH",
-            "e": 2,
+            "e": 502,
             "p": 3.5,
             "u": "UN"
         },
         {
             "n": "DISCO CORTE ACO INOX 4.1/2\" STANLEY",
-            "e": 81,
+            "e": 80,
             "p": 3.2,
             "u": "UN"
         },
@@ -13094,7 +13094,7 @@
         },
         {
             "n": "DISCO CORTE DIAM SEG MULTIMATERIAL 110MM BOSCH",
-            "e": 47,
+            "e": 46,
             "p": 29.9,
             "u": "UN"
         },
@@ -13118,7 +13118,7 @@
         },
         {
             "n": "DISCO CORTE DIAM TURBO FLEX MAX",
-            "e": 43,
+            "e": 42,
             "p": 9.9,
             "u": "UN"
         },
@@ -13160,7 +13160,7 @@
         },
         {
             "n": "DISCO CORTE PORC TURBO 105X10X20 CIBRA SIDER",
-            "e": 133,
+            "e": 131,
             "p": 14.9,
             "u": "UN"
         },
@@ -13310,7 +13310,7 @@
         },
         {
             "n": "DISCO DIAMANTADO PORCELANATO 4 DEWALT",
-            "e": 23,
+            "e": 22,
             "p": 59.9,
             "u": "UN"
         },
@@ -13874,19 +13874,19 @@
         },
         {
             "n": "DISJUNTOR MONOF.10AMP BCO",
-            "e": 16,
+            "e": 15,
             "p": 10.6,
             "u": "UN"
         },
         {
             "n": "DISJUNTOR MONOF.16AMP BCO",
-            "e": 319,
+            "e": 317,
             "p": 9.9,
             "u": "UN"
         },
         {
             "n": "DISJUNTOR MONOF.20AMP BCO",
-            "e": 68,
+            "e": 67,
             "p": 9.9,
             "u": "UN"
         },
@@ -14036,7 +14036,7 @@
         },
         {
             "n": "DISJUNTOR TRIF.63AMP BCO",
-            "e": 33,
+            "e": 32,
             "p": 57.9,
             "u": "UN"
         },
@@ -14516,7 +14516,7 @@
         },
         {
             "n": "DOB PALM 3.1/2\" ZINC METALVI C/2UND",
-            "e": 10,
+            "e": 9,
             "p": 11.9,
             "u": "UN"
         },
@@ -14816,7 +14816,7 @@
         },
         {
             "n": "DUCHA FAMINHO 4T BR 220V 4400W C/CANO TROPIC FAME",
-            "e": 64,
+            "e": 63,
             "p": 89.9,
             "u": "UN"
         },
@@ -14900,13 +14900,13 @@
         },
         {
             "n": "DUCHA HIGIENICA ABS BCO 10898 SORTEMAIS",
-            "e": 943,
+            "e": 940,
             "p": 19.9,
             "u": "UN"
         },
         {
             "n": "DUCHA HIGIENICA ABS CROM 10797 SORTEMAIS",
-            "e": 20,
+            "e": 18,
             "p": 46.3,
             "u": "UN"
         },
@@ -15050,7 +15050,7 @@
         },
         {
             "n": "DUREPOXI ALBA 50G",
-            "e": 42,
+            "e": 41,
             "p": 8.2,
             "u": "UN"
         },
@@ -15086,13 +15086,13 @@
         },
         {
             "n": "ELETRODO(S. ELETRICA)3.25MM GROSSA KG",
-            "e": 17.32,
+            "e": 7.32,
             "p": 36.3,
             "u": "UN"
         },
         {
             "n": "ELETRODO(S.ELETRICA) 2.50MM FINA KG",
-            "e": 35.6,
+            "e": 35.2,
             "p": 29.9,
             "u": "UN"
         },
@@ -15176,7 +15176,7 @@
         },
         {
             "n": "ELETRODUTO GARGANTA 25MM TIGRE MT",
-            "e": 4351,
+            "e": 4343,
             "p": 2.8,
             "u": "M"
         },
@@ -15236,7 +15236,7 @@
         },
         {
             "n": "EMASSADEIRA 7X9CM 230 M ROMA",
-            "e": 8,
+            "e": 7,
             "p": 2.9,
             "u": "UN"
         },
@@ -15254,7 +15254,7 @@
         },
         {
             "n": "EMASSADEIRA PLASTICA BCA",
-            "e": 265,
+            "e": 264,
             "p": 4.5,
             "u": "UN"
         },
@@ -15488,7 +15488,7 @@
         },
         {
             "n": "ENGAT FLEXIVEL GAS 3/8 C/A 2MT ROCO 3020",
-            "e": 4,
+            "e": 3,
             "p": 96.3,
             "u": "UN"
         },
@@ -15710,13 +15710,13 @@
         },
         {
             "n": "ENGATE PLAST 30CM AMANCO",
-            "e": 174,
+            "e": 173,
             "p": 7.9,
             "u": "UN"
         },
         {
             "n": "ENGATE PLAST 40CM AMANCO",
-            "e": 212,
+            "e": 211,
             "p": 7.9,
             "u": "UN"
         },
@@ -15752,7 +15752,7 @@
         },
         {
             "n": "ENGATE PLAST 60CM AMANCO",
-            "e": 41,
+            "e": 38,
             "p": 24.7,
             "u": "UN"
         },
@@ -15812,7 +15812,7 @@
         },
         {
             "n": "ENGATE RAPIDO 3/4 P.LIVRE 3514 HERC",
-            "e": 17,
+            "e": 15,
             "p": 9.4,
             "u": "UN"
         },
@@ -16034,7 +16034,7 @@
         },
         {
             "n": "ESCADA EXTENSIVEL AL 2X9 (2,74X4,5) MOR",
-            "e": 5,
+            "e": 4,
             "p": 979.9,
             "u": "UN"
         },
@@ -16946,7 +16946,7 @@
         },
         {
             "n": "ESGUICHO PISTOLA 651618 7 JATOS",
-            "e": 10,
+            "e": 9,
             "p": 16.9,
             "u": "UN"
         },
@@ -17042,7 +17042,7 @@
         },
         {
             "n": "ESPACADOR ECO 04MM",
-            "e": 284,
+            "e": 282,
             "p": 4.9,
             "u": "UN"
         },
@@ -17078,7 +17078,7 @@
         },
         {
             "n": "ESPACADOR P/NIVELAM.SLIM 2.0MM PCT CORTAG",
-            "e": 40,
+            "e": 36,
             "p": 13.8,
             "u": "UN"
         },
@@ -17162,13 +17162,13 @@
         },
         {
             "n": "ESPATULA ACO CROMADO 100MM ROMA 2030.10",
-            "e": 22,
+            "e": 21,
             "p": 11.8,
             "u": "UN"
         },
         {
             "n": "ESPATULA ACO CROMADO 2020/04 ROMA",
-            "e": 22,
+            "e": 21,
             "p": 4.7,
             "u": "UN"
         },
@@ -17768,7 +17768,7 @@
         },
         {
             "n": "ESPONJA P/REBOCO REAL",
-            "e": 113,
+            "e": 107,
             "p": 3.5,
             "u": "UN"
         },
@@ -17786,7 +17786,7 @@
         },
         {
             "n": "ESPUMA EXPANSIVA 500ML/320G M.PRIME",
-            "e": 19,
+            "e": 15,
             "p": 25.9,
             "u": "UN"
         },
@@ -18062,7 +18062,7 @@
         },
         {
             "n": "EXTENSAO ELET BR 1.5M 2P+T 4143 FAME",
-            "e": 3,
+            "e": 2,
             "p": 27.3,
             "u": "UN"
         },
@@ -18200,7 +18200,7 @@
         },
         {
             "n": "EXTENSAO NAROS 3X0.75MM 5M 2P+T 2086/0 PERLEX",
-            "e": 71,
+            "e": 69,
             "p": 34.7,
             "u": "UN"
         },
@@ -18398,7 +18398,7 @@
         },
         {
             "n": "FECH EXT ALAV CROM POP 711.01 SOPRANO",
-            "e": 49,
+            "e": 47,
             "p": 57.3,
             "u": "UN"
         },
@@ -18968,7 +18968,7 @@
         },
         {
             "n": "FECH STAM 701/100 ESP BRANCO",
-            "e": 12,
+            "e": 11,
             "p": 89.9,
             "u": "UN"
         },
@@ -19358,7 +19358,7 @@
         },
         {
             "n": "FELTRO ADESIVO RED 4.5CM C/4 OVERTIME",
-            "e": 11,
+            "e": 10,
             "p": 3.5,
             "u": "UN"
         },
@@ -19418,7 +19418,7 @@
         },
         {
             "n": "FERRO DE SOLDA 60W MAX",
-            "e": 24,
+            "e": 23,
             "p": 29.9,
             "u": "UN"
         },
@@ -19430,7 +19430,7 @@
         },
         {
             "n": "FERROLACK CORAL 3.6L CZA",
-            "e": 3,
+            "e": 4,
             "p": 259.9,
             "u": "UN"
         },
@@ -19724,7 +19724,7 @@
         },
         {
             "n": "FIBRA LIMPEZA PESADA 230MMX102MM TININDO 3M PCT C/5",
-            "e": 43,
+            "e": 42,
             "p": 17.4,
             "u": "UN"
         },
@@ -19832,7 +19832,7 @@
         },
         {
             "n": "FILTRO DE LINHA 5 SAIDA 1MT 34016 ILUMI",
-            "e": 9,
+            "e": 8,
             "p": 44.7,
             "u": "UN"
         },
@@ -19910,7 +19910,7 @@
         },
         {
             "n": "FIO DE NYLON 1.8MM MT",
-            "e": 139,
+            "e": 136,
             "p": 1.79,
             "u": "M"
         },
@@ -19922,7 +19922,7 @@
         },
         {
             "n": "FIO DE NYLON P/JARDIM 2.4MM 12M TRAMONTINA",
-            "e": 33,
+            "e": 32,
             "p": 27.9,
             "u": "UN"
         },
@@ -20096,7 +20096,7 @@
         },
         {
             "n": "FITA ADES MARROM 45MMX40/45MT",
-            "e": 177,
+            "e": 176,
             "p": 7.8,
             "u": "UN"
         },
@@ -20108,7 +20108,7 @@
         },
         {
             "n": "FITA ADES TRANSP 45/48MMX40MT",
-            "e": 938,
+            "e": 937,
             "p": 6.5,
             "u": "UN"
         },
@@ -20150,7 +20150,7 @@
         },
         {
             "n": "FITA CREPE 18/19MM 50MT",
-            "e": 1751,
+            "e": 1749,
             "p": 4.95,
             "u": "UN"
         },
@@ -20168,7 +20168,7 @@
         },
         {
             "n": "FITA CREPE 24/25MM 50MT",
-            "e": 1247,
+            "e": 1242,
             "p": 6.6,
             "u": "UN"
         },
@@ -20192,7 +20192,7 @@
         },
         {
             "n": "FITA CREPE 48/50MM 40/50MT",
-            "e": 782,
+            "e": 781,
             "p": 12.9,
             "u": "UN"
         },
@@ -20246,7 +20246,7 @@
         },
         {
             "n": "FITA DUP-FACE 19MMX2M FIXA FORTE 800GR",
-            "e": 20,
+            "e": 18,
             "p": 29.9,
             "u": "UN"
         },
@@ -20432,7 +20432,7 @@
         },
         {
             "n": "FITA ISOLANTE 05MT SOPRANO",
-            "e": 78,
+            "e": 77,
             "p": 2.5,
             "u": "UN"
         },
@@ -20444,13 +20444,13 @@
         },
         {
             "n": "FITA ISOLANTE 10MT SOPRANO",
-            "e": 175,
+            "e": 174,
             "p": 4.9,
             "u": "UN"
         },
         {
             "n": "FITA ISOLANTE 18/19X10M BCO",
-            "e": 175,
+            "e": 174,
             "p": 5.5,
             "u": "UN"
         },
@@ -20480,7 +20480,7 @@
         },
         {
             "n": "FITA ISOLANTE 20MT IMPERIAL",
-            "e": 113,
+            "e": 111,
             "p": 13.9,
             "u": "UN"
         },
@@ -20522,7 +20522,7 @@
         },
         {
             "n": "FITA ISOLANTE AUTOFUSAO 2MT 3M",
-            "e": 24,
+            "e": 23,
             "p": 12.9,
             "u": "UN"
         },
@@ -20546,7 +20546,7 @@
         },
         {
             "n": "FITA LED DOB 2835 IP65 10W 220V 3000K MT",
-            "e": 18,
+            "e": 218,
             "p": 8.95,
             "u": "UN"
         },
@@ -20594,7 +20594,7 @@
         },
         {
             "n": "FITA MULTIUSO ADES. DRYKO 30CM PC C/10MT",
-            "e": 94,
+            "e": 93,
             "p": 69.9,
             "u": "UN"
         },
@@ -20696,25 +20696,25 @@
         },
         {
             "n": "FITA VEDA ROSCA LIEGE 25MTS",
-            "e": 32,
+            "e": 31,
             "p": 4.5,
             "u": "UN"
         },
         {
             "n": "FITA VEDA ROSCA POLYTUBES 10MTS",
-            "e": 64,
+            "e": 52,
             "p": 3.5,
             "u": "UN"
         },
         {
             "n": "FITA VEDA ROSCA POLYTUBES 25MTS",
-            "e": 25,
+            "e": 23,
             "p": 7.95,
             "u": "UN"
         },
         {
             "n": "FITA VEDA ROSCA POLYTUBES 50MTS",
-            "e": 13,
+            "e": 12,
             "p": 12.7,
             "u": "UN"
         },
@@ -20756,7 +20756,7 @@
         },
         {
             "n": "FITA VEDATUDO ADES.VEDACIT 10CM PC C/10MT",
-            "e": 38,
+            "e": 37,
             "p": 32.9,
             "u": "UN"
         },
@@ -21092,7 +21092,7 @@
         },
         {
             "n": "FLAP-DISC ANGULAR 115X40G",
-            "e": 25,
+            "e": 24,
             "p": 6.4,
             "u": "UN"
         },
@@ -21104,7 +21104,7 @@
         },
         {
             "n": "FLAP-DISC ANGULAR 115X80G",
-            "e": 56,
+            "e": 55,
             "p": 6.4,
             "u": "UN"
         },
@@ -21182,7 +21182,7 @@
         },
         {
             "n": "FLEXIVEL P/DUCHA INOX 1.20MT 2001 BOGNAR",
-            "e": 17,
+            "e": 15,
             "p": 26.9,
             "u": "UN"
         },
@@ -21206,7 +21206,7 @@
         },
         {
             "n": "FLUIDO DE FREIO DOT4 200ML BOSCH",
-            "e": 15,
+            "e": 14,
             "p": 19.7,
             "u": "UN"
         },
@@ -21374,7 +21374,7 @@
         },
         {
             "n": "FORMICIDA GEL 10G",
-            "e": 13,
+            "e": 12,
             "p": 12.8,
             "u": "UN"
         },
@@ -21416,7 +21416,7 @@
         },
         {
             "n": "FORTFERRO ANTIFERRUGEM 3.0L CINZA FORTEX",
-            "e": 4,
+            "e": 3,
             "p": 129.9,
             "u": "UN"
         },
@@ -21434,7 +21434,7 @@
         },
         {
             "n": "FORTFERRO ANTIFERRUGEM 750ML BCO NEVE",
-            "e": 5,
+            "e": 4,
             "p": 38.8,
             "u": "UN"
         },
@@ -21458,7 +21458,7 @@
         },
         {
             "n": "FORTLAR TEXTURA INT 25KG BCO GELO",
-            "e": 13,
+            "e": 11,
             "p": 92.4,
             "u": "UN"
         },
@@ -21470,7 +21470,7 @@
         },
         {
             "n": "FORTLAR TEXTURA INT 25KG CINZA MEDIO",
-            "e": 11,
+            "e": 10,
             "p": 92.4,
             "u": "UN"
         },
@@ -21488,7 +21488,7 @@
         },
         {
             "n": "FORTLAR TEXTURA INT 25KG PALHA",
-            "e": 6,
+            "e": 8,
             "p": 92.4,
             "u": "UN"
         },
@@ -21512,7 +21512,7 @@
         },
         {
             "n": "FOSFATOL 200ML",
-            "e": 7,
+            "e": 6,
             "p": 13.9,
             "u": "UN"
         },
@@ -21542,7 +21542,7 @@
         },
         {
             "n": "FUNDO GALVANIZADO 0.9LT CORAL BCO",
-            "e": 3,
+            "e": 2,
             "p": 73.8,
             "u": "UN"
         },
@@ -21626,7 +21626,7 @@
         },
         {
             "n": "FUNDO ZARCAO FORTEX 750ML",
-            "e": 4,
+            "e": 3,
             "p": 41.8,
             "u": "UN"
         },
@@ -21698,7 +21698,7 @@
         },
         {
             "n": "FURADEIRA IMPACTO GSB450 BOSCH",
-            "e": 6,
+            "e": 12,
             "p": 361.8,
             "u": "UN"
         },
@@ -21908,7 +21908,7 @@
         },
         {
             "n": "GANCHO EXTENSOR ZINCADO METALVI",
-            "e": 17,
+            "e": 16,
             "p": 7.9,
             "u": "UN"
         },
@@ -22040,7 +22040,7 @@
         },
         {
             "n": "GARFO COMUM P/ROLO 23CM ROMA 426.235",
-            "e": 214,
+            "e": 213,
             "p": 8.5,
             "u": "UN"
         },
@@ -22094,13 +22094,13 @@
         },
         {
             "n": "GARRA CHUPETA P/BAT 405949/405940 200A PTO",
-            "e": 9,
+            "e": 7,
             "p": 17.9,
             "u": "UN"
         },
         {
             "n": "GARRA CHUPETA P/BAT 405957 200A VERM",
-            "e": 10,
+            "e": 8,
             "p": 17.7,
             "u": "UN"
         },
@@ -22442,7 +22442,7 @@
         },
         {
             "n": "GATILHO P/DUCHA SR-158 MET CROM SORTE METAIS",
-            "e": 11,
+            "e": 10,
             "p": 19.9,
             "u": "UN"
         },
@@ -22490,7 +22490,7 @@
         },
         {
             "n": "GESSO 1KG",
-            "e": 2406,
+            "e": 2383,
             "p": 2.5,
             "u": "UN"
         },
@@ -22958,14 +22958,14 @@
         },
         {
             "n": "GRELHA PLAS QUAD 10CM MESANO",
-            "e": 6,
+            "e": 5,
             "p": 3.9,
             "u": "UN"
         },
         {
             "n": "GRELHA PLAS QUAD 15CM MESANO",
             "e": 30,
-            "p": 7.2,
+            "p": 7.9,
             "u": "UN"
         },
         {
@@ -22976,13 +22976,13 @@
         },
         {
             "n": "GRELHA PLAS ROT QUAD 15CM OVERTIME",
-            "e": 61,
+            "e": 60,
             "p": 6.8,
             "u": "UN"
         },
         {
             "n": "GRELHA PLAS ROT QUAD 15CM PANTER",
-            "e": 31,
+            "e": 28,
             "p": 10.8,
             "u": "UN"
         },
@@ -23222,19 +23222,19 @@
         },
         {
             "n": "HASTE TERRA S/CON COBREADO 1.50MT",
-            "e": 8,
+            "e": 7,
             "p": 19.7,
             "u": "UN"
         },
         {
             "n": "HASTE TERRA S/CON COBREADO 2.00MT",
-            "e": 29,
+            "e": 28,
             "p": 25.3,
             "u": "UN"
         },
         {
             "n": "HASTE TERRA S/CON COBREADO 2.40MT",
-            "e": 21,
+            "e": 20,
             "p": 29.8,
             "u": "UN"
         },
@@ -23462,7 +23462,7 @@
         },
         {
             "n": "INSETICIDA LIQUIDO 30ML K-OTHRINE",
-            "e": 50,
+            "e": 48,
             "p": 16.8,
             "u": "UN"
         },
@@ -23522,7 +23522,7 @@
         },
         {
             "n": "INSETICOM 10PM 25G INSETIMAX",
-            "e": 12,
+            "e": 11,
             "p": 25.8,
             "u": "UN"
         },
@@ -23612,7 +23612,7 @@
         },
         {
             "n": "INTER 1TEC SIMP 2012 DUNAS ROMAZI",
-            "e": 19,
+            "e": 18,
             "p": 5.9,
             "u": "UN"
         },
@@ -23648,19 +23648,19 @@
         },
         {
             "n": "INTER 1TEC+1TOMADA 1435/1436/3899 MOD FAME",
-            "e": 61,
+            "e": 60,
             "p": 22.9,
             "u": "UN"
         },
         {
             "n": "INTER 1TEC+1TOMADA 2016 DUNAS ROMAZ",
-            "e": 41,
+            "e": 38,
             "p": 8.2,
             "u": "UN"
         },
         {
             "n": "INTER 1TEC+1TOMADA 2515 MARES ROMAZ",
-            "e": 71,
+            "e": 68,
             "p": 11.8,
             "u": "UN"
         },
@@ -23756,7 +23756,7 @@
         },
         {
             "n": "INTER 2TEC+1TOMADA 2017 DUNAS ROMAZ",
-            "e": 1,
+            "e": 0,
             "p": 14.3,
             "u": "UN"
         },
@@ -23924,7 +23924,7 @@
         },
         {
             "n": "INTER PERA MEIO FIO PTO 168PR",
-            "e": 21,
+            "e": 20,
             "p": 4.5,
             "u": "UN"
         },
@@ -24008,7 +24008,7 @@
         },
         {
             "n": "ISQUEIRO BIC MAXI GDE UND",
-            "e": 57,
+            "e": 55,
             "p": 7.5,
             "u": "UN"
         },
@@ -24266,7 +24266,7 @@
         },
         {
             "n": "JIMO CUPIM 400ML AEROSOL",
-            "e": 40,
+            "e": 39,
             "p": 46.3,
             "u": "UN"
         },
@@ -24332,7 +24332,7 @@
         },
         {
             "n": "JOELHO 45 ESGOTO 40MM AMANCO",
-            "e": 242,
+            "e": 241,
             "p": 2.7,
             "u": "UN"
         },
@@ -24464,7 +24464,7 @@
         },
         {
             "n": "JOELHO 90 ESGOTO 50MM AMANCO/TIGRE",
-            "e": 336,
+            "e": 335,
             "p": 3.8,
             "u": "UN"
         },
@@ -24578,7 +24578,7 @@
         },
         {
             "n": "JOELHO 90 SOLD 20MM AMANCO/KRONA/TIGRE",
-            "e": 76,
+            "e": 63,
             "p": 0.95,
             "u": "UN"
         },
@@ -24596,7 +24596,7 @@
         },
         {
             "n": "JOELHO 90 SOLD 40MM AMANCO/TIGRE",
-            "e": 103,
+            "e": 102,
             "p": 7.3,
             "u": "UN"
         },
@@ -24620,7 +24620,7 @@
         },
         {
             "n": "JOELHO 90 SOLD BUC LAT 25MMX1/2 AMANCO/TIGRE",
-            "e": 351,
+            "e": 350,
             "p": 6.7,
             "u": "UN"
         },
@@ -25010,7 +25010,7 @@
         },
         {
             "n": "JOGO DE CHAVE ALLEN TORX 09PCS MAX",
-            "e": 3,
+            "e": 2,
             "p": 23.8,
             "u": "UN"
         },
@@ -25628,7 +25628,7 @@
         },
         {
             "n": "KIT DUCHA HIG 1/4V ABS PTA SORTE METAIS",
-            "e": 19,
+            "e": 18,
             "p": 39.9,
             "u": "UN"
         },
@@ -25676,7 +25676,7 @@
         },
         {
             "n": "KIT FACIL P/REG 10EM1 S/ACAB 1420 BOGNAR",
-            "e": 22,
+            "e": 20,
             "p": 64.8,
             "u": "UN"
         },
@@ -25887,7 +25887,7 @@
         {
             "n": "KIT P/BANHEIRO 5PCS CROM PREMIUM MESANO",
             "e": 16,
-            "p": 76.3,
+            "p": 71.4,
             "u": "UN"
         },
         {
@@ -25905,7 +25905,7 @@
         {
             "n": "KIT P/BANHEIRO 5PCS STANDER MESANO",
             "e": 12,
-            "p": 66.8,
+            "p": 69.9,
             "u": "UN"
         },
         {
@@ -25970,7 +25970,7 @@
         },
         {
             "n": "KIT PINTURA FLEX 23CM 3PCS 280/19 ROMA",
-            "e": 189,
+            "e": 187,
             "p": 27.9,
             "u": "UN"
         },
@@ -25994,7 +25994,7 @@
         },
         {
             "n": "KIT PINTURA PQ REPAROS 3PCS 815 CONDOR",
-            "e": 25,
+            "e": 24,
             "p": 19.95,
             "u": "UN"
         },
@@ -26078,7 +26078,7 @@
         },
         {
             "n": "KIT REPARO P/REG 10EM1 ROCO 1751",
-            "e": 14,
+            "e": 15,
             "p": 79.9,
             "u": "UN"
         },
@@ -26090,7 +26090,7 @@
         },
         {
             "n": "KIT REPARO P/REG ROSC 0\" C/TELES ROCO 1508",
-            "e": 8,
+            "e": 7,
             "p": 39.9,
             "u": "UN"
         },
@@ -26552,7 +26552,7 @@
         },
         {
             "n": "LAMPADA LED BULBO T45 12W 3000K SORTELUZ REF10704",
-            "e": 137,
+            "e": 135,
             "p": 7.8,
             "u": "UN"
         },
@@ -26576,7 +26576,7 @@
         },
         {
             "n": "LAMPADA LED BULBO T45 9W 6500K SORTELUZ REF 20666",
-            "e": 523,
+            "e": 514,
             "p": 3.49,
             "u": "UN"
         },
@@ -26678,19 +26678,19 @@
         },
         {
             "n": "LAMPADA LED GLOBO 30W 6500K E-27 SORT/FORT",
-            "e": 294,
+            "e": 291,
             "p": 10.9,
             "u": "UN"
         },
         {
             "n": "LAMPADA LED GLOBO 40W 6500K E-27 SORTLUZ",
-            "e": 421,
+            "e": 420,
             "p": 12.9,
             "u": "UN"
         },
         {
             "n": "LAMPADA LED GLOBO 50W 6500K E-27 SORTLUZ",
-            "e": 348,
+            "e": 343,
             "p": 19.7,
             "u": "UN"
         },
@@ -26750,7 +26750,7 @@
         },
         {
             "n": "LAMPADA LED GLOBO G45 1W AZUL SORTELUZ",
-            "e": 38,
+            "e": 37,
             "p": 5.3,
             "u": "UN"
         },
@@ -26846,7 +26846,7 @@
         },
         {
             "n": "LAMPADA LED T5 GELAD 1.5W 6400K",
-            "e": 27,
+            "e": 26,
             "p": 14.3,
             "u": "UN"
         },
@@ -26882,7 +26882,7 @@
         },
         {
             "n": "LAMPADA P/GELAD.15W E-14 TRANSP S.LUZ",
-            "e": 65,
+            "e": 64,
             "p": 2.9,
             "u": "UN"
         },
@@ -27218,7 +27218,7 @@
         },
         {
             "n": "LAVATORIO PLAST BCO 36X26 KRONA",
-            "e": 4,
+            "e": 3,
             "p": 29.9,
             "u": "UN"
         },
@@ -27350,7 +27350,7 @@
         },
         {
             "n": "LETRA ACM MEDIO PTO B\"",
-            "e": 3,
+            "e": 2,
             "p": 16.7,
             "u": "UN"
         },
@@ -27434,7 +27434,7 @@
         },
         {
             "n": "LETRA VIDRO FUME A 14X11",
-            "e": 6,
+            "e": 5,
             "p": 9.9,
             "u": "UN"
         },
@@ -27530,7 +27530,7 @@
         },
         {
             "n": "LIGA ELASTICA REF C/GANCHO 2MT",
-            "e": 99,
+            "e": 97,
             "p": 9.9,
             "u": "UN"
         },
@@ -27662,7 +27662,7 @@
         },
         {
             "n": "LIMPA CONTATO 300ML M.PRIME",
-            "e": 27,
+            "e": 25,
             "p": 17.2,
             "u": "UN"
         },
@@ -27722,7 +27722,7 @@
         },
         {
             "n": "LIMPA PORCEL 1LT CRIVIALLI",
-            "e": 7,
+            "e": 6,
             "p": 21.9,
             "u": "UN"
         },
@@ -27824,7 +27824,7 @@
         },
         {
             "n": "LIXA D AGUA 100",
-            "e": 92,
+            "e": 91,
             "p": 3.9,
             "u": "UN"
         },
@@ -27854,7 +27854,7 @@
         },
         {
             "n": "LIXA D AGUA 180",
-            "e": 116,
+            "e": 115,
             "p": 3,
             "u": "UN"
         },
@@ -27866,7 +27866,7 @@
         },
         {
             "n": "LIXA D AGUA 220",
-            "e": 46,
+            "e": 45,
             "p": 2.9,
             "u": "UN"
         },
@@ -27896,7 +27896,7 @@
         },
         {
             "n": "LIXA D AGUA 600",
-            "e": 126,
+            "e": 125,
             "p": 3,
             "u": "UN"
         },
@@ -27914,13 +27914,13 @@
         },
         {
             "n": "LIXA FERRO 120",
-            "e": 23,
+            "e": 19,
             "p": 4.3,
             "u": "UN"
         },
         {
             "n": "LIXA FERRO 150",
-            "e": 92,
+            "e": 90,
             "p": 4.3,
             "u": "UN"
         },
@@ -27932,7 +27932,7 @@
         },
         {
             "n": "LIXA FERRO 36",
-            "e": 218,
+            "e": 217,
             "p": 5.6,
             "u": "UN"
         },
@@ -27950,13 +27950,13 @@
         },
         {
             "n": "LIXA FERRO 60",
-            "e": 59,
+            "e": 55,
             "p": 4.65,
             "u": "UN"
         },
         {
             "n": "LIXA FERRO 80",
-            "e": 331,
+            "e": 330,
             "p": 4.5,
             "u": "UN"
         },
@@ -28022,7 +28022,7 @@
         },
         {
             "n": "LIXA MASSA 120",
-            "e": 1262,
+            "e": 1179,
             "p": 1.3,
             "u": "UN"
         },
@@ -28034,7 +28034,7 @@
         },
         {
             "n": "LIXA MASSA 180",
-            "e": 587,
+            "e": 583,
             "p": 1.3,
             "u": "UN"
         },
@@ -28046,19 +28046,19 @@
         },
         {
             "n": "LIXA MASSA 50",
-            "e": 264,
+            "e": 263,
             "p": 1.95,
             "u": "UN"
         },
         {
             "n": "LIXA MASSA 60",
-            "e": 255,
+            "e": 253,
             "p": 1.9,
             "u": "UN"
         },
         {
             "n": "LIXA MASSA 80",
-            "e": 427,
+            "e": 425,
             "p": 1.9,
             "u": "UN"
         },
@@ -28280,7 +28280,7 @@
         },
         {
             "n": "LONA PLASTICA 1X4 13 KG 33MC PRETA MT",
-            "e": 327,
+            "e": 319,
             "p": 3.8,
             "u": "M"
         },
@@ -28316,7 +28316,7 @@
         },
         {
             "n": "LUB SPRAY LUB FAST 300ML",
-            "e": 722,
+            "e": 716,
             "p": 10.9,
             "u": "UN"
         },
@@ -28334,13 +28334,13 @@
         },
         {
             "n": "LUB WD-40 SPRAY 300ML",
-            "e": 52,
+            "e": 51,
             "p": 49.9,
             "u": "UN"
         },
         {
             "n": "LUMINARIA ABS EMB REDONDA 12W 6400K",
-            "e": 54,
+            "e": 53,
             "p": 13.95,
             "u": "UN"
         },
@@ -28592,7 +28592,7 @@
         },
         {
             "n": "LUMINARIA PAINEL EMB QUADRADA 24W 6400K",
-            "e": 12,
+            "e": 7,
             "p": 25.8,
             "u": "UN"
         },
@@ -28646,7 +28646,7 @@
         },
         {
             "n": "LUMINARIA PAINEL SOB QUADRADA 18W 6400K",
-            "e": 328,
+            "e": 324,
             "p": 21.9,
             "u": "UN"
         },
@@ -28964,7 +28964,7 @@
         },
         {
             "n": "LUVA DE CORRER ESG 40MM AMANCO",
-            "e": 25,
+            "e": 24,
             "p": 13.6,
             "u": "UN"
         },
@@ -28982,7 +28982,7 @@
         },
         {
             "n": "LUVA DE CORRER SOLD 25MM AMANCO/TIGRE",
-            "e": 23,
+            "e": 22,
             "p": 18.9,
             "u": "UN"
         },
@@ -29090,7 +29090,7 @@
         },
         {
             "n": "LUVA ESGOTO 100MM AMANCO/TIGRE",
-            "e": 85,
+            "e": 82,
             "p": 6.7,
             "u": "UN"
         },
@@ -29102,7 +29102,7 @@
         },
         {
             "n": "LUVA ESGOTO 150MM KRONA",
-            "e": 9,
+            "e": 7,
             "p": 38.5,
             "u": "UN"
         },
@@ -29114,7 +29114,7 @@
         },
         {
             "n": "LUVA ESGOTO 50MM AMANCO/TIGRE",
-            "e": 76,
+            "e": 75,
             "p": 3.9,
             "u": "UN"
         },
@@ -29252,7 +29252,7 @@
         },
         {
             "n": "LUVA P/ELETRODUTO ROSC 2 AMANCO/TIGRE",
-            "e": 18,
+            "e": 16,
             "p": 9.2,
             "u": "UN"
         },
@@ -29312,7 +29312,7 @@
         },
         {
             "n": "LUVA PRETA REFORCADA 157 MEDIA MUCAMBO",
-            "e": 22,
+            "e": 21,
             "p": 12.3,
             "u": "PAR"
         },
@@ -29444,13 +29444,13 @@
         },
         {
             "n": "LUVA SOLD C/BUC LAT 25MMX1/2 AMANCO",
-            "e": 80,
+            "e": 79,
             "p": 6.9,
             "u": "UN"
         },
         {
             "n": "LUVA SOLD C/BUC LAT 25MMX3/4 AMANCO/TIGRE/KRONA",
-            "e": 56,
+            "e": 53,
             "p": 17.5,
             "u": "UN"
         },
@@ -29468,7 +29468,7 @@
         },
         {
             "n": "LUVA SOLDAVEL 25MM AMANCO/TIGRE",
-            "e": 228,
+            "e": 227,
             "p": 1.3,
             "u": "UN"
         },
@@ -29480,7 +29480,7 @@
         },
         {
             "n": "LUVA SOLDAVEL 40MM AMANCO/KRONA/TIGRE",
-            "e": 57,
+            "e": 56,
             "p": 6,
             "u": "UN"
         },
@@ -29570,7 +29570,7 @@
         },
         {
             "n": "LUVA TERMICA LAMINADA",
-            "e": 2,
+            "e": 8,
             "p": 13.5,
             "u": "UN"
         },
@@ -29594,7 +29594,7 @@
         },
         {
             "n": "LUVA VERDE NATURAL 250 GRANDE MUCAMBO",
-            "e": 19,
+            "e": 17,
             "p": 9.9,
             "u": "PAR"
         },
@@ -29690,7 +29690,7 @@
         },
         {
             "n": "MACANETA ALAVANCA CROM SOPRANO",
-            "e": 7,
+            "e": 6,
             "p": 22.9,
             "u": "UN"
         },
@@ -29720,7 +29720,7 @@
         },
         {
             "n": "MACARICO A GAS PORTATL GT-6019",
-            "e": 4,
+            "e": 3,
             "p": 54.6,
             "u": "UN"
         },
@@ -29780,7 +29780,7 @@
         },
         {
             "n": "MACHADINHO C/CABO SAO ROMAO",
-            "e": 4,
+            "e": 3,
             "p": 59.9,
             "u": "UN"
         },
@@ -29882,7 +29882,7 @@
         },
         {
             "n": "MANDRIL 3/8 10MM BOSCH",
-            "e": 4,
+            "e": 8,
             "p": 72.3,
             "u": "UN"
         },
@@ -30164,7 +30164,7 @@
         },
         {
             "n": "MANGUEIRA P/GAS 1.20/1.25MT",
-            "e": 18,
+            "e": 17,
             "p": 16.9,
             "u": "UN"
         },
@@ -30194,13 +30194,13 @@
         },
         {
             "n": "MANGUEIRA P/JARD QUALITRANCE VERDE 10MT",
-            "e": 131,
+            "e": 130,
             "p": 27.8,
             "u": "UN"
         },
         {
             "n": "MANGUEIRA P/JARD QUALITRANCE VERDE 15MT",
-            "e": 70,
+            "e": 69,
             "p": 41,
             "u": "UN"
         },
@@ -30230,7 +30230,7 @@
         },
         {
             "n": "MANGUEIRA P/JARD TRANC 15MT",
-            "e": 8,
+            "e": 7,
             "p": 41.6,
             "u": "UN"
         },
@@ -30374,7 +30374,7 @@
         },
         {
             "n": "MANGUEIRA TOPFLEX VERDE 3/4P MT",
-            "e": 123,
+            "e": 98,
             "p": 8.9,
             "u": "UN"
         },
@@ -30470,7 +30470,7 @@
         },
         {
             "n": "MAO FRANCESA BCA 12X20CM S/PARAF MAX",
-            "e": 149,
+            "e": 143,
             "p": 4.9,
             "u": "UN"
         },
@@ -30488,7 +30488,7 @@
         },
         {
             "n": "MAO FRANCESA BCA 25X40CM S/PARAF MAX",
-            "e": 267,
+            "e": 265,
             "p": 11.9,
             "u": "UN"
         },
@@ -30518,7 +30518,7 @@
         },
         {
             "n": "MAO FRANCESA REFORC 30X25 M CAPIST",
-            "e": 109,
+            "e": 97,
             "p": 18.8,
             "u": "UN"
         },
@@ -30668,7 +30668,7 @@
         },
         {
             "n": "MARRETA DE FERRO 1KG TRAMONTINA",
-            "e": 7,
+            "e": 5,
             "p": 59.9,
             "u": "UN"
         },
@@ -30860,7 +30860,7 @@
         },
         {
             "n": "MARTELO PROF 25MM MAX FERRAGENS",
-            "e": 8,
+            "e": 6,
             "p": 29.9,
             "u": "UN"
         },
@@ -30962,7 +30962,7 @@
         },
         {
             "n": "MASCARA RESP PFF2 S/VALV AZUL",
-            "e": 201,
+            "e": 200,
             "p": 2.9,
             "u": "UN"
         },
@@ -30998,7 +30998,7 @@
         },
         {
             "n": "MASSA ACRILICA FORTEX 25KG",
-            "e": 12,
+            "e": 11,
             "p": 139.9,
             "u": "UN"
         },
@@ -31052,19 +31052,19 @@
         },
         {
             "n": "MASSA CORRIDA FORTEX 25KG",
-            "e": 35,
+            "e": 28,
             "p": 55.9,
             "u": "UN"
         },
         {
             "n": "MASSA CORRIDA FORTEX 5.5KG",
-            "e": 37,
+            "e": 33,
             "p": 23.4,
             "u": "UN"
         },
         {
             "n": "MASSA CORRIDA LUX 20KG",
-            "e": 94,
+            "e": 92,
             "p": 39.9,
             "u": "UN"
         },
@@ -31160,7 +31160,7 @@
         },
         {
             "n": "MASSA POLIESTER C/CAT 500G MAXI LIGHT",
-            "e": 59,
+            "e": 58,
             "p": 24.9,
             "u": "UN"
         },
@@ -31250,7 +31250,7 @@
         },
         {
             "n": "MECANISMO COMP ACIO.SUP 9514/9414 CENSI",
-            "e": 16,
+            "e": 15,
             "p": 168.9,
             "u": "UN"
         },
@@ -31310,7 +31310,7 @@
         },
         {
             "n": "MECANISMO COMP UNIVERSAL SUP MU/SP ASTRA",
-            "e": 25,
+            "e": 23,
             "p": 98.9,
             "u": "UN"
         },
@@ -31520,7 +31520,7 @@
         },
         {
             "n": "MINI POSTE 3 LINHA TRIF",
-            "e": 5,
+            "e": 4,
             "p": 79.9,
             "u": "UN"
         },
@@ -31550,7 +31550,7 @@
         },
         {
             "n": "MISTURADOR P/TINTA 5/16 ROMA 8010-1",
-            "e": 9,
+            "e": 8,
             "p": 21.9,
             "u": "UN"
         },
@@ -31796,7 +31796,7 @@
         },
         {
             "n": "MODULO INTER PARAL 10A 2509 MARES RMAZ",
-            "e": 21,
+            "e": 18,
             "p": 1,
             "u": "UN"
         },
@@ -32042,7 +32042,7 @@
         },
         {
             "n": "NEUTRALISADOR DE FERRUGEM 500ML VEDACIT",
-            "e": 42,
+            "e": 41,
             "p": 31.95,
             "u": "UN"
         },
@@ -32144,7 +32144,7 @@
         },
         {
             "n": "NIPEL ROSCAVEL 1/2 AMANCO/TIGRE",
-            "e": 212,
+            "e": 200,
             "p": 1.7,
             "u": "UN"
         },
@@ -32606,7 +32606,7 @@
         },
         {
             "n": "OBTURADOR C/CORRENTE 10999 SORTE METAIS",
-            "e": 28,
+            "e": 27,
             "p": 11.6,
             "u": "UN"
         },
@@ -32636,7 +32636,7 @@
         },
         {
             "n": "OBTURADOR P/SAIDA D AGUA KS/0 ASTRA",
-            "e": 12,
+            "e": 11,
             "p": 15.2,
             "u": "UN"
         },
@@ -32858,7 +32858,7 @@
         },
         {
             "n": "OLEO DE PEROBA KING 100ML",
-            "e": 14,
+            "e": 13,
             "p": 13.7,
             "u": "UN"
         },
@@ -32882,7 +32882,7 @@
         },
         {
             "n": "OLEO LUB SUPER MOTO 4T MOBIL 1LT",
-            "e": 14,
+            "e": 13,
             "p": 34.9,
             "u": "UN"
         },
@@ -33092,7 +33092,7 @@
         },
         {
             "n": "PANO DE CHAO COMUM",
-            "e": 111,
+            "e": 110,
             "p": 4.9,
             "u": "UN"
         },
@@ -33141,7 +33141,7 @@
         {
             "n": "PAPELEIRA MAX MESANO",
             "e": 8,
-            "p": 9.8,
+            "p": 6.9,
             "u": "UN"
         },
         {
@@ -33176,7 +33176,7 @@
         },
         {
             "n": "PARAF BROCANTE (5.5MM) 12X2\" UND",
-            "e": 463,
+            "e": 461,
             "p": 1.19,
             "u": "UN"
         },
@@ -33188,7 +33188,7 @@
         },
         {
             "n": "PARAF BROCANTE (5.5MM) 14X3/4\" UND",
-            "e": 436,
+            "e": 236,
             "p": 0.63,
             "u": "UN"
         },
@@ -33380,7 +33380,7 @@
         },
         {
             "n": "PARAF FRANCES 5/16X02",
-            "e": 414,
+            "e": 394,
             "p": 1.89,
             "u": "UN"
         },
@@ -33422,7 +33422,7 @@
         },
         {
             "n": "PARAF MADEIRA 2.2X12MM",
-            "e": 350,
+            "e": 337,
             "p": 0.1,
             "u": "UN"
         },
@@ -33512,7 +33512,7 @@
         },
         {
             "n": "PARAF MADEIRA 3.8X40MM",
-            "e": 850,
+            "e": 828,
             "p": 0.29,
             "u": "UN"
         },
@@ -33530,7 +33530,7 @@
         },
         {
             "n": "PARAF MADEIRA 4.2X25MM",
-            "e": 1529,
+            "e": 1505,
             "p": 0.21,
             "u": "UN"
         },
@@ -33542,7 +33542,7 @@
         },
         {
             "n": "PARAF MADEIRA 4.8X50MM",
-            "e": 1137,
+            "e": 1087,
             "p": 0.49,
             "u": "UN"
         },
@@ -33668,7 +33668,7 @@
         },
         {
             "n": "PARAF MAQUINA 3/16X2MM",
-            "e": 15,
+            "e": 14,
             "p": 0.88,
             "u": "UN"
         },
@@ -33764,7 +33764,7 @@
         },
         {
             "n": "PARAF MDF BICROMAT 3.5X12MM",
-            "e": 469,
+            "e": 459,
             "p": 0.11,
             "u": "UN"
         },
@@ -33776,7 +33776,7 @@
         },
         {
             "n": "PARAF MDF BICROMAT 3.5X25MM",
-            "e": 26,
+            "e": 0,
             "p": 0.13,
             "u": "UN"
         },
@@ -33806,13 +33806,13 @@
         },
         {
             "n": "PARAF MDF BICROMAT 4.0X40MM",
-            "e": 1549,
+            "e": 1539,
             "p": 0.29,
             "u": "UN"
         },
         {
             "n": "PARAF MDF BICROMAT 4.0X50MM",
-            "e": 441,
+            "e": 423,
             "p": 0.35,
             "u": "UN"
         },
@@ -33854,7 +33854,7 @@
         },
         {
             "n": "PARAF MDF BICROMAT 5.0X50MM",
-            "e": 464,
+            "e": 426,
             "p": 0.29,
             "u": "UN"
         },
@@ -33866,7 +33866,7 @@
         },
         {
             "n": "PARAF MDF BICROMAT 5.0X70MM",
-            "e": 191,
+            "e": 181,
             "p": 0.69,
             "u": "UN"
         },
@@ -34112,19 +34112,19 @@
         },
         {
             "n": "PARAF SEXTAVADO 6X20MM",
-            "e": 160,
+            "e": 156,
             "p": 0.78,
             "u": "UN"
         },
         {
             "n": "PARAF SEXTAVADO 6X30MM",
-            "e": 70,
+            "e": 68,
             "p": 1.28,
             "u": "UN"
         },
         {
             "n": "PARAF SEXTAVADO 6X40MM",
-            "e": 212,
+            "e": 210,
             "p": 1.29,
             "u": "UN"
         },
@@ -34148,7 +34148,7 @@
         },
         {
             "n": "PARAF SEXTAVADO 8X40MM",
-            "e": 590,
+            "e": 585,
             "p": 1.95,
             "u": "UN"
         },
@@ -34184,13 +34184,13 @@
         },
         {
             "n": "PARAF SOBERBA 1/4X50MM",
-            "e": 586,
+            "e": 582,
             "p": 1.63,
             "u": "UN"
         },
         {
             "n": "PARAF SOBERBA 1/4X65MM",
-            "e": 279,
+            "e": 255,
             "p": 1.08,
             "u": "UN"
         },
@@ -34202,7 +34202,7 @@
         },
         {
             "n": "PARAF SOBERBA 1/4X75MM",
-            "e": 271,
+            "e": 259,
             "p": 1.37,
             "u": "UN"
         },
@@ -34214,7 +34214,7 @@
         },
         {
             "n": "PARAF SOBERBA 3/16X50MM",
-            "e": 739,
+            "e": 727,
             "p": 0.68,
             "u": "UN"
         },
@@ -34256,7 +34256,7 @@
         },
         {
             "n": "PARAF SOBERBA 5/16X90MM",
-            "e": 178,
+            "e": 168,
             "p": 2.4,
             "u": "UN"
         },
@@ -34298,7 +34298,7 @@
         },
         {
             "n": "PARAFUSO BICROMAT 4.5X16MM",
-            "e": 2360,
+            "e": 2356,
             "p": 0.14,
             "u": "UN"
         },
@@ -34322,7 +34322,7 @@
         },
         {
             "n": "PARAFUSO FOSFATIZADO 3.5X35MM",
-            "e": 537,
+            "e": 521,
             "p": 0.34,
             "u": "UN"
         },
@@ -35378,13 +35378,13 @@
         },
         {
             "n": "PILHA AA PEQ COMUM ELGIN C/4UND",
-            "e": 32,
+            "e": 31,
             "p": 10.8,
             "u": "UN"
         },
         {
             "n": "PILHA AA PEQ COMUM ELGIN C/4UND TUBO",
-            "e": 11,
+            "e": 10,
             "p": 5.7,
             "u": "UN"
         },
@@ -35426,13 +35426,13 @@
         },
         {
             "n": "PILHA ALC AAA PALITO 1.5V ELGIN C/2UND",
-            "e": 32,
+            "e": 30,
             "p": 7.9,
             "u": "UN"
         },
         {
             "n": "PILHA ALC AAA PALITO 1.5V ELGIN C/4UND",
-            "e": 21,
+            "e": 18,
             "p": 13.8,
             "u": "UN"
         },
@@ -36146,7 +36146,7 @@
         },
         {
             "n": "PISO CERBRAS 46X46 A IPANEMA BEGE MT",
-            "e": 140.93,
+            "e": 129.43,
             "p": 29.9,
             "u": "UN"
         },
@@ -36188,7 +36188,7 @@
         },
         {
             "n": "PISO CERBRAS 46X46 A NEVE MT",
-            "e": 82.2,
+            "e": 70.7,
             "p": 34.9,
             "u": "M"
         },
@@ -36224,7 +36224,7 @@
         },
         {
             "n": "PISO CERBRAS 46X46A CRISTAL MT",
-            "e": 253,
+            "e": 250.7,
             "p": 33.9,
             "u": "M"
         },
@@ -36338,7 +36338,7 @@
         },
         {
             "n": "PISO KARINA 43X43 A 43169 DELFOS MT",
-            "e": 129.11,
+            "e": 125.05,
             "p": 38.9,
             "u": "UN"
         },
@@ -36452,7 +36452,7 @@
         },
         {
             "n": "PISO KARINA 57X57A 57101 IPE HD MT",
-            "e": 138.9,
+            "e": 136.67,
             "p": 38.9,
             "u": "UN"
         },
@@ -36872,19 +36872,19 @@
         },
         {
             "n": "PITAO ABERTO BUCHA 06",
-            "e": 453,
+            "e": 443,
             "p": 0.48,
             "u": "UN"
         },
         {
             "n": "PITAO ABERTO BUCHA 08",
-            "e": 784,
+            "e": 780,
             "p": 0.89,
             "u": "UN"
         },
         {
             "n": "PITAO ABERTO BUCHA 10",
-            "e": 1119,
+            "e": 1115,
             "p": 0.99,
             "u": "UN"
         },
@@ -36914,7 +36914,7 @@
         },
         {
             "n": "PITAO FECHADO BUCHA 08",
-            "e": 346,
+            "e": 340,
             "p": 0.89,
             "u": "UN"
         },
@@ -36962,7 +36962,7 @@
         },
         {
             "n": "PLACA 4X2 3 MOD 4516 MARES RMAZ",
-            "e": 25,
+            "e": 24,
             "p": 4.8,
             "u": "UN"
         },
@@ -37004,13 +37004,13 @@
         },
         {
             "n": "PLACA CEGA 3X3 RED 277 SB FAME",
-            "e": 68,
+            "e": 67,
             "p": 6.8,
             "u": "UN"
         },
         {
             "n": "PLACA CEGA 3X3 RED 4013 DUNAS ROMAZ",
-            "e": 208,
+            "e": 206,
             "p": 3.4,
             "u": "UN"
         },
@@ -37040,7 +37040,7 @@
         },
         {
             "n": "PLACA CEGA 4X2 4014 DUNAS ROMAZI",
-            "e": 83,
+            "e": 80,
             "p": 3.9,
             "u": "UN"
         },
@@ -37634,13 +37634,13 @@
         },
         {
             "n": "PLUG FEMEA 6023 2P+T 10A PT ROMAZI",
-            "e": 30,
+            "e": 23,
             "p": 5.9,
             "u": "UN"
         },
         {
             "n": "PLUG FEMEA 6033 2P+T 10A BC ROMAZI",
-            "e": 80,
+            "e": 78,
             "p": 4.6,
             "u": "UN"
         },
@@ -37676,7 +37676,7 @@
         },
         {
             "n": "PLUG MACHO 6024 2P 10A 180° PT ROMAZI",
-            "e": 90,
+            "e": 89,
             "p": 9.8,
             "u": "UN"
         },
@@ -37694,7 +37694,7 @@
         },
         {
             "n": "PLUG MACHO 6034 2P 10A 180° BC ROMAZI",
-            "e": 39,
+            "e": 38,
             "p": 4.5,
             "u": "UN"
         },
@@ -38150,7 +38150,7 @@
         },
         {
             "n": "PONTO DE LUZ LED VIOLINO 0.3W S.LUZ",
-            "e": 17,
+            "e": 14,
             "p": 8.9,
             "u": "UN"
         },
@@ -38186,7 +38186,7 @@
         },
         {
             "n": "PORCA SEXTAVADO 06MM",
-            "e": 2154,
+            "e": 2150,
             "p": 0.24,
             "u": "UN"
         },
@@ -38222,7 +38222,7 @@
         },
         {
             "n": "PORCA SEXTAVADO 3/16",
-            "e": 1403,
+            "e": 1402,
             "p": 0.2,
             "u": "UN"
         },
@@ -38276,7 +38276,7 @@
         },
         {
             "n": "PORCELANATO CERBRAS 70X70A TECHNATTO WHITE MATTE MT",
-            "e": 70,
+            "e": 64,
             "p": 67.8,
             "u": "M"
         },
@@ -39038,7 +39038,7 @@
         },
         {
             "n": "PORTA SANF PVC 0.70X2.10 BCO",
-            "e": 3,
+            "e": 2,
             "p": 119.8,
             "u": "UN"
         },
@@ -39074,7 +39074,7 @@
         },
         {
             "n": "PORTA SANF PVC 0.80X2.10 BCO",
-            "e": 9,
+            "e": 8,
             "p": 155.3,
             "u": "UN"
         },
@@ -39225,7 +39225,7 @@
         {
             "n": "PORTA TOALHA RETO STANDER MESANO/LR",
             "e": 16,
-            "p": 17.8,
+            "p": 15.9,
             "u": "UN"
         },
         {
@@ -39584,7 +39584,7 @@
         },
         {
             "n": "PREGO ACO GALV C/CAB 12X12(1.80X27.6)C/100",
-            "e": 4,
+            "e": 2,
             "p": 5.6,
             "u": "UN"
         },
@@ -39632,7 +39632,7 @@
         },
         {
             "n": "PREGO C/CABECA 1.1/4X14 KG",
-            "e": 23.3,
+            "e": 23,
             "p": 28.3,
             "u": "KG"
         },
@@ -39650,7 +39650,7 @@
         },
         {
             "n": "PREGO C/CABECA 18X27 (2.1/2X10) KG CIBRA",
-            "e": 116,
+            "e": 114,
             "p": 15.6,
             "u": "UN"
         },
@@ -39674,7 +39674,7 @@
         },
         {
             "n": "PREGO C/CABECA 2.1/2X10 KG",
-            "e": 13.01,
+            "e": 10.91,
             "p": 21.8,
             "u": "KG"
         },
@@ -39728,7 +39728,7 @@
         },
         {
             "n": "PREGO C/CABECA 5X5 KG",
-            "e": 10.8,
+            "e": 8.8,
             "p": 19.9,
             "u": "KG"
         },
@@ -39938,7 +39938,7 @@
         },
         {
             "n": "PRIMER ASFALTICO ACQUA 1L DRYKO",
-            "e": 103,
+            "e": 102,
             "p": 14.9,
             "u": "UN"
         },
@@ -40022,7 +40022,7 @@
         },
         {
             "n": "PRIMER SPRAY CINZA 400ML M.PRIME",
-            "e": 9,
+            "e": 8,
             "p": 17.9,
             "u": "UN"
         },
@@ -40070,7 +40070,7 @@
         },
         {
             "n": "PROJETOR SUPER LED 100W 6400K/6500K BCO BIV",
-            "e": 60,
+            "e": 55,
             "p": 39.4,
             "u": "UN"
         },
@@ -40172,7 +40172,7 @@
         },
         {
             "n": "PROJETOR SUPER LED 50W 6400K BCO BF",
-            "e": 30,
+            "e": 29,
             "p": 29.9,
             "u": "UN"
         },
@@ -40190,7 +40190,7 @@
         },
         {
             "n": "PROLONG P/CX SINF 150X150 AMANCO",
-            "e": 8,
+            "e": 7,
             "p": 14.9,
             "u": "UN"
         },
@@ -40226,7 +40226,7 @@
         },
         {
             "n": "PROLONGADOR 40MM C/ADAP 2801/2803 HERC",
-            "e": 9,
+            "e": 8,
             "p": 11.5,
             "u": "UN"
         },
@@ -40250,7 +40250,7 @@
         },
         {
             "n": "PROLONGADOR 803/5 5MT CONDOR",
-            "e": 12,
+            "e": 11,
             "p": 299.9,
             "u": "UN"
         },
@@ -40316,7 +40316,7 @@
         },
         {
             "n": "PROTETOR ANTI-IMPACTO TRANSP QUAD 13MM C/20 ADERE",
-            "e": 12,
+            "e": 10,
             "p": 24.9,
             "u": "UN"
         },
@@ -40496,7 +40496,7 @@
         },
         {
             "n": "PULVERIZADOR 2LT PLUS LOTUS",
-            "e": 2,
+            "e": 0,
             "p": 28.7,
             "u": "UN"
         },
@@ -40820,7 +40820,7 @@
         },
         {
             "n": "QUADRO TRIFASICO PLAST",
-            "e": 8,
+            "e": 7,
             "p": 145.8,
             "u": "UN"
         },
@@ -40886,7 +40886,7 @@
         },
         {
             "n": "RALINHO JAPONES 3.1/2\"",
-            "e": 38,
+            "e": 35,
             "p": 7.2,
             "u": "UN"
         },
@@ -40958,7 +40958,7 @@
         },
         {
             "n": "RALO CLICK QUADRADO 150MM 10820 SORTE METAIS",
-            "e": 7,
+            "e": 6,
             "p": 41.9,
             "u": "UN"
         },
@@ -40994,7 +40994,7 @@
         },
         {
             "n": "RALO PROTETOR PARAMAX 15X15 G146",
-            "e": 9,
+            "e": 8,
             "p": 22.8,
             "u": "UN"
         },
@@ -41228,7 +41228,7 @@
         },
         {
             "n": "REBITE 4.8X14MM",
-            "e": 1068,
+            "e": 1018,
             "p": 0.36,
             "u": "UN"
         },
@@ -41312,7 +41312,7 @@
         },
         {
             "n": "REBOCO PRONTO 15KG QUARTZOLIT",
-            "e": 82,
+            "e": 83,
             "p": 15.8,
             "u": "UN"
         },
@@ -41456,7 +41456,7 @@
         },
         {
             "n": "REFIL FOGAREIRO A GAS 400/200G M.PRIME",
-            "e": 7,
+            "e": 5,
             "p": 16.7,
             "u": "UN"
         },
@@ -41738,7 +41738,7 @@
         },
         {
             "n": "REGISTRO ESFERA SOLD 32MM VIQUA",
-            "e": 16,
+            "e": 15,
             "p": 14.6,
             "u": "UN"
         },
@@ -41750,7 +41750,7 @@
         },
         {
             "n": "REGISTRO ESFERA SOLD 40MM VIQUA",
-            "e": 12,
+            "e": 11,
             "p": 27.2,
             "u": "UN"
         },
@@ -41912,7 +41912,7 @@
         },
         {
             "n": "REGISTRO GAVETA 1509 3/4 C33 LIGHT BOGNAR",
-            "e": 9,
+            "e": 8,
             "p": 91.9,
             "u": "UN"
         },
@@ -41990,7 +41990,7 @@
         },
         {
             "n": "REGISTRO GAVETA DN20 3/4 PRIMOR 15705 DOCOL",
-            "e": 5,
+            "e": 4,
             "p": 119.9,
             "u": "UN"
         },
@@ -42032,7 +42032,7 @@
         },
         {
             "n": "REGISTRO GAVETA MAX 3/4 C-40 MESANO",
-            "e": 3,
+            "e": 4,
             "p": 88.4,
             "u": "UN"
         },
@@ -42086,7 +42086,7 @@
         },
         {
             "n": "REGISTRO P/DUCHA HIG ABS BCA 10731 SORTE METAIS",
-            "e": 21,
+            "e": 19,
             "p": 8.9,
             "u": "UN"
         },
@@ -42158,7 +42158,7 @@
         },
         {
             "n": "REGISTRO P/MAQ LAVAR 1/2\"X3/4\" SORTE METAIS 10606",
-            "e": 33,
+            "e": 31,
             "p": 22.9,
             "u": "UN"
         },
@@ -42308,8 +42308,8 @@
         },
         {
             "n": "REGISTRO PRESSAO MAX 3/4 C-40 MESANO",
-            "e": 23,
-            "p": 57.9,
+            "e": 22,
+            "p": 64.9,
             "u": "UN"
         },
         {
@@ -42398,13 +42398,13 @@
         },
         {
             "n": "REGULAD P/GAS C/MANG 1.20CM 504/01 ALIANCA",
-            "e": 10,
+            "e": 9,
             "p": 72.7,
             "u": "UN"
         },
         {
             "n": "REGULAD P/GAS C/MANG 1.20CM 506/01 ALIANCA",
-            "e": 24,
+            "e": 22,
             "p": 79.9,
             "u": "UN"
         },
@@ -42428,7 +42428,7 @@
         },
         {
             "n": "REGULADOR DE BRILHO FORTEX 3.6L",
-            "e": 19,
+            "e": 18,
             "p": 64.8,
             "u": "UN"
         },
@@ -42464,7 +42464,7 @@
         },
         {
             "n": "REGULADOR P/GAS 506/01 S/MANG GDE ALIANCA",
-            "e": 47,
+            "e": 46,
             "p": 58.6,
             "u": "UN"
         },
@@ -42500,7 +42500,7 @@
         },
         {
             "n": "REJUNTE FLEX 1KG REJUNTAMIX BCO",
-            "e": 93,
+            "e": 91,
             "p": 6.8,
             "u": "UN"
         },
@@ -42590,7 +42590,7 @@
         },
         {
             "n": "REJUNTE FLEX 1KG REJUNTAMIX PLATINA",
-            "e": 399,
+            "e": 389,
             "p": 6.8,
             "u": "UN"
         },
@@ -42650,7 +42650,7 @@
         },
         {
             "n": "REJUNTE PORCELANATO 1KG REJUNTAMIX CREMA MARFIL",
-            "e": 104,
+            "e": 98,
             "p": 10.9,
             "u": "UN"
         },
@@ -42674,7 +42674,7 @@
         },
         {
             "n": "REJUNTE PORCELANATO 1KG REJUNTAMIX PLATINA",
-            "e": 95,
+            "e": 94,
             "p": 10.9,
             "u": "UN"
         },
@@ -42734,7 +42734,7 @@
         },
         {
             "n": "REMOVEDOR PASTOSO 1KG BRASILUX",
-            "e": 5,
+            "e": 4,
             "p": 42.7,
             "u": "UN"
         },
@@ -42800,7 +42800,7 @@
         },
         {
             "n": "REPARADOR P/PLASTICO 150GR MAZA",
-            "e": 2,
+            "e": 1,
             "p": 69.7,
             "u": "UN"
         },
@@ -42813,12 +42813,12 @@
         {
             "n": "REPARO CABEC P/TORN 1/4 VOLTA M18 AZUL/VERMELHO MESANO",
             "e": 24,
-            "p": 9.9,
+            "p": 12.2,
             "u": "UN"
         },
         {
             "n": "REPARO CABECOTE MVS AM. P/ REG R.07 MESANO",
-            "e": 14,
+            "e": 13,
             "p": 43.8,
             "u": "UN"
         },
@@ -43238,7 +43238,7 @@
         },
         {
             "n": "RESISTENCIA VIDA LONGA 220V 6500W INTEN/COMP FAME",
-            "e": 8,
+            "e": 7,
             "p": 63.9,
             "u": "UN"
         },
@@ -43766,7 +43766,7 @@
         },
         {
             "n": "RODIZIO GIR TRANSP 50MM C/FREIO SOPRANO",
-            "e": 23,
+            "e": 21,
             "p": 11.7,
             "u": "UN"
         },
@@ -43790,7 +43790,7 @@
         },
         {
             "n": "RODIZIO GIR TRANSP 50MM S/FREIO SOPRANO",
-            "e": 9,
+            "e": 6,
             "p": 9.95,
             "u": "UN"
         },
@@ -44042,7 +44042,7 @@
         },
         {
             "n": "ROLDANA TRIF LOUCA 72X72/67X72",
-            "e": 39,
+            "e": 36,
             "p": 10.8,
             "u": "UN"
         },
@@ -44120,13 +44120,13 @@
         },
         {
             "n": "ROLO EPOXI FINOX 964/9 CONDOR",
-            "e": 73,
+            "e": 72,
             "p": 16.6,
             "u": "UN"
         },
         {
             "n": "ROLO ESPONJA 5CM CONDOR 8094",
-            "e": 115,
+            "e": 113,
             "p": 6.4,
             "u": "UN"
         },
@@ -44144,13 +44144,13 @@
         },
         {
             "n": "ROLO ESPONJA 983/8094 15CM CONDOR",
-            "e": 241,
+            "e": 239,
             "p": 11.6,
             "u": "UN"
         },
         {
             "n": "ROLO ESPONJA 983/8094 9CM CONDOR",
-            "e": 226,
+            "e": 225,
             "p": 6.7,
             "u": "UN"
         },
@@ -44222,7 +44222,7 @@
         },
         {
             "n": "ROLO FIBRAS ESPECIAIS 09CM C/CABO 323 ROMA",
-            "e": 11,
+            "e": 10,
             "p": 7.8,
             "u": "UN"
         },
@@ -44414,7 +44414,7 @@
         },
         {
             "n": "ROLO LA S/RESPINGO 5CM C/CABO ROMA 822/05",
-            "e": 41,
+            "e": 38,
             "p": 5.9,
             "u": "UN"
         },
@@ -44594,7 +44594,7 @@
         },
         {
             "n": "ROLO P/TEXTURA RUST 23CM FORTVINIL",
-            "e": 19,
+            "e": 18,
             "p": 31.8,
             "u": "UN"
         },
@@ -44660,7 +44660,7 @@
         },
         {
             "n": "ROLO ZERO-GOTA LA 952/23 CONDOR",
-            "e": 71,
+            "e": 68,
             "p": 33.9,
             "u": "UN"
         },
@@ -44804,7 +44804,7 @@
         },
         {
             "n": "SACA GESSO ( 40KG )",
-            "e": 53,
+            "e": 51,
             "p": 38.7,
             "u": "UN"
         },
@@ -44858,7 +44858,7 @@
         },
         {
             "n": "SACO VAZIO - ENTULHO 30KG UND",
-            "e": 567,
+            "e": 554,
             "p": 2.7,
             "u": "UN"
         },
@@ -44924,7 +44924,7 @@
         },
         {
             "n": "SELADOR ACR PIGMENTADO CONSTRUMIX 15L",
-            "e": 26,
+            "e": 24,
             "p": 69.9,
             "u": "UN"
         },
@@ -44948,13 +44948,13 @@
         },
         {
             "n": "SELADOR ACR PIGMENTADO FORTEX 15L",
-            "e": 16,
+            "e": 15,
             "p": 118.5,
             "u": "UN"
         },
         {
             "n": "SELADOR ACR PIGMENTADO FORTEX 3.6L",
-            "e": 16,
+            "e": 12,
             "p": 37.9,
             "u": "UN"
         },
@@ -45032,7 +45032,7 @@
         },
         {
             "n": "SELANTE ADES CIBRA PU FIXA ESPELHO 400G BCO",
-            "e": 8,
+            "e": 7,
             "p": 24.9,
             "u": "UN"
         },
@@ -45062,7 +45062,7 @@
         },
         {
             "n": "SELANTE ADES CIBRA PU40 400G BCO",
-            "e": 13,
+            "e": 11,
             "p": 18.9,
             "u": "UN"
         },
@@ -45092,7 +45092,7 @@
         },
         {
             "n": "SELANTE ADES CIBRA PU55 PARABRISA 310ML PTO",
-            "e": 73,
+            "e": 72,
             "p": 29.8,
             "u": "UN"
         },
@@ -45200,7 +45200,7 @@
         },
         {
             "n": "SERRA COMUM",
-            "e": 40,
+            "e": 39,
             "p": 1.9,
             "u": "UN"
         },
@@ -45386,13 +45386,13 @@
         },
         {
             "n": "SERRA MARMORE GDC 150/14-40 220V BOSCH",
-            "e": 11,
-            "p": 624.8,
+            "e": 23,
+            "p": 668.7,
             "u": "UN"
         },
         {
             "n": "SERRA STARRETT 1218 FLEXIVEL",
-            "e": 146,
+            "e": 141,
             "p": 16.9,
             "u": "UN"
         },
@@ -45512,7 +45512,7 @@
         },
         {
             "n": "SIFAO DE COPO MULTIUSO TIGRE",
-            "e": 23,
+            "e": 22,
             "p": 29.9,
             "u": "UN"
         },
@@ -45524,7 +45524,7 @@
         },
         {
             "n": "SIFAO DE COPO UNIVERSAL AMANCO",
-            "e": 17,
+            "e": 15,
             "p": 26.6,
             "u": "UN"
         },
@@ -45584,7 +45584,7 @@
         },
         {
             "n": "SIFAO UNIV BCO 2603 HERC",
-            "e": 2610,
+            "e": 2598,
             "p": 6.9,
             "u": "UN"
         },
@@ -45602,7 +45602,7 @@
         },
         {
             "n": "SIKADUR EPOXI TIX 1KG SIKA",
-            "e": 12,
+            "e": 11,
             "p": 99.6,
             "u": "UN"
         },
@@ -45626,13 +45626,13 @@
         },
         {
             "n": "SILICONE 50G INCOLOR CIBRA",
-            "e": 62,
+            "e": 61,
             "p": 5.9,
             "u": "UN"
         },
         {
             "n": "SILICONE 50G TRANSP",
-            "e": 24,
+            "e": 21,
             "p": 11.7,
             "u": "UN"
         },
@@ -45746,7 +45746,7 @@
         },
         {
             "n": "SILICONE SPRAY 300ML LAVANDA MUNDIAL PRIME",
-            "e": 19,
+            "e": 18,
             "p": 14.9,
             "u": "UN"
         },
@@ -45788,7 +45788,7 @@
         },
         {
             "n": "SODA CAUSTICA 500G COMBATE",
-            "e": 13,
+            "e": 11,
             "p": 14.9,
             "u": "UN"
         },
@@ -45860,7 +45860,7 @@
         },
         {
             "n": "SOLEIRA GRAN VD UBAT 0.75X0.13",
-            "e": 1,
+            "e": 0,
             "p": 63.5,
             "u": "UN"
         },
@@ -45950,7 +45950,7 @@
         },
         {
             "n": "SOLVENTE 101 THINNER 0.9LT",
-            "e": 247,
+            "e": 246,
             "p": 37.9,
             "u": "UN"
         },
@@ -45974,13 +45974,13 @@
         },
         {
             "n": "SOLVENTE 409 AGUARRAS 5LT",
-            "e": 10,
+            "e": 6,
             "p": 155.8,
             "u": "UN"
         },
         {
             "n": "SOLVENTE 9100 THINNER 0.9LT EUCATEX",
-            "e": 37,
+            "e": 36,
             "p": 22.9,
             "u": "UN"
         },
@@ -46004,7 +46004,7 @@
         },
         {
             "n": "SOLVENTE DILUENTE AGUARRAS 0.9LT EUCATEX",
-            "e": 21,
+            "e": 16,
             "p": 21,
             "u": "UN"
         },
@@ -46028,7 +46028,7 @@
         },
         {
             "n": "SOLVENTE DILUENTE SOLUT 900ML",
-            "e": 468,
+            "e": 454,
             "p": 19.8,
             "u": "UN"
         },
@@ -46106,13 +46106,13 @@
         },
         {
             "n": "SOQUETE C/RABICHO PRETO",
-            "e": 278,
+            "e": 273,
             "p": 2.95,
             "u": "UN"
         },
         {
             "n": "SOQUETE FIXO P/TETO ILUMI BCO",
-            "e": 36,
+            "e": 35,
             "p": 5.5,
             "u": "UN"
         },
@@ -46142,7 +46142,7 @@
         },
         {
             "n": "SOQUETE LOUCA S/RABICHO",
-            "e": 131,
+            "e": 130,
             "p": 2.7,
             "u": "UN"
         },
@@ -46190,13 +46190,13 @@
         },
         {
             "n": "SOQUETE PLAST ILUMI BCO",
-            "e": 4165,
+            "e": 4163,
             "p": 4.9,
             "u": "UN"
         },
         {
             "n": "SOQUETE PRATC ROMAZI BCO 7003",
-            "e": 126,
+            "e": 124,
             "p": 6.9,
             "u": "UN"
         },
@@ -46574,13 +46574,13 @@
         },
         {
             "n": "SPRAY TINTA S/R 400ML M.PRIME BCO",
-            "e": 118,
+            "e": 117,
             "p": 17.6,
             "u": "UN"
         },
         {
             "n": "SPRAY TINTA S/R 400ML M.PRIME BCO FOSCO",
-            "e": 21,
+            "e": 20,
             "p": 17.6,
             "u": "UN"
         },
@@ -46598,7 +46598,7 @@
         },
         {
             "n": "SPRAY TINTA S/R 400ML M.PRIME CROMADO",
-            "e": 19,
+            "e": 18,
             "p": 31.9,
             "u": "UN"
         },
@@ -46634,7 +46634,7 @@
         },
         {
             "n": "SPRAY TINTA S/R 400ML M.PRIME MARROM",
-            "e": 9,
+            "e": 8,
             "p": 17.6,
             "u": "UN"
         },
@@ -46700,7 +46700,7 @@
         },
         {
             "n": "SPRAY TINTA S/R 400ML M.PRIME VD CLARO",
-            "e": 12,
+            "e": 11,
             "p": 17.6,
             "u": "UN"
         },
@@ -46760,7 +46760,7 @@
         },
         {
             "n": "SPRAY TINTA USO GERAL 400ML BCO CIBRA",
-            "e": 72,
+            "e": 70,
             "p": 14.9,
             "u": "UN"
         },
@@ -46796,19 +46796,19 @@
         },
         {
             "n": "SPRAY TINTA USO GERAL 400ML PTO CIBRA",
-            "e": 52,
+            "e": 45,
             "p": 14.9,
             "u": "UN"
         },
         {
             "n": "SPRAY TINTA USO GERAL 400ML PTO FOSCO CIBRA",
-            "e": 18,
+            "e": 13,
             "p": 14.9,
             "u": "UN"
         },
         {
             "n": "SPRAY TINTA USO GERAL 400ML VD CLARO CIBRA",
-            "e": 7,
+            "e": 6,
             "p": 14.9,
             "u": "UN"
         },
@@ -46844,7 +46844,7 @@
         },
         {
             "n": "SPRAY VERNIZ 400ML M.PRIME",
-            "e": 17,
+            "e": 16,
             "p": 21.9,
             "u": "UN"
         },
@@ -47018,7 +47018,7 @@
         },
         {
             "n": "SUPER TANQUE DE FIB SIMP 0.57X0.47 BCO FIBRA MAIS",
-            "e": 5,
+            "e": 4,
             "p": 144.9,
             "u": "UN"
         },
@@ -47390,19 +47390,19 @@
         },
         {
             "n": "SUPORTE P/GRELHA QUAD 10X10 MESANO",
-            "e": 8,
+            "e": 7,
             "p": 4.9,
             "u": "UN"
         },
         {
             "n": "SUPORTE P/GRELHA QUAD 15X15 MESANO",
-            "e": 9,
-            "p": 7.6,
+            "e": 8,
+            "p": 8.4,
             "u": "UN"
         },
         {
             "n": "SUPORTE P/MANGUEIRA OVERTI",
-            "e": 21,
+            "e": 20,
             "p": 10.8,
             "u": "UN"
         },
@@ -47432,7 +47432,7 @@
         },
         {
             "n": "SUPORTE P/PRAT 150MM PTO OVERTIME",
-            "e": 160,
+            "e": 157,
             "p": 6.4,
             "u": "UN"
         },
@@ -47504,13 +47504,13 @@
         },
         {
             "n": "SUPORTE P/TV 10\" A 71\" PLASMA LED LCD MAX",
-            "e": 70,
+            "e": 68,
             "p": 19.9,
             "u": "UN"
         },
         {
             "n": "SUPORTE P/TV 10\" A 90\" SBRU951 BRASFORMA",
-            "e": 46,
+            "e": 41,
             "p": 10.9,
             "u": "UN"
         },
@@ -47804,7 +47804,7 @@
         },
         {
             "n": "SUPORTE SPLIT 45CM C/PARAF BCO PAR",
-            "e": 3,
+            "e": 1,
             "p": 78.6,
             "u": "UN"
         },
@@ -48002,7 +48002,7 @@
         },
         {
             "n": "TALHADEIRA SDS PLUS 14X250X40MM MAX",
-            "e": 5,
+            "e": 4,
             "p": 17.9,
             "u": "UN"
         },
@@ -48650,7 +48650,7 @@
         },
         {
             "n": "TE DE REDUCAO ESGOTO 100X50 AMANCO/TIGRE",
-            "e": 13,
+            "e": 12,
             "p": 19.6,
             "u": "UN"
         },
@@ -48704,7 +48704,7 @@
         },
         {
             "n": "TE DE REDUCAO ROSC 3/4X1/2 AMANCO",
-            "e": 18,
+            "e": 16,
             "p": 8.5,
             "u": "UN"
         },
@@ -48722,7 +48722,7 @@
         },
         {
             "n": "TE DE REDUCAO SOLD 40X25MM AMANCO",
-            "e": 16,
+            "e": 15,
             "p": 12.6,
             "u": "UN"
         },
@@ -48734,7 +48734,7 @@
         },
         {
             "n": "TE DE REDUCAO SOLD 50X25MM AMANCO",
-            "e": 2,
+            "e": 1,
             "p": 12.5,
             "u": "UN"
         },
@@ -48764,13 +48764,13 @@
         },
         {
             "n": "TE ELETRICO CINZA NOVO PADRAO ILUMI",
-            "e": 2,
+            "e": 1,
             "p": 8.9,
             "u": "UN"
         },
         {
             "n": "TE ESGOTO 100MM AMANCO/TIGRE",
-            "e": 66,
+            "e": 65,
             "p": 17.7,
             "u": "UN"
         },
@@ -48782,7 +48782,7 @@
         },
         {
             "n": "TE ESGOTO 40MM AMANCO/KRONA/TIGRE",
-            "e": 51,
+            "e": 126,
             "p": 4.6,
             "u": "UN"
         },
@@ -48920,7 +48920,7 @@
         },
         {
             "n": "TE ROSCAVEL 1/2 AMANCO/TIGRE",
-            "e": 59,
+            "e": 48,
             "p": 4.2,
             "u": "UN"
         },
@@ -48950,7 +48950,7 @@
         },
         {
             "n": "TE SOLDAVEL 32MM AMANCO/TIGRE",
-            "e": 45,
+            "e": 44,
             "p": 5.3,
             "u": "UN"
         },
@@ -49022,7 +49022,7 @@
         },
         {
             "n": "TECPLUS TOP CX 4KG QUARTZOLIT",
-            "e": 9,
+            "e": 8,
             "p": 36.2,
             "u": "UN"
         },
@@ -49070,7 +49070,7 @@
         },
         {
             "n": "TELA GALV FEIJAO S.JORGE MT",
-            "e": 20,
+            "e": 19,
             "p": 56.8,
             "u": "UN"
         },
@@ -49082,13 +49082,13 @@
         },
         {
             "n": "TELA GALV P/PINT FIO 24 1X1.5 MT",
-            "e": 189,
+            "e": 179,
             "p": 11.9,
             "u": "UN"
         },
         {
             "n": "TELA GALV P/VIV 1/2X26 1X1.5 MT",
-            "e": 288.25,
+            "e": 287.25,
             "p": 17.9,
             "u": "M"
         },
@@ -49100,7 +49100,7 @@
         },
         {
             "n": "TELA PIA NYLON 39X29CM",
-            "e": 16,
+            "e": 36,
             "p": 13.4,
             "u": "UN"
         },
@@ -49112,7 +49112,7 @@
         },
         {
             "n": "TELA PIA NYLON 45X30CM",
-            "e": 27,
+            "e": 47,
             "p": 14.8,
             "u": "UN"
         },
@@ -49124,7 +49124,7 @@
         },
         {
             "n": "TELA PLAST P/PINT 1X1.5 MT",
-            "e": 14,
+            "e": 4,
             "p": 12.9,
             "u": "M"
         },
@@ -49268,7 +49268,7 @@
         },
         {
             "n": "TELHA EM ACRILICO TRIPLA",
-            "e": 47,
+            "e": 46,
             "p": 21.8,
             "u": "UN"
         },
@@ -49778,7 +49778,7 @@
         },
         {
             "n": "TEXTURA ACR FORTEX 25KG CZ NEBLINA/NIQUEL",
-            "e": 13,
+            "e": 11,
             "p": 131.9,
             "u": "UN"
         },
@@ -49976,7 +49976,7 @@
         },
         {
             "n": "TIJOLO BRANCO C/20UND",
-            "e": 35,
+            "e": 34,
             "p": 19.6,
             "u": "UN"
         },
@@ -50306,13 +50306,13 @@
         },
         {
             "n": "TINTA ACR FORTCRYL 15L AREIA DO DESERTO",
-            "e": 2,
+            "e": 3,
             "p": 199.9,
             "u": "UN"
         },
         {
             "n": "TINTA ACR FORTCRYL 15L AZUL ESPECIAL",
-            "e": 5,
+            "e": 4,
             "p": 244.3,
             "u": "UN"
         },
@@ -50324,13 +50324,13 @@
         },
         {
             "n": "TINTA ACR FORTCRYL 15L BCO GELO",
-            "e": 14,
+            "e": 13,
             "p": 199.9,
             "u": "UN"
         },
         {
             "n": "TINTA ACR FORTCRYL 15L BCO NEVE",
-            "e": 15,
+            "e": 14,
             "p": 199.9,
             "u": "UN"
         },
@@ -50378,7 +50378,7 @@
         },
         {
             "n": "TINTA ACR FORTCRYL 15L CZ NEB/MEDIO",
-            "e": 8,
+            "e": 3,
             "p": 199.9,
             "u": "UN"
         },
@@ -50486,7 +50486,7 @@
         },
         {
             "n": "TINTA ACR FORTCRYL 3.6L AMARELO CANARIO",
-            "e": 12,
+            "e": 11,
             "p": 69.9,
             "u": "UN"
         },
@@ -50570,7 +50570,7 @@
         },
         {
             "n": "TINTA ACR FORTCRYL 3.6L CZ.NIQUEL",
-            "e": 8,
+            "e": 9,
             "p": 64.7,
             "u": "UN"
         },
@@ -50582,7 +50582,7 @@
         },
         {
             "n": "TINTA ACR FORTCRYL 3.6L MARFIM",
-            "e": 10,
+            "e": 9,
             "p": 64.7,
             "u": "UN"
         },
@@ -50618,13 +50618,13 @@
         },
         {
             "n": "TINTA ACR FORTCRYL 3.6L PESSEGO",
-            "e": 9,
+            "e": 8,
             "p": 64.7,
             "u": "UN"
         },
         {
             "n": "TINTA ACR FORTCRYL 3.6L PRETO",
-            "e": 6,
+            "e": 4,
             "p": 64.7,
             "u": "UN"
         },
@@ -50882,7 +50882,7 @@
         },
         {
             "n": "TINTA ACR LAR CORAL 15LT BCO NEVE",
-            "e": 37,
+            "e": 36,
             "p": 149.9,
             "u": "UN"
         },
@@ -50942,7 +50942,7 @@
         },
         {
             "n": "TINTA ACR LAR CORAL 3.6L AREIA",
-            "e": 10,
+            "e": 9,
             "p": 64.8,
             "u": "UN"
         },
@@ -51386,13 +51386,13 @@
         },
         {
             "n": "TINTA AUT SINT MAZA 0.9LT ALUMINIO",
-            "e": 5,
+            "e": 4,
             "p": 49.9,
             "u": "UN"
         },
         {
             "n": "TINTA AUT SINT MAZA 0.9LT BCO GEADA",
-            "e": 28,
+            "e": 27,
             "p": 49.9,
             "u": "UN"
         },
@@ -51470,7 +51470,7 @@
         },
         {
             "n": "TINTA CIMENTO QUEIMADO CZ NOBRE 5KG FORTEX",
-            "e": 6,
+            "e": 5,
             "p": 114.9,
             "u": "UN"
         },
@@ -51524,19 +51524,19 @@
         },
         {
             "n": "TINTA CONSTRUMIX LATEX INT BC GELO 3.6 LT",
-            "e": 11,
+            "e": 10,
             "p": 24.7,
             "u": "UN"
         },
         {
             "n": "TINTA CONSTRUMIX LATEX INT BC NEVE 15 LT",
-            "e": 92,
+            "e": 90,
             "p": 69.9,
             "u": "UN"
         },
         {
             "n": "TINTA CONSTRUMIX LATEX INT BC NEVE 3.0 LT",
-            "e": 10,
+            "e": 9,
             "p": 24.7,
             "u": "UN"
         },
@@ -52100,7 +52100,7 @@
         },
         {
             "n": "TINTA ESM ACET SINT CORALIT 750ML BCO",
-            "e": 6,
+            "e": 5,
             "p": 47.4,
             "u": "UN"
         },
@@ -52172,7 +52172,7 @@
         },
         {
             "n": "TINTA ESM FORTMAX A/B 3LT AMARELO",
-            "e": 5,
+            "e": 4,
             "p": 107.2,
             "u": "UN"
         },
@@ -52202,13 +52202,13 @@
         },
         {
             "n": "TINTA ESM FORTMAX A/B 3LT CONHAQUE",
-            "e": 5,
+            "e": 4,
             "p": 107.2,
             "u": "UN"
         },
         {
             "n": "TINTA ESM FORTMAX A/B 3LT CZA MEDIO",
-            "e": 8,
+            "e": 7,
             "p": 107.2,
             "u": "UN"
         },
@@ -52226,7 +52226,7 @@
         },
         {
             "n": "TINTA ESM FORTMAX A/B 3LT TABACO",
-            "e": 11,
+            "e": 12,
             "p": 107.2,
             "u": "UN"
         },
@@ -52292,7 +52292,7 @@
         },
         {
             "n": "TINTA ESM FORTMAX A/B 750ML MARFIM",
-            "e": 7,
+            "e": 5,
             "p": 29.3,
             "u": "UN"
         },
@@ -52352,7 +52352,7 @@
         },
         {
             "n": "TINTA ESM FORTMAX A/B ZERO 3LT CONHAQUE",
-            "e": 7,
+            "e": 8,
             "p": 119.95,
             "u": "UN"
         },
@@ -52364,7 +52364,7 @@
         },
         {
             "n": "TINTA ESM FORTMAX A/B ZERO 3LT TABACO",
-            "e": 10,
+            "e": 9,
             "p": 119.95,
             "u": "UN"
         },
@@ -52400,7 +52400,7 @@
         },
         {
             "n": "TINTA ESM FORTMAX A/B ZERO 750ML BCO NEVE",
-            "e": 12,
+            "e": 9,
             "p": 33.4,
             "u": "UN"
         },
@@ -52424,13 +52424,13 @@
         },
         {
             "n": "TINTA ESM FORTMAX A/B ZERO 750ML TABACO",
-            "e": 12,
+            "e": 10,
             "p": 33.4,
             "u": "UN"
         },
         {
             "n": "TINTA ESM FORTMAX A/B ZERO 750ML VD FOLHA",
-            "e": 16,
+            "e": 15,
             "p": 33.4,
             "u": "UN"
         },
@@ -52454,7 +52454,7 @@
         },
         {
             "n": "TINTA ESM FORTMAX ACET ZERO 3LT BCO NEVE",
-            "e": 17,
+            "e": 14,
             "p": 120.9,
             "u": "UN"
         },
@@ -52496,7 +52496,7 @@
         },
         {
             "n": "TINTA ESM HIPERCOR/HIPERLAR A/B 112.5ML AMARELO",
-            "e": 1,
+            "e": 0,
             "p": 9.9,
             "u": "UN"
         },
@@ -52784,7 +52784,7 @@
         },
         {
             "n": "TINTA ESM SINT. DIR FER 0.9LT BRONZE ANTIGO",
-            "e": 3,
+            "e": 0,
             "p": 73.9,
             "u": "UN"
         },
@@ -53078,13 +53078,13 @@
         },
         {
             "n": "TINTA FORTMAIS LATEX 15L BCO GELO",
-            "e": 28,
+            "e": 20,
             "p": 109.9,
             "u": "UN"
         },
         {
             "n": "TINTA FORTMAIS LATEX 15L BCO NEVE",
-            "e": 33,
+            "e": 31,
             "p": 109.9,
             "u": "UN"
         },
@@ -53108,7 +53108,7 @@
         },
         {
             "n": "TINTA FORTMAIS LATEX 15L LARANJA",
-            "e": 5,
+            "e": 4,
             "p": 109.9,
             "u": "UN"
         },
@@ -53144,7 +53144,7 @@
         },
         {
             "n": "TINTA FORTMAIS LATEX 15L PALHA",
-            "e": 10,
+            "e": 15,
             "p": 109.9,
             "u": "UN"
         },
@@ -53204,7 +53204,7 @@
         },
         {
             "n": "TINTA FORTMAIS LATEX 3.6L BCO NEVE",
-            "e": 24,
+            "e": 25,
             "p": 39.9,
             "u": "UN"
         },
@@ -53264,7 +53264,7 @@
         },
         {
             "n": "TINTA FORTMAIS LATEX 3.6L OCRE MARAJO",
-            "e": 7,
+            "e": 8,
             "p": 39.9,
             "u": "UN"
         },
@@ -53360,7 +53360,7 @@
         },
         {
             "n": "TINTA HIDRACOR PO 2KG BCO",
-            "e": 149,
+            "e": 148,
             "p": 6.6,
             "u": "UN"
         },
@@ -53576,7 +53576,7 @@
         },
         {
             "n": "TINTA PISO ACR FORTPISO 15L CONCRETO",
-            "e": 5,
+            "e": 4,
             "p": 259.9,
             "u": "UN"
         },
@@ -53690,7 +53690,7 @@
         },
         {
             "n": "TINTA PISO ACR NOVACOR 0.9L BCO",
-            "e": 5,
+            "e": 4,
             "p": 44.8,
             "u": "UN"
         },
@@ -53822,7 +53822,7 @@
         },
         {
             "n": "TINTA PISO ACR NOVACOR 3.6L AM.DEMARCAÇAO",
-            "e": 1,
+            "e": 5,
             "p": 135.8,
             "u": "UN"
         },
@@ -53858,13 +53858,13 @@
         },
         {
             "n": "TINTA PISO ACR NOVACOR 3.6L CZA",
-            "e": 7,
+            "e": 11,
             "p": 135.8,
             "u": "UN"
         },
         {
             "n": "TINTA PISO ACR NOVACOR 3.6L CZA CHUMBO",
-            "e": 0,
+            "e": 4,
             "p": 135.8,
             "u": "UN"
         },
@@ -53882,7 +53882,7 @@
         },
         {
             "n": "TINTA PISO ACR NOVACOR 3.6L VERDE",
-            "e": 2,
+            "e": 6,
             "p": 135.8,
             "u": "UN"
         },
@@ -54080,7 +54080,7 @@
         },
         {
             "n": "TOMADA BIP 2P+T 1430/3898 20A MOD FAME",
-            "e": 53,
+            "e": 52,
             "p": 18.3,
             "u": "UN"
         },
@@ -54098,7 +54098,7 @@
         },
         {
             "n": "TOMADA DUPLA 10A 1015 DUNAS ROMAZI",
-            "e": 32,
+            "e": 30,
             "p": 9.1,
             "u": "UN"
         },
@@ -54110,13 +54110,13 @@
         },
         {
             "n": "TOMADA DUPLA 10A 1433/3900 MOD FAME",
-            "e": 40,
+            "e": 39,
             "p": 26.9,
             "u": "UN"
         },
         {
             "n": "TOMADA DUPLA 10A 1515 MARES ROMAZI",
-            "e": 509,
+            "e": 508,
             "p": 14.8,
             "u": "UN"
         },
@@ -54170,7 +54170,7 @@
         },
         {
             "n": "TOMADA EXT 20A SIMPLES 1923 ROMAZI JERI PLUS",
-            "e": 48,
+            "e": 47,
             "p": 9.3,
             "u": "UN"
         },
@@ -54728,7 +54728,7 @@
         },
         {
             "n": "TORNEIRA B.MOV PAR FLEXCOLOR PTO 1/4 C-70 MAX MESANO",
-            "e": 4,
+            "e": 3,
             "p": 92.2,
             "u": "UN"
         },
@@ -54752,7 +54752,7 @@
         },
         {
             "n": "TORNEIRA B.MOV PAR GOURMET PTO 10714 SORTE METAIS",
-            "e": 8,
+            "e": 7,
             "p": 76.7,
             "u": "UN"
         },
@@ -54794,7 +54794,7 @@
         },
         {
             "n": "TORNEIRA B.MOVEL BANC LAV 1/4 SIMPLEX MESANO",
-            "e": 22,
+            "e": 23,
             "p": 36.7,
             "u": "UN"
         },
@@ -55040,7 +55040,7 @@
         },
         {
             "n": "TORNEIRA B.MOVEL PIA/MESA 2069 C53 LIGHT BOGNAR",
-            "e": 7,
+            "e": 6,
             "p": 72.6,
             "u": "UN"
         },
@@ -55280,7 +55280,7 @@
         },
         {
             "n": "TORNEIRA ESFERA 1/2X3/4 1360 BOGNAR",
-            "e": 5,
+            "e": 4,
             "p": 34.6,
             "u": "UN"
         },
@@ -55448,7 +55448,7 @@
         },
         {
             "n": "TORNEIRA GEL DIREITA E ESQUERDA",
-            "e": 49,
+            "e": 47,
             "p": 15.2,
             "u": "UN"
         },
@@ -55760,8 +55760,8 @@
         },
         {
             "n": "TORNEIRA PAR. COZ GOURMET 1/4 C-34 MAX MESANO",
-            "e": 13,
-            "p": 79.9,
+            "e": 12,
+            "p": 79.3,
             "u": "UN"
         },
         {
@@ -55785,7 +55785,7 @@
         {
             "n": "TORNEIRA PAREDE C/AREJ 18CM 1/4 C-23 MAX",
             "e": 7,
-            "p": 69.7,
+            "p": 66.7,
             "u": "UN"
         },
         {
@@ -55964,7 +55964,7 @@
         },
         {
             "n": "TORNEIRA PLAST JARDIM 1/2X3/4 1128",
-            "e": 247,
+            "e": 243,
             "p": 4.3,
             "u": "UN"
         },
@@ -55976,7 +55976,7 @@
         },
         {
             "n": "TORNEIRA PLAST LAV/MESA 1/2 BCA MARUJA VIQUA",
-            "e": 7,
+            "e": 6,
             "p": 29.9,
             "u": "UN"
         },
@@ -55994,7 +55994,7 @@
         },
         {
             "n": "TORNEIRA PLAST LONGA 1/2X3/4 1117/1158",
-            "e": 76,
+            "e": 72,
             "p": 7.9,
             "u": "UN"
         },
@@ -56096,13 +56096,13 @@
         },
         {
             "n": "TORQUES ARMADOR 10\" SAO ROMAO",
-            "e": 8,
+            "e": 6,
             "p": 46.7,
             "u": "UN"
         },
         {
             "n": "TORQUES ARMADOR 12\" SAO ROMAO",
-            "e": 3,
+            "e": 2,
             "p": 51.9,
             "u": "UN"
         },
@@ -56480,13 +56480,13 @@
         },
         {
             "n": "TRINCHA 301 1\" ROMA 301.003",
-            "e": 93,
+            "e": 90,
             "p": 3,
             "u": "UN"
         },
         {
             "n": "TRINCHA 301 1.1/2 ROMA 301.004",
-            "e": 297,
+            "e": 295,
             "p": 4.6,
             "u": "UN"
         },
@@ -56504,7 +56504,7 @@
         },
         {
             "n": "TRINCHA 301 2.1/2 ROMA 301.006",
-            "e": 99,
+            "e": 96,
             "p": 7.6,
             "u": "UN"
         },
@@ -56516,7 +56516,7 @@
         },
         {
             "n": "TRINCHA 301 3/4 ROMA 301.002",
-            "e": 109,
+            "e": 108,
             "p": 2.65,
             "u": "UN"
         },
@@ -56528,7 +56528,7 @@
         },
         {
             "n": "TRINCHA 312 1.1/2 BCA ROMA",
-            "e": 73,
+            "e": 71,
             "p": 6.4,
             "u": "UN"
         },
@@ -56618,13 +56618,13 @@
         },
         {
             "n": "TRINCHA 317 1 ROMA",
-            "e": 104,
+            "e": 103,
             "p": 3.2,
             "u": "UN"
         },
         {
             "n": "TRINCHA 317 1.1/2 ROMA",
-            "e": 92,
+            "e": 91,
             "p": 4.4,
             "u": "UN"
         },
@@ -56714,7 +56714,7 @@
         },
         {
             "n": "TRINCHA 700 1\" CONDOR",
-            "e": 140,
+            "e": 139,
             "p": 3.95,
             "u": "UN"
         },
@@ -56732,13 +56732,13 @@
         },
         {
             "n": "TRINCHA 700 2\" CONDOR",
-            "e": 101,
+            "e": 98,
             "p": 7.4,
             "u": "UN"
         },
         {
             "n": "TRINCHA 700 2.1/2\" CONDOR",
-            "e": 124,
+            "e": 123,
             "p": 9.65,
             "u": "UN"
         },
@@ -56750,7 +56750,7 @@
         },
         {
             "n": "TRINCHA 700 3/4\" CONDOR",
-            "e": 96,
+            "e": 95,
             "p": 3.45,
             "u": "UN"
         },
@@ -56942,7 +56942,7 @@
         },
         {
             "n": "TUBO ELET RIGIDO 2 3MTS AMANCO",
-            "e": 35,
+            "e": 34,
             "p": 49.95,
             "u": "UN"
         },
@@ -56972,7 +56972,7 @@
         },
         {
             "n": "TUBO ESG PVC 100MM AMANCO/TIGRE MT",
-            "e": 1265,
+            "e": 1256,
             "p": 23.8,
             "u": "M"
         },
@@ -56984,7 +56984,7 @@
         },
         {
             "n": "TUBO ESG PVC 150MM AMANCO/TIGRE MT",
-            "e": 252,
+            "e": 246,
             "p": 59.9,
             "u": "M"
         },
@@ -57056,7 +57056,7 @@
         },
         {
             "n": "TUBO EXT METAL 2609 HERC",
-            "e": 9,
+            "e": 8,
             "p": 35.7,
             "u": "UN"
         },
@@ -57176,7 +57176,7 @@
         },
         {
             "n": "TUBO P/CX DESCARGA",
-            "e": 11,
+            "e": 31,
             "p": 17.9,
             "u": "UN"
         },
@@ -57194,7 +57194,7 @@
         },
         {
             "n": "TUBO SOLD PVC 20MM AMANCO/TIGRE MT",
-            "e": 373,
+            "e": 367,
             "p": 6.9,
             "u": "M"
         },
@@ -57206,7 +57206,7 @@
         },
         {
             "n": "TUBO SOLD PVC 25MM AMANCO/TIGRE MT",
-            "e": 3983,
+            "e": 3965,
             "p": 6.5,
             "u": "M"
         },
@@ -57710,7 +57710,7 @@
         },
         {
             "n": "VALVULA INOX ESCOAMENTO 3 1/2 ABS DOCOL",
-            "e": 29,
+            "e": 28,
             "p": 31.9,
             "u": "UN"
         },
@@ -57771,12 +57771,12 @@
         {
             "n": "VALVULA P/LAV METAL MESANO",
             "e": 29,
-            "p": 21,
+            "p": 22.4,
             "u": "UN"
         },
         {
             "n": "VALVULA P/LAV PLAS 7/8 S/LADR TIGRE",
-            "e": 11,
+            "e": 10,
             "p": 16.9,
             "u": "UN"
         },
@@ -57794,7 +57794,7 @@
         },
         {
             "n": "VALVULA P/LAV S/LAD ABS 1603",
-            "e": 1,
+            "e": 0,
             "p": 13.2,
             "u": "UN"
         },
@@ -57884,8 +57884,8 @@
         },
         {
             "n": "VALVULA PIA AM 3.1/2 INOX ABS INOXSUL/MESANO",
-            "e": 19,
-            "p": 11.6,
+            "e": 18,
+            "p": 19.9,
             "u": "UN"
         },
         {
@@ -57896,7 +57896,7 @@
         },
         {
             "n": "VALVULA PIA AM 3.1/2 INOX LIGHT 1623 BOGNAR",
-            "e": 33,
+            "e": 32,
             "p": 27.9,
             "u": "UN"
         },
@@ -57932,7 +57932,7 @@
         },
         {
             "n": "VALVULA PIA AM INOX 430 3.1/2 PADOVA",
-            "e": 29,
+            "e": 27,
             "p": 12.9,
             "u": "UN"
         },
@@ -58016,7 +58016,7 @@
         },
         {
             "n": "VARAL DE ACO 15MT",
-            "e": 13,
+            "e": 12,
             "p": 5.8,
             "u": "UN"
         },
@@ -58028,7 +58028,7 @@
         },
         {
             "n": "VARAL DE ACO 30MTS",
-            "e": 2,
+            "e": 0,
             "p": 9.95,
             "u": "UN"
         },
@@ -58412,7 +58412,7 @@
         },
         {
             "n": "VASO PLAST PAREDE 25CM MARROM",
-            "e": 12,
+            "e": 9,
             "p": 7.2,
             "u": "UN"
         },
@@ -58448,7 +58448,7 @@
         },
         {
             "n": "VASO PLAST QUADRADO 12CM PTO",
-            "e": 9,
+            "e": 8,
             "p": 4.8,
             "u": "UN"
         },
@@ -58532,7 +58532,7 @@
         },
         {
             "n": "VASO PLAST QUADRADO 34CM PTO",
-            "e": 10,
+            "e": 9,
             "p": 28.7,
             "u": "UN"
         },
@@ -58736,7 +58736,7 @@
         },
         {
             "n": "VASSOURA P/JARD METAL C/CABO REG TRAMONTINA",
-            "e": 11,
+            "e": 10,
             "p": 63.8,
             "u": "UN"
         },
@@ -58964,7 +58964,7 @@
         },
         {
             "n": "VEDANTE P/TORNEIRA 1/2\"X3/4\"",
-            "e": 346,
+            "e": 342,
             "p": 0.75,
             "u": "UN"
         },
@@ -59012,7 +59012,7 @@
         },
         {
             "n": "VEDATOP SEMI FLEX CX 18KG VEDACIT",
-            "e": 8,
+            "e": 7,
             "p": 89.9,
             "u": "UN"
         },
@@ -59174,7 +59174,7 @@
         },
         {
             "n": "VERNIZ BR MARITIMO LUX 750ML",
-            "e": 53,
+            "e": 52,
             "p": 35.9,
             "u": "UN"
         },
@@ -59240,7 +59240,7 @@
         },
         {
             "n": "VERNIZ EXTRA MARIT.SPARLACK 0.9LT",
-            "e": 31,
+            "e": 30,
             "p": 49.9,
             "u": "UN"
         },
@@ -59384,7 +59384,7 @@
         },
         {
             "n": "VERNIZ NEUTREX CAST.AVERM. 3.6LT",
-            "e": 25,
+            "e": 24,
             "p": 169.8,
             "u": "UN"
         },
@@ -59498,7 +59498,7 @@
         },
         {
             "n": "ZARCAO SPRAY 400ML M. PRIME",
-            "e": 6,
+            "e": 5,
             "p": 32.6,
             "u": "UN"
         },
@@ -59510,7 +59510,7 @@
         },
         {
             "n": "LAMPADA LED BULBO T60 20W 6500K SORTELUZ REF20671",
-            "e": 900,
+            "e": 898,
             "p": 7.9,
             "u": "UN"
         },
@@ -59564,7 +59564,7 @@
         },
         {
             "n": "DISCO CORTE 7 1/2\" STANDARD BOSCH",
-            "e": 26,
+            "e": 76,
             "p": 9.9,
             "u": "UN"
         },
@@ -59858,7 +59858,7 @@
         },
         {
             "n": "FITA AD FIBRA VIDRO TEL9X9-50MMX45M AZUL ADERE",
-            "e": 36,
+            "e": 35,
             "p": 15.7,
             "u": "UN"
         },
@@ -59980,6 +59980,30 @@
             "n": "VEDALIT 3.6LT",
             "e": 4,
             "p": 78.9,
+            "u": "UN"
+        },
+        {
+            "n": "AGUA DESTILADA 5LT",
+            "e": 20,
+            "p": 13.2,
+            "u": "UN"
+        },
+        {
+            "n": "CAPA P/MAQUINA DE LAVAR C/TAMPA FRONT E ZIPER 10 A 12KG",
+            "e": 6,
+            "p": 69.95,
+            "u": "UN"
+        },
+        {
+            "n": "CAPA P/MAQUINA DE LAVAR C/ZIPER 16 A 17KG",
+            "e": 8,
+            "p": 72.8,
+            "u": "UN"
+        },
+        {
+            "n": "LIXADEIRA ORBITAL GSS 140 220W 220V BOSCH",
+            "e": 2,
+            "p": 419.9,
             "u": "UN"
         }
     ],
@@ -82616,7 +82640,12 @@
         "07898692152304": 9989,
         "07898202103437": 9990,
         "07898692151321": 9992,
-        "17897321117872": 9996
+        "17897321117872": 9996,
+        "00302659405206": 9997,
+        "00609963120536": 9997,
+        "07890208180399": 9998,
+        "07890211024468": 9999,
+        "04053423247558": 10000
     },
-    "atualizado": "28/07/2026 08:06"
+    "atualizado": "29/07/2026 08:13"
 }
