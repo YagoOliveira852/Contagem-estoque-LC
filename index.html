@@ -325,6 +325,21 @@
       white-space: nowrap;
     }
 
+    .lista-item .col-dir {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+      white-space: nowrap;
+    }
+
+    .lista-item .preco {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--petroleo);
+      white-space: nowrap;
+    }
+
     .lista-item .badge-dif {
       font-size: 12px;
       padding: 3px 8px;
@@ -861,7 +876,10 @@
           }
         },
           h('span', { className: 'nome' }, PRODUTOS[id].n),
-          h('span', { className: 'qtd' }, PRODUTOS[id].e === '' ? '' : 'sist: ' + PRODUTOS[id].e)
+          h('span', { className: 'col-dir' },
+            h('span', { className: 'preco' }, fmtPreco(PRODUTOS[id].p)),
+            h('span', { className: 'qtd' }, PRODUTOS[id].e === '' ? '' : 'sist: ' + PRODUTOS[id].e)
+          )
         )),
         h('button', { className: 'btn btn-ghost btn-sm', style: { marginTop: 8 }, onClick: onCancelar }, 'Cancelar')
       );
@@ -989,9 +1007,12 @@
           termo.length >= 2 && resultados.length === 0 && h('p', { className: 'empty' }, 'Nenhum produto encontrado'),
           resultados.map(id => h('div', { key: id, className: 'lista-item', onClick: () => onSelect(id), style: { cursor: 'pointer' } },
             h('span', { className: 'nome' }, PRODUTOS[id].n),
-            h('span', { className: 'qtd' },
-              (ehCodigo ? codigoDoId(id) + ' · ' : '') +
-              (contagens[id] ? '✓ contado' : (PRODUTOS[id].e === '' ? '' : 'sist: ' + PRODUTOS[id].e))
+            h('span', { className: 'col-dir' },
+              h('span', { className: 'preco' }, fmtPreco(PRODUTOS[id].p)),
+              h('span', { className: 'qtd' },
+                (ehCodigo ? codigoDoId(id) + ' · ' : '') +
+                (contagens[id] ? '✓ contado' : (PRODUTOS[id].e === '' ? '' : 'sist: ' + PRODUTOS[id].e))
+              )
             )
           ))
         )
