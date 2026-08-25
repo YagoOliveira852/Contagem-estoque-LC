@@ -1,6 +1,40 @@
 /**
- * Contagem de estoque — Loja da Construção  (v9.0)
+ * Contagem de estoque — Loja da Construção  (v9.3)
  * -----------------------------------------------------------------
+ * v9.3: a aba "Não contados" virou REGISTRO ACUMULADO, não mais fotografia.
+ *       Cada execução acrescenta a letra pedida e revisa TODAS as letras que já
+ *       estão lá: o produto que aparecer contado (ou Feito/Inativado/Enviado)
+ *       na aba Contagens sai da lista sozinho. Produto de letra que já foi
+ *       apagada da Contagens (fim de ciclo) fica preservado — não dá pra
+ *       reconferir, então não some por engano. Digite * pra só revisar, sem
+ *       acrescentar letra nova. O alerta mostra o total pendente por letra.
+ *
+ * v9.2: ETIQUETA SAIU DA ABA CONTAGENS. Agora tem aba própria "Etiquetas"
+ *       (Data, Letra, Código, Produto, Chave, Impressa?) e marcar etiqueta
+ *       NUNCA mais encosta na aba Contagens.
+ *       BUG QUE ISSO CORRIGE: na v9.0/v9.1, marcar etiqueta de um produto já
+ *       contado/enviado mandava o item por gravar_. A linha fechada só era
+ *       preservada se as quantidades batessem — como a marcação vai sem
+ *       quantidade (0/0), a comparação falhava e a linha era SOBRESCRITA com
+ *       zeros, apagando a contagem antiga. Além da separação em aba, gravar_
+ *       ganhou salvaguarda: item sem quantidade preenchida não regrava linha
+ *       fechada, em nenhuma hipótese.
+ *       A coluna "Etiqueta nova" (12ª) foi removida — rode "Configurar /
+ *       reestilizar" uma vez: ele migra o que estava marcado com "Sim" pra aba
+ *       Etiquetas e só depois apaga a coluna. Isso também conserta o
+ *       carregarLetra, que na v9.0 montava 11 colunas num range de 12 e
+ *       quebrava ao trazer uma letra nova.
+ *       Marcar o mesmo produto de novo não duplica: atualiza a data e reabre
+ *       pra impressão. "Marcar como impressas" não apaga o histórico da aba.
+ *
+ * v9.1: menu "📝 Ver produtos NÃO contados da letra". Gera/reescreve a aba
+ *       "Não contados" com o que ficou de fora naquela letra, separando quem
+ *       está na aba Contagens sem quantidade de quem NUNCA foi carregado na aba
+ *       (produtos anteriores à automação, comparados contra o dados.json).
+ *       Quem você contou (status OK, com quantidade) nunca aparece nessa lista.
+ *       A aba é uma FOTOGRAFIA: cada execução apaga e reescreve. Nada é enviado
+ *       pra Estoque_Principal — é só pra você saber o que falta conferir.
+ *
  * v9.0: duas funcionalidades novas pra não perder tempo/produto durante a
  *       contagem:
  *  1. ETIQUETA NOVA: nova coluna "Etiqueta nova" na aba Contagens. O app
@@ -61,8 +95,12 @@ var ESTOQUE_ID='1DoUEO-QfwPcdYHFIsroEXpnmO0x4GSVIzFRamJEaoYc'; // [v8] Estoque_P
 var ABA='Contagens';
 var ABA_CODNOVOS='Códigos novos'; // [v9] revisão manual: vínculos feitos no app entre código escaneado e produto existente
 var HDR_CODNOVOS=['Data','Código escaneado','Produto vinculado','Chave produto','Letra'];
-var HDR=['Chave','Letra','Código','Produto','Qtd loja','Qtd estoque','Total','Estoque sistema','Ajuste','Status','Atualizado em','Etiqueta nova'];
-var C_CHAVE=1,C_LETRA=2,C_COD=3,C_PROD=4,C_LOJA=5,C_EST=6,C_TOTAL=7,C_SIST=8,C_AJU=9,C_STATUS=10,C_DATA=11,C_ETIQ=12,NCOL=12;
+var ABA_ETIQ='Etiquetas'; // [v9.2] etiqueta nova saiu da aba Contagens e virou aba própria
+var HDR_ETIQ=['Data','Letra','Código','Produto','Chave','Impressa?'];
+var ABA_NAOCONT='Não contados'; // [v9.1] fotografia do que ficou de fora quando você fecha a letra
+var HDR_NAOCONT=['Letra','Código','Produto','Estoque sistema','Origem','Detectado em'];
+var HDR=['Chave','Letra','Código','Produto','Qtd loja','Qtd estoque','Total','Estoque sistema','Ajuste','Status','Atualizado em'];
+var C_CHAVE=1,C_LETRA=2,C_COD=3,C_PROD=4,C_LOJA=5,C_EST=6,C_TOTAL=7,C_SIST=8,C_AJU=9,C_STATUS=10,C_DATA=11,NCOL=11;
 var LINHAS=3000;
 var OPCOES_STATUS=['Não contado','OK','Pendente','Feito','Inativado','Enviado'];
 var VERDE_BG='#D4EDDA',VERDE_TX='#155724',VERM_BG='#F8D7DA',VERM_TX='#721C24';
@@ -113,6 +151,7 @@ function onOpen(){
     .addItem('Ordenar por produto (A→Z)','ordenar')
     .addSeparator()
     .addItem('Fechar letra (enviar p/ Estoque_Principal)','fecharLetra')
+    .addItem('📝 Ver produtos NÃO contados da letra','listarNaoContados') // [v9.1]
     .addSeparator()
     .addItem('Atualizar estoque do sistema (via dados.json)','atualizarEstoqueSistema')
     .addSeparator()
@@ -120,8 +159,8 @@ function onOpen(){
     .addItem('Atualizar resumo','atualizarResumo')
     .addItem('Limpar contagens (nova letra/ciclo)','limparContagens')
     .addSeparator()
-    .addItem('🏷️ Ver produtos p/ etiqueta nova','listarEtiquetas')       // [v9]
-    .addItem('🏷️ Limpar marcações de etiqueta (já imprimi)','limparEtiquetas') // [v9]
+    .addItem('🏷️ Ver etiquetas pendentes','listarEtiquetas')             // [v9.2]
+    .addItem('🏷️ Marcar etiquetas como impressas','limparEtiquetas')     // [v9.2]
     .addToUi();
 }
 
@@ -216,26 +255,32 @@ function ordenar(){
 
 function configurar(){
   var ss=ss_(); var sh=ss.getSheetByName(ABA); if(!sh) sh=ss.insertSheet(ABA);
-  var data=sh.getDataRange().getValues(); var rows=[];
+  var data=sh.getDataRange().getValues(); var rows=[]; var migrar=[]; // [v9.2]
   if(data.length>1){
     var head=data[0].map(function(x){return String(x).trim();});
     function ix(n){ return head.indexOf(n); }
     var iCh=ix('Chave'),iCo=ix('Código'),iPr=ix('Produto'),iLo=ix('Qtd loja'),
         iEs=ix('Qtd estoque'),iSi=ix('Estoque sistema'),iSt=ix('Status'),iIn=ix('Inativado?'),iDa=ix('Atualizado em'),
-        iEt=ix('Etiqueta nova'); // [v9]
+        iEt=ix('Etiqueta nova'); // [v9.2] só pra MIGRAR o que já estava marcado
     for(var r=1;r<data.length;r++){
       var row=data[r]; var prod=iPr>=0?row[iPr]:row[3];
       if(prod===''||prod==null) continue;
       var st=''; if(iSt>=0) st=row[iSt];
       else if(iIn>=0 && String(row[iIn]).toLowerCase()==='sim') st='Inativado';
       rows.push({chave:iCh>=0?row[iCh]:(row[0]||prod),cod:iCo>=0?row[iCo]:'',prod:prod,
-        loja:iLo>=0?row[iLo]:'',est:iEs>=0?row[iEs]:'',sist:iSi>=0?row[iSi]:'',status:st,data:iDa>=0?row[iDa]:'',
-        etiqueta:iEt>=0?row[iEt]:''}); // [v9]
+        loja:iLo>=0?row[iLo]:'',est:iEs>=0?row[iEs]:'',sist:iSi>=0?row[iSi]:'',status:st,data:iDa>=0?row[iDa]:''});
+      // [v9.2] marcação antiga na coluna velha? manda pra aba Etiquetas antes de sumir com a coluna
+      if(iEt>=0 && String(row[iEt]||'')==='Sim'){
+        migrar.push({codigo:iCo>=0?row[iCo]:'', nome:prod, chave:iCh>=0?row[iCh]:''});
+      }
     }
   }
+  if(migrar.length){ gravarEtiquetas_(migrar); }
   rows.sort(function(a,b){ return String(a.prod).localeCompare(String(b.prod),'pt'); });
   sh.clear();
   sh.getRange(1,1,sh.getMaxRows(),sh.getMaxColumns()).clearDataValidations(); // remove validação antiga (senão barra "Não contado"/"Enviado")
+  // [v9.2] some de vez com a 12ª coluna ("Etiqueta nova") — o que estava marcado já foi migrado acima
+  if(sh.getMaxColumns()>NCOL){ sh.deleteColumns(NCOL+1, sh.getMaxColumns()-NCOL); }
   sh.getRange(1,1,1,NCOL).setValues([HDR]);
   var n=rows.length;
   if(n){
@@ -244,8 +289,7 @@ function configurar(){
       var x=rows[i]; var st=x.status;
       if(st!=='Feito'&&st!=='Inativado'&&st!=='Enviado') st=statusAuto_(x.loja,x.est,x.sist);
       out.push([x.chave, letraDe_(x.prod), x.cod, x.prod, x.loja, x.est,
-                totalVal_(x.loja,x.est), x.sist, ajusteVal_(x.loja,x.est,x.sist), st, x.data,
-                x.etiqueta==='Sim'?'Sim':'']); // [v9]
+                totalVal_(x.loja,x.est), x.sist, ajusteVal_(x.loja,x.est,x.sist), st, x.data]);
     }
     sh.getRange(2,C_COD,n,1).setNumberFormat('@'); // [v8] garante código como texto
     sh.getRange(2,1,n,NCOL).setValues(out);
@@ -262,11 +306,9 @@ function aplicarEstilo_(sh){
   sh.setColumnWidth(C_LETRA,55); sh.setColumnWidth(C_COD,120); sh.setColumnWidth(C_PROD,300);
   sh.setColumnWidth(C_LOJA,80); sh.setColumnWidth(C_EST,95); sh.setColumnWidth(C_TOTAL,70);
   sh.setColumnWidth(C_SIST,120); sh.setColumnWidth(C_AJU,160); sh.setColumnWidth(C_STATUS,115); sh.setColumnWidth(C_DATA,155);
-  sh.setColumnWidth(C_ETIQ,110); // [v9]
   sh.getRange(2,C_LETRA,LINHAS,1).setHorizontalAlignment('center');
   sh.getRange(2,C_LOJA,LINHAS,C_SIST-C_LOJA+1).setHorizontalAlignment('center');
   sh.getRange(2,C_STATUS,LINHAS,1).setHorizontalAlignment('center');
-  sh.getRange(2,C_ETIQ,LINHAS,1).setHorizontalAlignment('center'); // [v9]
   sh.getRange(2,C_COD,LINHAS,1).setNumberFormat('@'); // [v8] coluna Código sempre texto
   sh.getBandings().forEach(function(b){ b.remove(); });
   var lastData=Math.max(sh.getLastRow(),2);
@@ -274,8 +316,6 @@ function aplicarEstilo_(sh){
   band.setFirstRowColor(ZEBRA1); band.setSecondRowColor(ZEBRA2);
   var val=SpreadsheetApp.newDataValidation().requireValueInList(OPCOES_STATUS,true).setAllowInvalid(false).build();
   sh.getRange(2,C_STATUS,LINHAS,1).setDataValidation(val);
-  var valEt=SpreadsheetApp.newDataValidation().requireValueInList(['','Sim'],true).setAllowInvalid(false).build(); // [v9]
-  sh.getRange(2,C_ETIQ,LINHAS,1).setDataValidation(valEt);
   var rules=[];
   function contains(col,text,bg,fg){ return SpreadsheetApp.newConditionalFormatRule().whenTextContains(text).setBackground(bg).setFontColor(fg).setRanges([sh.getRange(2,col,LINHAS,1)]).build(); }
   function equals(col,text,bg,fg){ return SpreadsheetApp.newConditionalFormatRule().whenTextEqualTo(text).setBackground(bg).setFontColor(fg).setRanges([sh.getRange(2,col,LINHAS,1)]).build(); }
@@ -288,7 +328,6 @@ function aplicarEstilo_(sh){
   rules.push(equals(C_STATUS,'Inativado',VERM_BG,VERM_TX));
   rules.push(equals(C_STATUS,'Não contado',GRIS_BG,GRIS_TX));
   rules.push(equals(C_STATUS,'Enviado',AZUL_BG,AZUL_TX));
-  rules.push(equals(C_ETIQ,'Sim',AMBAR_BG,AMBAR_TX)); // [v9]
   sh.setConditionalFormatRules(rules);
   try{ var f=sh.getFilter(); if(f) f.remove(); }catch(e){}
   try{ sh.getRange(1,1,Math.max(sh.getLastRow(),2),NCOL).createFilter(); }catch(e){}
@@ -530,36 +569,97 @@ function limparContagens(){
   SpreadsheetApp.getActive().toast('Contagens zeradas.','🧮 Contagem',5);
 }
 
-// [v9] Lista as linhas marcadas com "Etiqueta nova" (pra imprimir de uma vez)
-function listarEtiquetas(){
-  var ui=SpreadsheetApp.getUi();
-  var sh=ss_().getSheetByName(ABA); var last=sh?sh.getLastRow():0;
-  if(!sh||last<2){ ui.alert('A aba Contagens está vazia.'); return; }
-  var vals=sh.getRange(2,1,last-1,NCOL).getValues();
-  var achados=[];
-  for(var i=0;i<vals.length;i++){
-    var v=vals[i]; if(!v[C_PROD-1]) continue;
-    if(String(v[C_ETIQ-1]||'')==='Sim') achados.push({linha:i+2,cod:v[C_COD-1],nome:v[C_PROD-1]});
+// [v9.2] Pega (ou cria) a aba própria das etiquetas
+function abaEtiquetas_(){
+  var ss=ss_(); var sh=ss.getSheetByName(ABA_ETIQ);
+  if(!sh){
+    sh=ss.insertSheet(ABA_ETIQ);
+    sh.getRange(1,1,1,HDR_ETIQ.length).setValues([HDR_ETIQ])
+      .setBackground(HEAD_BG).setFontColor(HEAD_TX).setFontWeight('bold');
+    sh.setFrozenRows(1);
+    sh.setColumnWidth(1,140); sh.setColumnWidth(2,55); sh.setColumnWidth(3,150);
+    sh.setColumnWidth(4,330); sh.setColumnWidth(5,90); sh.setColumnWidth(6,100);
+    sh.getRange(2,3,LINHAS,1).setNumberFormat('@');            // código sempre texto
+    sh.getRange(2,1,LINHAS,1).setNumberFormat('dd/mm/yyyy hh:mm');
+    sh.getRange(2,6,LINHAS,1).setHorizontalAlignment('center');
+    var v=SpreadsheetApp.newDataValidation().requireValueInList(['','Sim'],true).setAllowInvalid(false).build();
+    sh.getRange(2,6,LINHAS,1).setDataValidation(v);
+    sh.setConditionalFormatRules([SpreadsheetApp.newConditionalFormatRule()
+      .whenTextEqualTo('Sim').setBackground(VERDE_BG).setFontColor(VERDE_TX)
+      .setRanges([sh.getRange(2,6,LINHAS,1)]).build()]);
   }
-  if(!achados.length){ ui.alert('Nenhum produto marcado pra etiqueta nova no momento.'); return; }
-  var lista=achados.slice(0,40).map(function(a){ return '• '+a.nome+(a.cod?' — '+a.cod:'')+' (linha '+a.linha+')'; }).join('\n');
-  ui.alert('🏷️ '+achados.length+' produto(s) marcado(s) p/ etiqueta nova:\n\n'+lista+(achados.length>40?'\n• ...':''));
+  return sh;
 }
 
-// [v9] Zera a coluna "Etiqueta nova" de tudo (rode depois de imprimir as etiquetas)
+// [v9.2] Registra a marcação de etiqueta na aba própria — sem encostar na aba Contagens.
+// Uma linha por produto: marcar de novo só atualiza a data e reabre pra impressão.
+function gravarEtiquetas_(itens){
+  var sh=abaEtiquetas_();
+  var last=sh.getLastRow();
+  var porCod={}, porNome={};
+  if(last>=2){
+    var cur=sh.getRange(2,1,last-1,HDR_ETIQ.length).getValues();
+    for(var i=0;i<cur.length;i++){
+      var cz=desp_(cur[i][2]); if(cz && porCod[cz]==null) porCod[cz]=i+2;
+      var nm=norm_(cur[i][3]||''); if(nm && porNome[nm]==null) porNome[nm]=i+2;
+    }
+  }
+  var agora=new Date(), novas=[];
+  for(var j=0;j<itens.length;j++){
+    var it=itens[j];
+    var nome=String(it.nome||''); if(!nome) continue;
+    var cod=String(it.codigo||''); var codZ=desp_(cod);
+    var ts=it.ts?new Date(it.ts):agora;
+    var r=(codZ&&porCod[codZ]!=null)?porCod[codZ]:porNome[norm_(nome)];
+    if(r!=null){
+      sh.getRange(r,1).setValue(ts);   // já estava na lista: só atualiza a data
+      sh.getRange(r,6).setValue('');   // e reabre pra impressão
+      continue;
+    }
+    var linha=[ts, letraDe_(nome), cod, nome, it.chave!=null?String(it.chave):'', ''];
+    novas.push(linha);
+    var nr=last+novas.length;
+    if(codZ) porCod[codZ]=nr;
+    porNome[norm_(nome)]=nr;
+  }
+  if(novas.length){
+    var r0=sh.getLastRow()+1;
+    sh.getRange(r0,3,novas.length,1).setNumberFormat('@');
+    sh.getRange(r0,1,novas.length,HDR_ETIQ.length).setValues(novas);
+  }
+}
+
+// [v9.2] Lista o que está pendente de imprimir (aba Etiquetas, coluna "Impressa?" vazia)
+function listarEtiquetas(){
+  var ui=SpreadsheetApp.getUi();
+  var sh=abaEtiquetas_(); var last=sh.getLastRow();
+  if(last<2){ ui.alert('Nenhum produto marcado pra etiqueta nova no momento.'); return; }
+  var vals=sh.getRange(2,1,last-1,HDR_ETIQ.length).getValues();
+  var achados=[];
+  for(var i=0;i<vals.length;i++){
+    var v=vals[i]; if(!v[3]) continue;
+    if(String(v[5]||'')==='Sim') continue; // já impressa
+    achados.push('• '+v[3]+(v[2]?' — '+v[2]:''));
+  }
+  sh.activate();
+  if(!achados.length){ ui.alert('✅ Nenhuma etiqueta pendente — tudo que está na aba "'+ABA_ETIQ+'" já foi marcado como impresso.'); return; }
+  ui.alert('🏷️ '+achados.length+' produto(s) esperando etiqueta:\n\n'+achados.slice(0,40).join('\n')+(achados.length>40?'\n• ...':'')+'\n\n(lista completa na aba "'+ABA_ETIQ+'")');
+}
+
+// [v9.2] Marca as pendentes como impressas (não apaga o histórico da aba)
 function limparEtiquetas(){
   var ui=SpreadsheetApp.getUi();
-  var sh=ss_().getSheetByName(ABA); var last=sh?sh.getLastRow():0;
-  if(!sh||last<2){ ui.alert('A aba Contagens está vazia.'); return; }
-  var vals=sh.getRange(2,1,last-1,NCOL).getValues();
+  var sh=abaEtiquetas_(); var last=sh.getLastRow();
+  if(last<2){ ui.alert('A aba "'+ABA_ETIQ+'" está vazia.'); return; }
+  var vals=sh.getRange(2,1,last-1,HDR_ETIQ.length).getValues();
   var linhas=[];
-  for(var i=0;i<vals.length;i++){ if(String(vals[i][C_ETIQ-1]||'')==='Sim') linhas.push(i+2); }
-  if(!linhas.length){ ui.alert('Nenhuma marcação de etiqueta pra limpar.'); return; }
-  var r=ui.alert('Limpar marcações de etiqueta','Isso remove o destaque de "Etiqueta nova" de '+linhas.length+' produto(s). Confirma (já imprimiu)?',ui.ButtonSet.YES_NO);
+  for(var i=0;i<vals.length;i++){ if(vals[i][3] && String(vals[i][5]||'')!=='Sim') linhas.push(i+2); }
+  if(!linhas.length){ ui.alert('Nenhuma etiqueta pendente pra marcar como impressa.'); return; }
+  var r=ui.alert('Etiquetas impressas','Marcar '+linhas.length+' etiqueta(s) como impressas? (as linhas ficam na aba, só saem da lista de pendentes)',ui.ButtonSet.YES_NO);
   if(r!==ui.Button.YES) return;
-  var rl=linhas.map(function(L){ return String.fromCharCode(64+C_ETIQ)+L; });
-  sh.getRangeList(rl).setValue('');
-  SpreadsheetApp.getActive().toast('Marcações de etiqueta limpas ('+linhas.length+').','🏷️ Etiqueta',5);
+  var rl=linhas.map(function(L){ return 'F'+L; });
+  sh.getRangeList(rl).setValue('Sim');
+  SpreadsheetApp.getActive().toast(linhas.length+' etiqueta(s) marcada(s) como impressa(s).','🏷️ Etiqueta',5);
 }
 
 // [v9] Pega (ou cria) a aba de revisão dos códigos vinculados manualmente no app
@@ -604,10 +704,18 @@ function doPost(e){
     var itens=body.itens||(body.item?[body.item]:[]);
     if(!itens.length) return resp_({ok:false,erro:'sem itens'});
     // [v9] separa vínculos de código novo (vão pra aba de revisão) das contagens normais
-    var codNovos=[], contagens=[];
-    for(var i=0;i<itens.length;i++){ (itens[i].tipo==='codigo_novo'?codNovos:contagens).push(itens[i]); }
+    // [v9.2] etiqueta virou aba própria: marcar etiqueta NÃO passa mais pela aba Contagens
+    var codNovos=[], contagens=[], etiquetas=[];
+    for(var i=0;i<itens.length;i++){
+      var it=itens[i];
+      if(it.tipo==='codigo_novo'){ codNovos.push(it); continue; }
+      if(it.etiqueta) etiquetas.push(it);
+      // só vira contagem se veio quantidade de verdade (marcação pura de etiqueta não conta)
+      if(it.tipo!=='etiqueta' && contou_(it.qtdLoja,it.qtdEstoque)) contagens.push(it);
+    }
     if(contagens.length) gravar_(contagens);
     if(codNovos.length) gravarCodigosNovos_(codNovos);
+    if(etiquetas.length) gravarEtiquetas_(etiquetas);
     return resp_({ok:true,gravados:itens.length});
   }catch(err){ return resp_({ok:false,erro:String(err)}); }
 }
@@ -659,31 +767,27 @@ function gravar_(itens){
     if(nomeN) mapaNome[nomeN]=r;
     var cur2=nova?'':String(sh.getRange(r,C_STATUS).getValue()||'');
     var st;
-    var etiqNovo=it.etiqueta?'Sim':''; // [v9]
     if(cur2==='Feito'||cur2==='Inativado'||cur2==='Enviado'){
       // [v8.5] linha FECHADA: congelada também contra o app.
       // Reenvio do celular com as MESMAS quantidades (botão Sincronizar, fila antiga)
       // não toca na linha. Só regrava se a contagem mudou de verdade (recontagem) —
       // e aí volta pro fluxo com status recalculado, pra ser enviada de novo.
+      // [v9.2] SALVAGUARDA: item sem quantidade preenchida NUNCA regrava linha fechada.
+      // (era isso que zerava a contagem antiga quando você só marcava etiqueta)
+      if(!contou_(it.qtdLoja,it.qtdEstoque)) continue;
       var lojaAtual=num_(sh.getRange(r,C_LOJA).getValue());
       var estAtual=num_(sh.getRange(r,C_EST).getValue());
-      if(lojaAtual===num_(it.qtdLoja) && estAtual===num_(it.qtdEstoque)){
-        // [v9] mesmo com a linha congelada, a marcação de etiqueta nova pode mudar
-        if(it.etiqueta!==undefined && String(sh.getRange(r,C_ETIQ).getValue()||'')!==etiqNovo) sh.getRange(r,C_ETIQ).setValue(etiqNovo);
-        continue;
-      }
+      if(lojaAtual===num_(it.qtdLoja) && estAtual===num_(it.qtdEstoque)) continue;
       st=statusAuto_(it.qtdLoja,it.qtdEstoque,it.sistema);
     } else {
       st=statusAuto_(it.qtdLoja,it.qtdEstoque,it.sistema);
     }
-    // [v9] se o item não trouxe o campo etiqueta (fila antiga/app desatualizado), preserva o que já estava na linha
-    var etiqOut=(it.etiqueta!==undefined)?etiqNovo:(nova?'':String(sh.getRange(r,C_ETIQ).getValue()||''));
     sh.getRange(r,C_COD).setNumberFormat('@'); // [v8] código como texto
     sh.getRange(r,1,1,NCOL).setValues([[
       chave, letraDe_(it.nome), it.codigo||'', it.nome||'',
       num_(it.qtdLoja), num_(it.qtdEstoque), num_(it.qtdLoja)+num_(it.qtdEstoque),
       num_(it.sistema), ajusteVal_(it.qtdLoja,it.qtdEstoque,it.sistema), st,
-      it.ts?new Date(it.ts):agora, etiqOut
+      it.ts?new Date(it.ts):agora
     ]]);
   }
   atualizarResumo();
@@ -743,4 +847,149 @@ function atualizarEstoqueSistema(){
            '\n• Estoque_Principal: '+cEst+' produtos'+(semCasar?('\n• '+semCasar+' sem casar'):''));
 }
 
-function doGet(){ return resp_({ok:true,servico:'contagem-estoque-lc',versao:9.0}); }
+
+// [v9.3] Pega (ou cria) a aba-registro do que ainda falta contar.
+// Corrige o cabeçalho se vier de uma versão anterior.
+function abaNaoContados_(){
+  var ss=ss_(); var sh=ss.getSheetByName(ABA_NAOCONT);
+  if(!sh){
+    sh=ss.insertSheet(ABA_NAOCONT);
+    sh.setFrozenRows(1);
+    sh.setColumnWidth(1,55); sh.setColumnWidth(2,150); sh.setColumnWidth(3,330);
+    sh.setColumnWidth(4,120); sh.setColumnWidth(5,210); sh.setColumnWidth(6,140);
+    sh.getRange(2,2,LINHAS,1).setNumberFormat('@');          // código sempre texto
+    sh.getRange(2,6,LINHAS,1).setNumberFormat('dd/mm/yyyy hh:mm');
+    sh.getRange(2,1,LINHAS,1).setHorizontalAlignment('center');
+  }
+  var cab=sh.getRange(1,1,1,HDR_NAOCONT.length).getValues()[0].join('|');
+  if(cab!==HDR_NAOCONT.join('|')){
+    sh.getRange(1,1,1,HDR_NAOCONT.length).setValues([HDR_NAOCONT])
+      .setBackground(HEAD_BG).setFontColor(HEAD_TX).setFontWeight('bold');
+  }
+  return sh;
+}
+
+// [v9.3] REGISTRO ACUMULADO do que falta contar — vai somando letra após letra.
+// A cada execução:
+//   1) revisa TUDO que já está na aba: o produto que agora aparece contado (ou
+//      resolvido como Feito/Inativado/Enviado) na aba Contagens SAI da lista;
+//   2) acrescenta o que falta na letra perguntada, sem duplicar o que já estava.
+// Produto de uma letra que já foi apagada da aba Contagens (fim de ciclo) fica
+// preservado no registro — não dá pra reconferir, então não some sozinho.
+// Duas origens na coluna "Origem":
+//   • "Na aba, sem contar"  = a linha existe na Contagens e está sem quantidade;
+//   • "Nunca carregado (dados.json)" = produto da letra que nem chegou na aba.
+// Quem você contou (inclusive contando ZERO) nunca entra aqui.
+function listarNaoContados(){
+  var ui=SpreadsheetApp.getUi();
+  var r=ui.prompt('Produtos não contados',
+    'Qual letra acrescentar ao registro? (ex.: C)\n\nDeixe * para só revisar o que já está na aba, sem acrescentar letra nova.',
+    ui.ButtonSet.OK_CANCEL);
+  if(r.getSelectedButton()!==ui.Button.OK) return;
+  var letra=String(r.getResponseText()||'').trim().toUpperCase().charAt(0);
+  if(!letra){ ui.alert('Digite uma letra (ou * para só revisar).'); return; }
+  var soRevisar=(letra==='*');
+
+  var sh=ss_().getSheetByName(ABA); var last=sh?sh.getLastRow():0;
+  var vals=(sh&&last>=2)? sh.getRange(2,1,last-1,NCOL).getValues() : [];
+
+  // estado atual da aba Contagens, por código (sem zeros) e por nome
+  var feitoCod={}, feitoNome={}, naAba={}, naAbaCod={}, naAbaNome={};
+  var itensLetra=[], contados=0, resolvidos=0;
+  for(var i=0;i<vals.length;i++){
+    var v=vals[i]; var nome=v[C_PROD-1]; if(!nome) continue;
+    var L=String(v[C_LETRA-1]||'').toUpperCase();
+    var cz=desp_(v[C_COD-1]); var nz=norm_(nome);
+
+    if(v[C_CHAVE-1]!==''&&v[C_CHAVE-1]!=null) naAba[String(v[C_CHAVE-1])]=true;
+    if(cz) naAbaCod[cz]=true;
+    if(nz) naAbaNome[nz]=true;
+
+    var st=String(v[C_STATUS-1]||'');
+    var jaResolvido = contou_(v[C_LOJA-1],v[C_EST-1]) || st==='Feito' || st==='Inativado' || st==='Enviado';
+    if(jaResolvido){ if(cz) feitoCod[cz]=true; if(nz) feitoNome[nz]=true; }
+
+    if(soRevisar || L!==letra) continue;
+    if(contou_(v[C_LOJA-1],v[C_EST-1])){ contados++; continue; }
+    if(st==='Feito'||st==='Inativado'||st==='Enviado'){ resolvidos++; continue; }
+    itensLetra.push([L||letra, String(v[C_COD-1]||''), String(nome), num_(v[C_SIST-1]), 'Na aba, sem contar', '']);
+  }
+
+  // 1) revisa o registro que já existe
+  var dest=abaNaoContados_(); var lastR=dest.getLastRow();
+  var antigos=(lastR>=2)? dest.getRange(2,1,lastR-1,HDR_NAOCONT.length).getValues() : [];
+  var mantidos=[], saiu=0, jaTem={};
+  for(var k=0;k<antigos.length;k++){
+    var a=antigos[k]; var nomeA=a[2]; if(!nomeA) continue;
+    var czA=desp_(a[1]); var nzA=norm_(nomeA);
+    if((czA&&feitoCod[czA]) || feitoNome[nzA]){ saiu++; continue; } // contou depois: sai
+    mantidos.push(a);
+    if(czA) jaTem['C:'+czA]=true;
+    jaTem['N:'+nzA]=true;
+  }
+
+  // 2) produtos da letra que nunca chegaram na aba Contagens
+  var nuncaCarregado=0, erroFetch=null;
+  if(!soRevisar){
+    try{
+      var d=JSON.parse(UrlFetchApp.fetch(DADOS_URL,{muteHttpExceptions:true}).getContentText());
+      var produtos=d.produtos||[], codigos=d.codigos||{};
+      var codeById={}; for(var c in codigos){ var id=codigos[c]; if(codeById[id]==null) codeById[id]=c; }
+      for(var idx=0; idx<produtos.length; idx++){
+        var p=produtos[idx]; var nm=String(p.n||''); if(!nm) continue;
+        if(letraDe_(nm)!==letra) continue;
+        var cod=codeById[idx]||''; var codZ=desp_(cod);
+        if(naAba[String(idx)]) continue;
+        if(codZ && naAbaCod[codZ]) continue;
+        if(naAbaNome[norm_(nm)]) continue;
+        itensLetra.push([letra, cod, nm, num_(p.e), 'Nunca carregado (dados.json)', '']);
+        nuncaCarregado++;
+      }
+    }catch(e){ erroFetch=String(e); }
+  }
+
+  // 3) junta sem duplicar
+  var agora=new Date(), entrou=0;
+  for(var j=0;j<itensLetra.length;j++){
+    var it=itensLetra[j]; var czI=desp_(it[1]); var nzI=norm_(it[2]);
+    if((czI&&jaTem['C:'+czI]) || jaTem['N:'+nzI]) continue; // já estava no registro
+    it[5]=agora; // detectado em
+    mantidos.push(it); entrou++;
+    if(czI) jaTem['C:'+czI]=true;
+    jaTem['N:'+nzI]=true;
+  }
+
+  mantidos.sort(function(x,y){
+    var lx=String(x[0]||''), ly=String(y[0]||'');
+    if(lx!==ly) return lx<ly? -1 : 1;
+    var nx=norm_(x[2]), ny=norm_(y[2]);
+    return nx<ny? -1 : (nx>ny? 1 : 0);
+  });
+
+  if(lastR>1) dest.getRange(2,1,lastR-1,HDR_NAOCONT.length).clearContent();
+  if(mantidos.length){
+    dest.getRange(2,2,mantidos.length,1).setNumberFormat('@');
+    dest.getRange(2,1,mantidos.length,HDR_NAOCONT.length).setValues(mantidos);
+  }
+  dest.activate();
+
+  var porLetra={};
+  for(var m=0;m<mantidos.length;m++){ var LL=String(mantidos[m][0]||'?'); porLetra[LL]=(porLetra[LL]||0)+1; }
+  var resumo=[]; for(var L2 in porLetra) resumo.push(L2+': '+porLetra[L2]);
+  resumo.sort();
+
+  var msg=(soRevisar?'Revisão do registro':'Letra '+letra)+'\n\n';
+  if(!soRevisar){
+    msg+='• '+entrou+' produto(s) novo(s) no registro';
+    if(nuncaCarregado) msg+=' (sendo '+nuncaCarregado+' que nunca foram carregados na aba)';
+    msg+='\n';
+  }
+  msg+='• '+saiu+' saíram (foram contados desde a última vez)\n';
+  msg+='• '+mantidos.length+' ainda faltando no total\n';
+  if(resumo.length) msg+='\nPor letra — '+resumo.join(' | ');
+  if(!soRevisar) msg+='\n\nNa letra '+letra+', ficaram de fora da lista:\n• '+contados+' que você contou\n• '+resolvidos+' resolvidos sem quantidade';
+  if(erroFetch) msg+='\n\n⚠️ Não consegui checar os nunca carregados (dados.json inacessível): '+erroFetch;
+  ui.alert(msg);
+}
+
+function doGet(){ return resp_({ok:true,servico:'contagem-estoque-lc',versao:9.3}); }
