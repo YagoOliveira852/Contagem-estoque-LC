@@ -174,6 +174,17 @@
       color: var(--txt);
     }
 
+    .badge-inativo {
+      display: inline-block;
+      background: var(--ambar-bg);
+      color: var(--ambar-tx);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+
     .estoque-box {
       display: flex;
       align-items: center;
@@ -918,6 +929,7 @@
 
       return h('div', { className: 'card' },
         h('div', { className: 'prod-nome' }, p.n),
+        p.i === 1 && h('div', { className: 'badge-inativo' }, '⚠️ Fora de linha — saldo pode estar desatualizado'),
         h('div', { className: 'prod-meta' },
           'Unidade: ', h('b', null, p.u || '—'), '  ·  Preço: ', h('b', null, fmtPreco(p.p))
         ),
