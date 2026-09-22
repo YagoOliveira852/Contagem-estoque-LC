@@ -90,7 +90,7 @@ Por letra:
 | `dados.json`            | Base de produtos: `{ codigos: { "cod": id }, produtos: [{ n, e, p, u }] }`.                                               |
 | `apps-script/Codigo.gs` | Backend (Apps Script) da planilha: recebe o app, estiliza, "Carregar letra", "Fechar letra", Resumo, aba "Códigos novos". |
 
-`dados.json` — por produto: `n` = nome · `e` = estoque no sistema · `p` = preço · `u` = unidade.
+`dados.json` — por produto: `n` = nome · `e` = estoque no sistema · `p` = preço · `u` = unidade · `fl` = `1` quando o produto está **fora de linha** (campo opcional; ausente = ativo). Produtos com `fl` não aparecem na busca por nome do app, mas continuam acháveis por código digitado ou escaneado. `fl` é aditivo: não altera índice nem código, e a ordem do array nunca muda (a lista da tela é ordenada por nome só na exibição).
 
 ---
 
@@ -259,7 +259,7 @@ Por letra:
 | `dados.json`            | Base de produtos: `{ codigos: { "cod": id }, produtos: [{ n, e, p, u }] }`.                                               |
 | `apps-script/Codigo.gs` | Backend (Apps Script) da planilha: recebe o app, estiliza, "Carregar letra", "Fechar letra", Resumo, aba "Códigos novos". |
 
-`dados.json` — por produto: `n` = nome · `e` = estoque no sistema · `p` = preço · `u` = unidade.
+`dados.json` — por produto: `n` = nome · `e` = estoque no sistema · `p` = preço · `u` = unidade · `fl` = `1` quando o produto está **fora de linha** (campo opcional; ausente = ativo). Produtos com `fl` não aparecem na busca por nome do app, mas continuam acháveis por código digitado ou escaneado. `fl` é aditivo: não altera índice nem código, e a ordem do array nunca muda (a lista da tela é ordenada por nome só na exibição).
 
 ---
 

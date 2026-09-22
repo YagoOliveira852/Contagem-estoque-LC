@@ -864,10 +864,14 @@
       const [q, setQ] = useState('');
       const termo = q.trim().toUpperCase();
       let resultados = [];
+      // Vincular código a um produto existente: mostra TODOS (inclusive fora de linha,
+      // pois é comum vincular um código a um item descontinuado), ordenados por nome.
       if (termo.length >= 2) {
-        for (let i = 0; i < PRODUTOS.length && resultados.length < 30; i++) {
+        for (let i = 0; i < PRODUTOS.length; i++) {
           if (PRODUTOS[i].n.toUpperCase().includes(termo)) resultados.push(i);
         }
+        resultados.sort((a, b) => PRODUTOS[a].n.localeCompare(PRODUTOS[b].n, 'pt-BR'));
+        resultados = resultados.slice(0, 30);
       }
       return h('div', { style: { marginTop: 14, borderTop: '1px solid var(--borda)', paddingTop: 14 } },
         h('div', { className: 'search-box' },
@@ -1002,10 +1006,14 @@
       }
       // busca por NOME (também como fallback quando o número não achou código,
       // pois muitos nomes têm números, ex.: "REF 4089")
+      // Produtos fora de linha (fl) NÃO aparecem na busca por nome — só por código/scan.
+      // Ordena por nome na exibição (o array/índice do dados.json NÃO é alterado).
       if (!resultados.length && termo.length >= 2) {
-        for (let i = 0; i < PRODUTOS.length && resultados.length < 50; i++) {
-          if (PRODUTOS[i].n.toUpperCase().includes(termo)) resultados.push(i);
+        for (let i = 0; i < PRODUTOS.length; i++) {
+          if (!PRODUTOS[i].fl && PRODUTOS[i].n.toUpperCase().includes(termo)) resultados.push(i);
         }
+        resultados.sort((a, b) => PRODUTOS[a].n.localeCompare(PRODUTOS[b].n, 'pt-BR'));
+        resultados = resultados.slice(0, 50);
       }
       return h('div', null,
         h('div', { className: 'card' },
